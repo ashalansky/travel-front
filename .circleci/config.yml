@@ -19,21 +19,21 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
 
-deploy:
-  machine:
-    enabled: true
+  deploy:
+    machine:
+      enabled: true
 
-  working_directory: ~/client
+    working_directory: ~/client
 
-  steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "c8:dd:ed:ea:d1:03:29:37:45:ce:7f:bc:de:db:02:5e"
-    - checkout
-    - run:
-        name: Push Master to Production
-        command: |
-          git push https://github.com/ashalansky/travel-front.git master:production
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "c8:dd:ed:ea:d1:03:29:37:45:ce:7f:bc:de:db:02:5e"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/ashalansky/travel-front.git master:production
 
 workflows:
   version: 2
