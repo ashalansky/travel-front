@@ -34,7 +34,8 @@ export default function() {
       justify="space-around"
       alignItems="center"
     >
-
+ 
+ 
       <DestinationCard></DestinationCard>
       <DestinationCard></DestinationCard>
       <DestinationCard></DestinationCard>
