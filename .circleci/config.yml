@@ -44,12 +44,12 @@ workflows:
             branches:
               only: 
                 - master
-              ignore: production
+              ignore: /.*/
       - deploy:
           filters:
             branches:
               only:
                 - master
-              ignore: production
+              ignore: /.*/
           requires:
             - build
