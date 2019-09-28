@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     gridGap: theme.spacing(3),
     alignItems: 'center',
     justify: 'center',
-    background: LightBlue[50]
+    background: LightBlue[50],
   },
   title: {
     padding: theme.spacing(1),
@@ -61,7 +61,7 @@ export default function AppDesc(props) {
             <LocationCityIcon className={classes.icon}/>
           </Typography>
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={3}>   
           <Typography className={classes.typography}>
             <EventIcon className={classes.icon}/>
           </Typography>
@@ -74,7 +74,7 @@ export default function AppDesc(props) {
         <Grid item xs={3}>
           <Typography className={classes.typography}>
             <ShareIcon className={classes.icon}/>
-          </Typography>    
+          </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography className={classes.description}>
@@ -88,13 +88,13 @@ export default function AppDesc(props) {
         </Grid>
         <Grid item xs={3}>
           <Typography className={classes.description}>
-            Select your preferred flights
+            Select your flights
           </Typography>
         </Grid>
         <Grid item xs={3}>
           <Typography className={classes.description}>
             Share your plan with your friends
-          </Typography>        
+          </Typography>
         </Grid>
       </Grid>
     </div>
