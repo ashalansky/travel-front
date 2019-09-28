@@ -6,10 +6,6 @@ jobs:
 
     working_directory: ~/client
 
-    branches:
-      only:
-        - master
-
     steps:
       - checkout
       - restore_cache:
@@ -29,10 +25,6 @@ jobs:
 
     working_directory: ~/client
 
-    branches:
-      only:
-        - master
-        
     steps:
       - add_ssh_keys:
           fingerprints:
