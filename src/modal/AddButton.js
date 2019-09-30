@@ -7,7 +7,9 @@ import { Grid } from '@material-ui/core';
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: theme.spacing(2),
-    color: 'white'
+    color: 'white',
+    background: '#ffc445',
+    
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -19,7 +21,7 @@ export default function AddButton() {
 
 
   return (
-    <Grid container justify="flex-end">
+    <Grid container justify="center" xs={12}>
         <Fab variant="outlined" color="primary" aria-label="add" className={classes.fab}>
           <AddIcon />
           Add Destination

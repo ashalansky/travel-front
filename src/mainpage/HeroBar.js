@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
-// import classnames from "classnames";
+import {Animated} from "react-animated-css";
+
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -35,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     placeSelf: 'center',
     fontStyle: "Helvetica Neue",
     color: 'black',
+
   },
   plane: {
     gridRow: 2,
@@ -51,7 +53,9 @@ export default function HeroBanner(props) {
   
   return (
     <div className={classes.container}>
-        <Typography variant="h4" className={classes.title}>Travel Bum</Typography>
+      <Animated animationIn="fadeInUp" className={classes.title}>
+        <Typography variant="h4" >Travel Bum</Typography>
+      </Animated>
         <AirplanemodeActiveIcon className={classes.plane}></AirplanemodeActiveIcon>
         <Button className={classes.button}>Create Trip</Button>
     </div>
