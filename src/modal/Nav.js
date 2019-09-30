@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   root: {
+    paddingLeft: '5%',
     width: '90%',
   },
   button: {
@@ -16,7 +17,11 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
+    justifyContent: 'center'
   },
+  div: {
+    textAlign: 'center',
+  }
 }));
 
 function getSteps() {
@@ -79,7 +84,7 @@ export default function ModalNav() {
             </Button>
           </div>
         ) : (
-          <div>
+          <div className={classes.div}>
             <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
             <div>
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
