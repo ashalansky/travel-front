@@ -1,28 +1,44 @@
-import React from "react";
+import React, { useState } from 'react';
 import Calendar from "react-calendar";
 import "./styles/calendar.css";
-const classNames = require('classnames');
+import moment from 'moment';
+const classnames = require('classnames');
 
 const cities = [
   "Calgary", "Edmonton", "Toronto"
 ]
 
-export default function calendar(props) {
-  let state = {
+const colors = [
+
+]
+
+const getDates = function (startDate, stopDate) {
+  let dateArray = [];
+  let currentDate = moment(startDate);
+  stopDate = moment(stopDate);
+  while (currentDate <= stopDate) {
+      dateArray.push(moment(currentDate)["_d"].toDateString());
+      currentDate = moment(currentDate).add(1, 'days');
+  }
+  return dateArray;
+};
+
+export default function CalendarComponent(props) {
+  const [state, setState] = useState({
     cities: cities,
     values: [],
-    city: "Calgary"
-
-  }
-
+    city: "Calgary",
+    numberOfCities: 0
+  })
+  
   const onChange = (values) => {
-    console.log(typeof values)
-    state.values = state.values.concat([values])
-    values = state.values.map(value => {
-      console.log(value)
-      return value
-    });
-    return values
+    
+    const dateArray = getDates(values[0],values[1]);
+
+    let newValues = state.values.concat([dateArray]);
+    let cityNumber = state.numberOfCities + 1;
+    console.log(cityNumber);
+    setState({...state, values: newValues, numberOfCities: cityNumber})
   }
 
   const cityList = cities.map(city => {
@@ -41,13 +57,15 @@ export default function calendar(props) {
         minDate={new Date()}
         selectRange={true}
         onChange={(value) => {onChange(value)}}
-        onClickDay={(value) => console.log('Clicked day: ', value)}
         tileClassName={(tile) => {
-          console.log(tile)
-          let newTiles = state.values.map((value) => {
-            return value
+          let setActive = state.values.map((value) => {
+            if (tile.view === "month" && value.includes(tile.date.toDateString())) {
+              return classnames([`react-calendar__tile-selectedPrevious${state.numberOfCities}`])
+            } else {
+              return "react-calendar__tile"
+            }
           })
-          console.log(newTiles)
+          return setActive
         }}
       />
     </section>

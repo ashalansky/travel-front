@@ -19,3 +19,22 @@ abbr[title] {
 .react-calendar__tile--active:enabled:focus {
   background: #4FC3F7
 }
+
+.react-calendar__tile-selectedPrevious1 {
+  background: #334746;
+}
+.react-calendar__tile-selectedPrevious2 {
+  background: #4c4c41;
+}
+.react-calendar__tile-selectedPrevious3 {
+  background: #84863b;
+}
+.react-calendar__tile-selectedPrevious4 {
+  background: #c0bb4e;
+}
+.react-calendar__tile-selectedPrevious5 {
+  background: #e9d09a;
+}
+.react-calendar__tile-selectedPrevious6 {
+  background: #016367;
+}
