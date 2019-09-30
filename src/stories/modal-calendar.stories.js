@@ -13,5 +13,5 @@ storiesOf("Calendar", module)
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
   })
   .add("Default", () => (
-    <Calendar></Calendar>
+    <Calendar onClick={action("value")}></Calendar>
   ))
