@@ -7,6 +7,7 @@ import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
 
 const useStyles = makeStyles(theme => ({
   container: {
+    marginTop: 40,
     display: 'grid',
     gridTemplateRows: '25% 25% auto',
     gridTemplateColumns: '90px auto 90px',
