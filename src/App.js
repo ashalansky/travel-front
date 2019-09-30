@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import Calendar from './modal/Calendar';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -35,6 +36,7 @@ export default function ButtonAppBar() {
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
+      <Calendar></Calendar>
     </div>
   );
 }
