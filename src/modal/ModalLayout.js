@@ -39,6 +39,5 @@ export default function ModalLayout() {
       <ModalNav className={classes.nav}></ModalNav>
     </Grid>
   </Grid>
-
   );
 }
