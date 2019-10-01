@@ -4,6 +4,10 @@ import "./styles/calendar.css";
 import moment from 'moment';
 const classnames = require('classnames');
 
+const cities = [
+  "Calgary", "Edmonton", "Toronto", "Montreal"
+]
+
 const getDates = function (startDate, stopDate) {
   let dateArray = [];
   let currentDate = moment(startDate);
@@ -23,6 +27,7 @@ const setNewDate = function (departingDate) {
 
 export default function CalendarComponent(props) {
   const [state, setState] = useState({
+    cities: cities,
     values: [],
     numberOfCities: 0,
     firstDate: new Date(),
@@ -34,16 +39,12 @@ export default function CalendarComponent(props) {
     const departingDate = values[1];
     const dateArray = getDates(arrivalDate,departingDate);
     const newDate = setNewDate(departingDate);
-    console.log(newDate);
     
     let newValues = state.values.concat([dateArray]);
     let cityNumber = state.numberOfCities + 1;
-    if (state.values.length < 6) {
+    if (state.values.length < state.cities.length) {
       setState({...state, values: newValues, numberOfCities: cityNumber, firstDate: arrivalDate, lastDate: newDate["_d"]})
-    } else {
-      setState({...state, values: newValues, numberOfCities: cityNumber})
-    }
-
+    } 
   }
 
   return (
