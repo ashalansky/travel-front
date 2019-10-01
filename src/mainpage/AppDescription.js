@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     justify: 'center',
     background: LightBlue[50],
+    marginTop: 30
   },
   title: {
     padding: theme.spacing(1),
