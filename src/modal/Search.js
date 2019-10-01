@@ -10,16 +10,16 @@ let types = [
 
 class Search extends Component {
   render() {
-  return (
-     
-        <Geosuggest 
-        onSuggestSelect={this.onSuggestSelect}
-        types={types}
-        placeholder="Find City"
-        queryDelay="500"
-        />     
-    
-  )
+    return (
+      
+          <Geosuggest 
+          onSuggestSelect={this.onSuggestSelect}
+          types={types}
+          placeholder="Add City"
+          queryDelay="500"
+          />     
+      
+    )
   }
   onSuggestSelect(suggest) {
     //console.log(suggest);

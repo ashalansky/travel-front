@@ -3,6 +3,7 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Grid } from '@material-ui/core';
+import Search from './Search'
 import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles(theme => ({
@@ -62,12 +63,12 @@ export default function AddButton() {
               <AddIcon />
             </div>
             <InputBase
-              placeholder="Add City"
+              placeholder='Add City'
               classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-            />
+              root: classes.inputRoot,
+              input: classes.inputInput,
+              }}>
+            </InputBase>
           </div>
         </Fab>
     </Grid>
