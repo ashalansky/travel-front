@@ -31,6 +31,7 @@ export default function() {
             Travel-Bum
           </Typography>
           <Button color="inherit" className={classes.button}>Login</Button>
+          <Button color="inherit" className={classes.button}>Sign Up</Button>
         </Toolbar>
       </AppBar>
     </div>

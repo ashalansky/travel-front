@@ -50,11 +50,19 @@ export default function Login() {
           <Paper className={classes.paper}>
             <div>
               <Typography variant="h6" className={classes.title}>
-              Login
+              Sign Up
               </Typography>
             </div>
           <div>
-            <TextField variant='outlined' placeholder='Email' className={classes.textField}> 
+            <TextField variant='outlined' placeholder='Username' className={classes.textField}> 
+            </TextField>
+          </div>
+          <div>
+            <TextField variant='outlined' placeholder='Origin City' className={classes.textField}>
+            </TextField>
+          </div>
+          <div>
+            <TextField variant='outlined' placeholder='Email' className={classes.textField}>
             </TextField>
           </div>
           <div>
@@ -62,7 +70,7 @@ export default function Login() {
             </TextField>
           </div>
           <Button variant="contained" color="primary" className={classes.button}>
-            Login
+            Sign Up
           </Button>
           </Paper>
       </Grid>

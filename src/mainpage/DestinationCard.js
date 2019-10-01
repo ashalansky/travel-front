@@ -23,7 +23,7 @@ export default function() {
   const classes = useStyles();
 
   return (
-    <Card aos-init data-aos='fade-up'  
+    <Card data-aos='fade-up'  
       data-aos-anchor-placement='top-bottom' 
       data-aos-easing='ease-in-out' 
       data-aos-duration='600'

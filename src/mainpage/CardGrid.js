@@ -24,7 +24,7 @@ export default function() {
     <Typography 
       className={classes.title}
       variant="h3"
-      aos-init data-aos='fade-up' 
+      data-aos='fade-up' 
       data-aos-delay='150' 
       data-aos-anchor-placement='top-bottom' 
       data-aos-easing='ease-in-out' 
@@ -41,7 +41,6 @@ export default function() {
       <DestinationCard></DestinationCard>
       <DestinationCard></DestinationCard>
       <DestinationCard></DestinationCard>
-
     </Grid>
     </Fragment>
   )

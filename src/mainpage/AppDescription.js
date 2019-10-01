@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     gridGap: theme.spacing(3),
     alignItems: 'center',
     justify: 'center',
-    background: LightBlue[50],
+    background: 'white',
     marginTop: 30
   },
   title: {
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
   },
   description: {
     textAlign: 'center',
-    color: BlueGrey[500],
+    color: 'BlueGrey[500]',
     fontSize: 24,
   },
   icon: {
