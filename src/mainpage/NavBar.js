@@ -12,7 +12,11 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     flexGrow: 1,
+    fontFamily: 'Ubuntu',
   },
+  button: {
+    fontFamily: 'Ubuntu',
+  }
 }));
 
 export default function() {
@@ -26,7 +30,7 @@ export default function() {
           <Typography variant="h6" className={classes.title}>
             Travel-Bum
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" className={classes.button}>Login</Button>
         </Toolbar>
       </AppBar>
     </div>
