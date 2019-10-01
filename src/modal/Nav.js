@@ -8,8 +8,7 @@ import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    paddingLeft: '5%',
-    width: '90%',
+    width: '100%',
   },
   button: {
     marginRight: theme.spacing(1),
@@ -79,7 +78,6 @@ export default function ModalNav() {
               <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
                 Back
               </Button>
-
               <Button
                 variant="contained"
                 color="primary"
