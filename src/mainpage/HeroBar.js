@@ -57,7 +57,7 @@ export default function HeroBanner(props) {
         <Typography variant="h4" >Travel Bum</Typography>
       </Animated>
         <AirplanemodeActiveIcon className={classes.plane}></AirplanemodeActiveIcon>
-        <Button className={classes.button}>Create Trip</Button>
+        <Button className={classes.button} onClick={() => props.setModal(!props.modalOn)}>Create Trip</Button>
     </div>
     );
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import ModalNav from './Nav';
 import AddButton from './AddButton';
 import RouteList from './RouteList';
+import Map from './Map';
+import Search from './Search';
+
 
 const useStyles = makeStyles({
   container: {
@@ -26,13 +28,14 @@ export default function ModalLayout() {
   <Grid container spacing={3}>
     <Grid item xs={12} sm={5}>
       <Paper className={classes.paper}>
+        <Search></Search>
         <RouteList></RouteList>
       </Paper>
       <AddButton></AddButton>
     </Grid>
     <Grid item sm={7} xs={12}>
       <Paper className={classes.paper}>
-        Map
+        <Map></Map>
       </Paper>
     </Grid>
     <Grid item xs={12}>

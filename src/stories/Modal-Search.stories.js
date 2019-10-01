@@ -3,5 +3,5 @@ import  Search from '../modal/Search';
 import { storiesOf } from "@storybook/react";
 
 
-storiesOf("Map", module)
+storiesOf("Search", module)
 .add("Initial", () => <Search></Search>);
