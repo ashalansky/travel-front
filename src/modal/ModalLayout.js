@@ -68,14 +68,4 @@ export default function ModalLayout() {
   );
 }
 
-[{id: 1, name: "calg", lag: 30, lng: 30}, {id: 1, name: "calg", lag: 30, lng: 30}]
 
-const temp = arr[0]
-arr[0] = arr[1];
-arr[1] = temp;
-
-
-{
- 1:  { id: 1, position: 1, name: "Calgary", lat: 39, lng: 39 },
-  { id: 2, position: 3, name: "Chicago", lat: 39, lng: 39 }
-}
