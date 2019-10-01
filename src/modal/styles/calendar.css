@@ -20,21 +20,98 @@ abbr[title] {
   background: #4FC3F7
 }
 
+.react-calendar__tile-firstSelectedPrevious1 {
+  background: #255525;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious1 {
+  background: #255525;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
 .react-calendar__tile-selectedPrevious1 {
-  background: #334746;
+  background: #255525;
 }
+
+.react-calendar__tile-firstSelectedPrevious2 {
+  background: #559364;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious2 {
+  background: #559364;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
 .react-calendar__tile-selectedPrevious2 {
-  background: #4c4c41;
+  background: #559364;
 }
-.react-calendar__tile-selectedPrevious3 {
-  background: #84863b;
-}
-.react-calendar__tile-selectedPrevious4 {
-  background: #c0bb4e;
-}
-.react-calendar__tile-selectedPrevious5 {
-  background: #e9d09a;
-}
-.react-calendar__tile-selectedPrevious6 {
+
+.react-calendar__tile-firstSelectedPrevious3 {
   background: #016367;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious3 {
+  background: #016367;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.react-calendar__tile-selectedPrevious3 {
+  background: #016367;
+}
+
+.react-calendar__tile-firstSelectedPrevious4 {
+  background: #44af92;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious4 {
+  background: #44af92;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.react-calendar__tile-selectedPrevious4 {
+  background: #44af92;
+}
+
+.react-calendar__tile-firstSelectedPrevious5 {
+  background: #9fedd4;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious5 {
+  background: #9fedd4;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.react-calendar__tile-selectedPrevious5 {
+  background: #9fedd4;
+}
+
+.react-calendar__tile-firstSelectedPrevious6 {
+  background: #d6dfc2;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.react-calendar__tile-lastSelectedPrevious6 {
+  background: #d6dfc2;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.react-calendar__tile-selectedPrevious6 {
+  background: #d6dfc2;
 }
