@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 50,
     display: 'grid',
-    gridTemplateRows: '25% 25% auto',
+    gridTemplateRows: '35% 25% auto',
     gridTemplateColumns: '90px auto 90px',
     width: '100%',
     background: 'linear-gradient(0deg, rgba(54,104,173,1) 0%, rgba(255,255,255,1) 0%, rgba(100,148,233,1) 100%)',
@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
     width: 250,
     fontSize: 30,
     color: 'white',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    fontFamily: 'Ubuntu',
   },
   title: {
     gridRow: 1,
@@ -36,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     placeSelf: 'center',
     fontFamily: 'Ubuntu',
     color: 'white',
-    textAlign: 'center'
+    textAlign: 'center',
 
   },
   plane: {

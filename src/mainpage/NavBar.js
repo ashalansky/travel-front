@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     fontFamily: 'Ubuntu',
+    fontSize: 20
   }
 }));
 
@@ -27,10 +28,10 @@ export default function() {
       <AppBar position="fixed">
         <Toolbar>
           <Flight/>
-          <Typography variant="h6" className={classes.title}>
+          <Typography variant="h5" className={classes.title}>
             Travel-Bum
           </Typography>
-          <Button color="inherit" className={classes.button}>Login</Button>
+          <Button variant="h5" color="inherit" className={classes.button}>Login</Button>
           <Button color="inherit" className={classes.button}>Sign Up</Button>
         </Toolbar>
       </AppBar>
