@@ -2,120 +2,144 @@ abbr[title] {
   text-decoration: none;
 }
 
-.react-calendar__tile--rangeStart {
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+.react-calendar {
+  width: 60%;
+  height: 60%;
 }
 
-.react-calendar__tile--rangeEnd {
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
+.react-calendar button {
+  border: 2px solid transparent;
+}
+
+.react-calendar__tile {
+  margin: 2px;
+}
+
+.react-calendar__tile--rangeStart {
+  background: rgba(3,169,244,1);
 }
 
 .react-calendar__tile--active {
-  background: 80ced6;
+  background: rgba(3,169,244,0.1);
+  color: black;
 }
 
-.react-calendar__tile--active:enabled:focus {
-  background: 80ced6;
+.react-calendar__tile:enabled:focus {
+  background:rgba(0, 151, 19, 0);
+  border: 2px solid #78909C
 }
 
-.react-calendar__tile--active:enabled:hover {
-  background: 80ced6;
+.react-calendar__tile:enabled:hover {
+  background:rgba(0, 151, 19, 0);
+  border: 2px solid #78909C
 }
 
-.react-calendar__tile-firstSelectedPrevious1 {
-  background: #255525;
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+.react-calendar__tiles-leavingOriginCity{
+  background: #4FC3F7;
+  border-radius: 15px;
 }
 
-.react-calendar__tile-lastSelectedPrevious1 {
-  background: #255525;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-
-.react-calendar__tile-selectedPrevious1 {
-  background: #255525;
+.react-calendar__tile-onlySelectedPrevious2 {
+  background: #4DD0E1;
+  border-radius: 15px;
 }
 
 .react-calendar__tile-firstSelectedPrevious2 {
-  background: #559364;
+  background: #4DD0E1;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .react-calendar__tile-lastSelectedPrevious2 {
-  background: #559364;
+  background: #4DD0E1;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
 .react-calendar__tile-selectedPrevious2 {
-  background: #559364;
+  background: #4DD0E1;
+}
+
+.react-calendar__tile-onlySelectedPrevious3 {
+  background: #4DB6AC;
+  border-radius: 15px;
 }
 
 .react-calendar__tile-firstSelectedPrevious3 {
-  background: #016367;
+  background: #4DB6AC;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .react-calendar__tile-lastSelectedPrevious3 {
-  background: #016367;
+  background: #4DB6AC;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
 .react-calendar__tile-selectedPrevious3 {
-  background: #016367;
+  background: #4DB6AC;
+}
+
+.react-calendar__tile-onlySelectedPrevious4 {
+  background: #81C784;
+  border-radius: 15px;
 }
 
 .react-calendar__tile-firstSelectedPrevious4 {
-  background: #44af92;
+  background: #81C784;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .react-calendar__tile-lastSelectedPrevious4 {
-  background: #44af92;
+  background: #81C784;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
 .react-calendar__tile-selectedPrevious4 {
-  background: #44af92;
+  background: #81C784;
+}
+
+.react-calendar__tile-onlySelectedPrevious5 {
+  background: #AED581;
+  border-radius: 15px;
 }
 
 .react-calendar__tile-firstSelectedPrevious5 {
-  background: #9fedd4;
+  background: #AED581;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .react-calendar__tile-lastSelectedPrevious5 {
-  background: #9fedd4;
+  background: #AED581;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
 .react-calendar__tile-selectedPrevious5 {
-  background: #9fedd4;
+  background: #AED581;
+}
+
+.react-calendar__tile-onlySelectedPrevious6 {
+  background: #7986CB;
+  border-radius: 15px;
 }
 
 .react-calendar__tile-firstSelectedPrevious6 {
-  background: #d6dfc2;
+  background: #7986CB;
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .react-calendar__tile-lastSelectedPrevious6 {
-  background: #d6dfc2;
+  background: #7986CB;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
 
 .react-calendar__tile-selectedPrevious6 {
-  background: #d6dfc2;
+  background: #7986CB;
 }
