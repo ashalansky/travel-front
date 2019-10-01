@@ -9,7 +9,7 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton'
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
-
+import RouteListItem from './RouteListItem';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -18,46 +18,22 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function RouteList() {
+export default function RouteList(props) {
   const classes = useStyles();
+
+  const cityComponents = props.cities.map(city => (
+   <RouteListItem
+    name={city.name}
+   
+   ></RouteListItem>
+  ));
 
   return (
     <List className={classes.root}>
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-          <ExploreIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Barcelona, Spain" />
-        <IconButton edge="end" aria-label="delete">
-          <DeleteOutlineIcon />
-        </IconButton>
-      </ListItem>
+      {cityComponents}
       <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-          <ExploreIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Lisbon, Portugal" />
-        <IconButton edge="end" aria-label="delete">
-          <DeleteOutlineIcon />
-        </IconButton>
-      </ListItem>
-      <Divider variant="inset" component="li" />
-      <ListItem>
-        <ListItemAvatar>
-          <Avatar>
-          <ExploreIcon />
-          </Avatar>
-        </ListItemAvatar>
-        <ListItemText primary="Prague, Czech Republic" />
-        <IconButton edge="end" aria-label="delete">
-          <DeleteOutlineIcon />
-        </IconButton>
-      </ListItem>
+     
     </List>
   );
 }
+
