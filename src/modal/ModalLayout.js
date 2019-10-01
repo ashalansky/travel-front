@@ -31,10 +31,18 @@ const cityData = [
 export default function ModalLayout() {
   const [cities, setCities] = useState([]);
   
+  console.log(cities)
+  const removeCity = function(index){
+    let arr = [...cities];
+    delete arr[index]
+
+    setCities(arr)
+  
+
+  }
   const addCity = function(city){
     let arr = [...cities];
-    arr.push({name: city});
-
+    arr.push(city);
     setCities(arr);
   }
   
@@ -55,7 +63,7 @@ export default function ModalLayout() {
         </Grid>
         <Grid item sm={7} xs={12}>
           <Paper className={classes.paper}>
-            <Map></Map>
+            <Map cities={cities}></Map>
           </Paper>
         </Grid>
       </Grid>

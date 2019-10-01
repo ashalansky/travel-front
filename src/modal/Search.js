@@ -17,7 +17,7 @@ class Search extends Component {
 
   onSuggestSelect(suggest) {
   if(suggest){
-    this.addCity(suggest.gmaps.name);
+    this.addCity({name: suggest.gmaps.name, lat: suggest.location.lat, lng: suggest.location.lng});
 //    console.log(suggest.location);
   }
 }
