@@ -3,7 +3,7 @@ import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 const mapsApiKey = process.env.REACT_APP_MAPS_API_KEY
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
+// const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 class Map extends Component {
   static defaultProps = {

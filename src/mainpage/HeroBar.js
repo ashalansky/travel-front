@@ -13,7 +13,6 @@ const useStyles = makeStyles(theme => ({
     gridTemplateRows: '25% 25% auto',
     gridTemplateColumns: '90px auto 90px',
     width: '100%',
-    background: 'rgb(54,104,173)',
     background: 'linear-gradient(0deg, rgba(54,104,173,1) 0%, rgba(255,255,255,1) 0%, rgba(100,148,233,1) 100%)',
     fontFamily: 'Roboto',
     height: '70vh',
