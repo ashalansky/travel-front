@@ -37,12 +37,17 @@ export default function CalendarComponent(props) {
   const onChange = (values) => {
     const arrivalDate = values[0];
     const departingDate = values[1];
+
+    console.log("departing date", departingDate);
+    console.log("arriving date", arrivalDate);
+    console.log("state.lastDate", state.lastDate);
+    console.log("departingDate before lastDate", moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate));
+    console.log("arrivingDate before lastDate", moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate));
     const dateArray = getDates(arrivalDate,departingDate);
     const newDate = setNewDate(departingDate);
-    
     let newValues = state.values.concat([dateArray]);
     let cityNumber = state.numberOfCities + 1;
-    if (state.values.length < state.cities.length) {
+    if (state.values.length < state.cities.length && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && !(moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
       setState({...state, values: newValues, numberOfCities: cityNumber, firstDate: arrivalDate, lastDate: newDate["_d"]})
     } 
   }
