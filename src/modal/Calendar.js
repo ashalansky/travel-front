@@ -1,7 +1,38 @@
 import React, { useState } from 'react';
-import Calendar from "react-calendar";
-import "./styles/calendar.css";
+import { makeStyles } from '@material-ui/core/styles';
+import Calendar from 'react-calendar';
+import './styles/calendar.css';
 import moment from 'moment';
+import Fab from '@material-ui/core/Fab'
+
+const useStyles = makeStyles(theme => ({
+  fab: {
+    margin: theme.spacing(1),
+  },
+  extendedIcon: {
+    marginRight: theme.spacing(1),
+  },
+  reactCalendarTileSelectedPrevious1: {
+    background: '#255525',
+  },
+  reactCalendarTileSelectedPrevious2: {
+    background: '#559364',
+  },
+  reactCalendarTileSelectedPrevious3: {
+    background: '#016367',
+  },
+  reactCalendarTileSelectedPrevious4: {
+    background: '#44af92',
+  },
+  reactCalendarTileSelectedPrevious5: {
+    background: '#9fedd4',
+  },
+  reactCalendarTileSelectedPrevious6: {
+    background: '#d6dfc2',
+  }
+}));
+
+
 const classnames = require('classnames');
 
 const cities = [
@@ -26,12 +57,86 @@ const setNewDate = function (departingDate) {
 }
 
 export default function CalendarComponent(props) {
+
+  const classes = useStyles();
+
   const [state, setState] = useState({
     cities: cities,
     values: [],
     numberOfCities: 0,
     firstDate: new Date(),
     lastDate: new Date(),
+    city: cities[0],
+  });
+
+  const changeSelectedCity = function (cityName) {
+    setState({...state, city: cityName});
+  }
+
+  const cityList = state.cities.map((city) => {
+    if (city === state.city) {
+      const index = state.cities.indexOf(city) + 1;
+      let selectedClass = classnames(classes.fab)
+      switch (index) {
+        case 1:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        case 2:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious2)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        case 3:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious3)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        case 4:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious4)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        case 5:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious5)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        case 6:
+          selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious6)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+        default:
+          console.log("in default")
+          console.log(index);
+          selectedClass = classnames(classes.fab)
+          return (
+            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+              {city}
+            </Fab>
+          )
+      }
+    }
+    let selectedClass = classnames(classes.fab)
+    return (
+      <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
+        {city}
+      </Fab>
+    )
   })
   
   const onChange = (values) => {
@@ -54,6 +159,7 @@ export default function CalendarComponent(props) {
 
   return (
     <section>
+      {cityList}
       <Calendar
         calendarType="US"
         minDate={new Date()}

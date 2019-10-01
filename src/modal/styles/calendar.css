@@ -13,11 +13,15 @@ abbr[title] {
 }
 
 .react-calendar__tile--active {
-  background: #4FC3F7
+  background: 80ced6;
 }
 
 .react-calendar__tile--active:enabled:focus {
-  background: #4FC3F7
+  background: 80ced6;
+}
+
+.react-calendar__tile--active:enabled:hover {
+  background: 80ced6;
 }
 
 .react-calendar__tile-firstSelectedPrevious1 {
