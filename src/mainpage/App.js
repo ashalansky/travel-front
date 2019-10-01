@@ -3,18 +3,21 @@ import NavBar from './NavBar';
 import HeroBar from './HeroBar';
 import CardGrid from './CardGrid';
 import AppDescription from './AppDescription';
-import ModalLayout from '../modal/ModalLayout';
 import ModalContainer from '../modal/ModalContainer';
-//IM A COMMENT
-//Im another comment
+
 export default function App() {
   const [modalOn, setModal] = useState(false);
  
+  const closeModal = () => {
+    setModal(false);
+  }
+
+
   return (
     <div>
       <NavBar></NavBar>
       <HeroBar setModal={setModal} modalOn={modalOn}></HeroBar>
-      <ModalContainer open={modalOn}></ModalContainer>
+      <ModalContainer open={modalOn} closeModal={closeModal}></ModalContainer>
       <div><CardGrid></CardGrid></div>
       <div><AppDescription></AppDescription></div>
      
