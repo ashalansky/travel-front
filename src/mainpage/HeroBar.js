@@ -8,7 +8,7 @@ import AOS from 'aos'
 
 const useStyles = makeStyles(theme => ({
   container: {
-    marginTop: 50,
+    marginTop: 80,
     display: 'grid',
     gridTemplateRows: '35% 25% auto',
     gridTemplateColumns: '90px auto 90px',
