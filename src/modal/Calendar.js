@@ -4,7 +4,6 @@ import Calendar from 'react-calendar';
 import './styles/calendar.css';
 import moment from 'moment';
 import Fab from '@material-ui/core/Fab'
-import { statements } from '@babel/template';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -17,19 +16,19 @@ const useStyles = makeStyles(theme => ({
     background: '#4FC3F7',
   },
   reactCalendarTileSelectedPrevious2: {
-    background: '#4DD0E1',
+    background: '#81d2e0',
   },
   reactCalendarTileSelectedPrevious3: {
-    background: '#4DB6AC',
+    background: '#49c4a1',
   },
   reactCalendarTileSelectedPrevious4: {
-    background: '#81C784',
+    background: '#edb625',
   },
   reactCalendarTileSelectedPrevious5: {
-    background: '#AED581',
+    background: '#e6186d',
   },
   reactCalendarTileSelectedPrevious6: {
-    background: '#7986CB',
+    background: '#5c3a58',
   }
 }));
 
@@ -241,16 +240,23 @@ export default function CalendarComponent(props) {
   
   const updateArrivingDate = function(city) {
     let index = state.cities.indexOf(city);
-    if (index === 0 || !state.values[index-1]) {
-      return new Date()
-    }
-    if (state.numberOfCities < state.cities.length) {
-      let departingDate = state.values[index-1].slice(-1)[0];
+    if (index === 0 && state.values[index]) {
+      let departingDate = state.values[index].slice(-1)[0];
       let departDate = moment(departingDate);
-      let newDate = moment(departDate).add(1, 'days');
+      let newDate = moment(departDate);
       return newDate["_d"]
     }
 
+    if (!state.values[index-1]) {
+      return new Date()
+    }
+
+    
+    let departingDate = state.values[index-1].slice(-1)[0];
+    let departDate = moment(departingDate);
+    let newDate = moment(departDate).add(1, 'days');
+    return newDate["_d"]
+   
   }
 
   const updateDates = function(startDate, stopDate, selectedCity) {
@@ -258,24 +264,35 @@ export default function CalendarComponent(props) {
     let currentDates = [...state.values];
     let currentDate = moment(startDate);
     stopDate = moment(stopDate);
-    if (index === currentDates.length - 1) {
-      return currentDates;
-    }
-    if(currentDates[index].includes(moment(stopDate)["_d"].toDateString())){
-      let foundIndex = currentDates[index].indexOf(moment(stopDate)["_d"].toDateString());
-      let joiningDates = currentDates[index].slice(foundIndex + 1, currentDates[index].length);
-      let changedDates = currentDates[index].slice(0, foundIndex + 1);
-      let updatedDates = currentDates[index + 1].concat(joiningDates);
-      currentDates[index] = changedDates;
-      currentDates[index + 1] = updatedDates;
-    } else if (currentDates[index + 1].includes(moment(stopDate)["_d"].toDateString())) {
-      let foundIndex = currentDates[index + 1].indexOf(moment(stopDate)["_d"].toDateString());
-      let joiningDates = currentDates[index + 1].slice(0, foundIndex + 1);
-      let changedDates = currentDates[index + 1].slice(foundIndex + 1, currentDates[index + 1].length);
-      let updatedDates = currentDates[index].concat(joiningDates);
-      currentDates[index] = updatedDates;
-      currentDates[index + 1] = changedDates;
+    if (currentDates[index+1]) {
+      if(currentDates[index].includes(moment(stopDate)["_d"].toDateString())){
+        let foundIndex = currentDates[index].indexOf(moment(stopDate)["_d"].toDateString());
+        let joiningDates = currentDates[index].slice(foundIndex + 1, currentDates[index].length);
+        let changedDates = currentDates[index].slice(0, foundIndex + 1);
+        let updatedDates = joiningDates.concat(currentDates[index + 1]);
+        currentDates[index] = changedDates;
+        currentDates[index + 1] = updatedDates;
+      } else if (currentDates[index + 1].includes(moment(stopDate)["_d"].toDateString())) {
+        let foundIndex = currentDates[index + 1].indexOf(moment(stopDate)["_d"].toDateString());
+        let joiningDates = currentDates[index + 1].slice(0, foundIndex + 1);
+        let changedDates = currentDates[index + 1].slice(foundIndex + 1, currentDates[index + 1].length);
+        let updatedDates = currentDates[index].concat(joiningDates);
+        currentDates[index] = updatedDates;
+        currentDates[index + 1] = changedDates;
+      } else {
+        currentDates[index] = [];
+        while (currentDate <= stopDate) {
+          currentDates[index].push(moment(currentDate)["_d"].toDateString());
+          currentDate = moment(currentDate).add(1, 'days');
+        }
+        let newDates = currentDates.slice(0, index + 1);
+        currentDates = newDates;
+      }
     } else {
+      let lastChosenDate = moment(currentDates[index - 1].slice(-1)[0]);
+      while (currentDate <= lastChosenDate) {
+        currentDate = moment(currentDate).add(1, 'days');
+      }
       currentDates[index] = [];
       while (currentDate <= stopDate) {
         currentDates[index].push(moment(currentDate)["_d"].toDateString());
@@ -284,7 +301,6 @@ export default function CalendarComponent(props) {
       let newDates = currentDates.slice(0, index + 1);
       currentDates = newDates;
     }
-    console.log(currentDates);
     
     return currentDates;
   }
@@ -311,13 +327,14 @@ export default function CalendarComponent(props) {
       } 
     }
 
-    if (state.numberOfCities === state.cities.length){
+    if (state.numberOfCities === state.cities.length && state.city){
       let updatedDates = updateDates(arrivalDate, departingDate, state.city);
       let selectedCity = state.cities[updatedDates.length];
       if (updatedDates.length !== state.cities.length) {
         cityNumber = updatedDates.length;
       } else {
-        selectedCity = state.cities[updatedDates.length - 1];
+        let index = state.cities.indexOf(state.city);
+        selectedCity = state.cities[index];
       }
       setState({...state, values: updatedDates, numberOfCities: cityNumber, lastDate: newDate["_d"], city: selectedCity})
     }
@@ -326,9 +343,6 @@ export default function CalendarComponent(props) {
   return (
     <section>
       {cityList}
-      <p>
-        when would you like to leave {state.city}
-      </p>
       <Calendar
         calendarType="US"
         minDate={new Date()}
@@ -353,7 +367,6 @@ export default function CalendarComponent(props) {
           return setActive
         }}
       />
-      {numberOfDaysAtCity}
     </section>
   )
 
