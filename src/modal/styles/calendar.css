@@ -22,6 +22,7 @@ abbr[title] {
 .react-calendar__tile--active {
   background: rgba(3,169,244,0.1);
   color: black;
+  font-weight: 900;
 }
 
 .react-calendar__tile:enabled:focus {

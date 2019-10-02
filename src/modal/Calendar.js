@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import './styles/calendar.css';
 import moment from 'moment';
 import Fab from '@material-ui/core/Fab'
+import { statements } from '@babel/template';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -64,15 +65,16 @@ export default function CalendarComponent(props) {
     cities: cities,
     values: [],
     numberOfCities: 0,
-    firstDate: new Date(),
     lastDate: new Date(),
     city: cities[0],
   });
 
+  //Changes selected city
   const changeSelectedCity = function (cityName) {
     setState({...state, city: cityName});
   }
 
+  // Creates list of cities
   const cityList = state.cities.map((city) => {
     if (city === state.city) {
       const index = state.cities.indexOf(city) + 1;
@@ -80,6 +82,13 @@ export default function CalendarComponent(props) {
       switch (index) {
         case 1:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -87,6 +96,13 @@ export default function CalendarComponent(props) {
           )
         case 2:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious2)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -94,6 +110,13 @@ export default function CalendarComponent(props) {
           )
         case 3:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious3)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -101,6 +124,13 @@ export default function CalendarComponent(props) {
           )
         case 4:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious4)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -108,6 +138,13 @@ export default function CalendarComponent(props) {
           )
         case 5:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious5)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -115,6 +152,13 @@ export default function CalendarComponent(props) {
           )
         case 6:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious6)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -122,6 +166,13 @@ export default function CalendarComponent(props) {
           )
         default:
           selectedClass = classnames(classes.fab)
+          if (state.values.length !== state.cities.length){
+            return (
+            <Fab variant="extended" className={selectedClass}>
+              {city}
+            </Fab>
+            )
+          }
           return (
             <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
               {city}
@@ -130,6 +181,13 @@ export default function CalendarComponent(props) {
       }
     }
     let selectedClass = classnames(classes.fab)
+    if (state.values.length !== state.cities.length){
+      return (
+      <Fab variant="extended" className={selectedClass}>
+        {city}
+      </Fab>
+      )
+    }
     return (
       <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
         {city}
@@ -137,6 +195,7 @@ export default function CalendarComponent(props) {
     )
   });
 
+  // Displays the number of days in certain city
   const numberOfDaysAtCity = state.cities.map((city) => {
     const index = state.cities.indexOf(city);
     let stayDuration = 0
@@ -173,11 +232,56 @@ export default function CalendarComponent(props) {
     )
   })
   
+  const updateArrivingDate = function(city) {
+    let index = state.cities.indexOf(city);
+    if (index === 0 || !state.values[index-1]) {
+      return new Date()
+    }
+    let departingDate = state.values[index-1].slice(-1)[0];
+    let departDate = moment(departingDate);
+    let newDate = moment(departDate).add(1, 'days');
+    return newDate["_d"]
+  }
+
+  const updateDates = function(startDate, stopDate, selectedCity) {
+    let index = state.cities.indexOf(selectedCity);
+    let currentDates = [...state.values];
+    let currentDate = moment(startDate);
+    stopDate = moment(stopDate);
+    if(currentDates[index].includes(moment(stopDate)["_d"].toDateString())){
+      let foundIndex = currentDates[index].indexOf(moment(stopDate)["_d"].toDateString());
+      let joiningDates = currentDates[index].slice(foundIndex, currentDates[index].length);
+      let changedDates = currentDates[index].slice(0, foundIndex + 1);
+      let updatedDates = currentDates[index + 1].concat(joiningDates);
+      currentDates[index] = changedDates;
+      currentDates[index + 1] = updatedDates;
+    } else if (currentDates[index + 1].includes(moment(stopDate)["_d"].toDateString())) {
+      let foundIndex = currentDates[index + 1].indexOf(moment(stopDate)["_d"].toDateString());
+      let joiningDates = currentDates[index + 1].slice(0, foundIndex + 1);
+      let changedDates = currentDates[index + 1].slice(foundIndex, currentDates[index + 1].length);
+      let updatedDates = currentDates[index].concat(joiningDates);
+      currentDates[index] = updatedDates;
+      currentDates[index + 1] = changedDates;
+    } else {
+      currentDates[index] = [];
+      while (currentDate <= stopDate) {
+        currentDates[index].push(moment(currentDate)["_d"].toDateString());
+        currentDate = moment(currentDate).add(1, 'days');
+      }
+      let newDates = currentDates.slice(0, index + 1);
+      currentDates = newDates;
+    }
+    
+    return currentDates;
+  }
+  
+
   const onChange = (values) => {
 
+    console.log(state.numberOfCities < state.cities.length);
     const arrivalDate = values[0];
     const departingDate = values[1];
-    const dateArray = getDates(arrivalDate,departingDate);
+    let dateArray = getDates(arrivalDate,departingDate);
     const newDate = setNewDate(departingDate);
 
     let newValues = state.values.concat([dateArray]);
@@ -190,8 +294,19 @@ export default function CalendarComponent(props) {
         selectedCity = state.cities[cityNumber - 1];
       }
       if (state.values.length < state.cities.length && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && !(moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
-        setState({...state, values: newValues, numberOfCities: cityNumber, firstDate: arrivalDate, lastDate: newDate["_d"], city: selectedCity})
+        setState({...state, values: newValues, numberOfCities: cityNumber, lastDate: newDate["_d"], city: selectedCity})
       } 
+    }
+
+    if (state.numberOfCities === state.cities.length){
+      let updatedDates = updateDates(arrivalDate, departingDate, state.city);
+      let selectedCity = state.cities[updatedDates.length];
+      if (updatedDates.length !== state.cities.length) {
+        cityNumber = updatedDates.length;
+      } else {
+        selectedCity = state.cities[updatedDates.length - 1];
+      }
+      setState({...state, values: updatedDates, numberOfCities: cityNumber, lastDate: newDate["_d"], city: selectedCity})
     }
   }
 
@@ -205,23 +320,21 @@ export default function CalendarComponent(props) {
         calendarType="US"
         minDate={new Date()}
         selectRange={true}
-        value={state.lastDate}
+        value={updateArrivingDate(state.city)}
         onChange={(value) => {onChange(value)}}
         tileClassName={(tile) => {
           let setActive = [];
-          if ((moment(tile.date).add(1, 'days').isSameOrBefore(state.lastDate))) {
-            for (let i = 0; (i< state.values.length) && (i < 6); i++) {
-              if (i === 0 && tile.view === "month" && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length -1)){
-                setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
-              }  else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && (state.values[i].indexOf(tile.date.toDateString()) === 0) && state.values[i].length === 1) {
-                setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
-              } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === 0) {
-                setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
-              } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length - 1)) {
-                setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
-              } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString())) {
-                setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
-              }
+          for (let i = 0; (i< state.values.length) && (i < 6); i++) {
+            if (i === 0 && tile.view === "month" && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length -1)){
+              setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
+            }  else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && (state.values[i].indexOf(tile.date.toDateString()) === 0) && state.values[i].length === 1) {
+              setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
+            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === 0) {
+              setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
+            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length - 1)) {
+              setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
+            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString())) {
+              setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
             }
           }
           return setActive
