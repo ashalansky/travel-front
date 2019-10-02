@@ -8,7 +8,6 @@ let types = [
   ];
   
 
-
 class Search extends Component {
   constructor(props){
     super(props)
@@ -23,18 +22,6 @@ class Search extends Component {
 }
 
   render() {
-<<<<<<< HEAD
-    return (
-      
-          <Geosuggest 
-          onSuggestSelect={this.onSuggestSelect}
-          types={types}
-          placeholder="Add City"
-          queryDelay="500"
-          />     
-      
-    )
-=======
     
   return (
      
@@ -47,7 +34,6 @@ class Search extends Component {
         />     
     
   )
->>>>>>> master
   }
  
 };

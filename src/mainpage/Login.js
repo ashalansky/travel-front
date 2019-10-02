@@ -53,17 +53,17 @@ export default function Login() {
               Login
               </Typography>
             </div>
-          <div>
-            <TextField variant='outlined' placeholder='Email' className={classes.textField}> 
-            </TextField>
-          </div>
-          <div>
-            <TextField variant='outlined' placeholder='Password' className={classes.textField}>
-            </TextField>
-          </div>
-          <Button variant="contained" color="primary" className={classes.button}>
-            Login
-          </Button>
+            <div>
+              <TextField variant='outlined' placeholder='Email' className={classes.textField}> 
+              </TextField>
+            </div>
+            <div>
+              <TextField variant='outlined' placeholder='Password' className={classes.textField}>
+              </TextField>
+            </div>
+            <Button variant="contained" color="primary" className={classes.button} >
+              Login
+            </Button>
           </Paper>
       </Grid>
   )

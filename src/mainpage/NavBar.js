@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function() {
+export default function(props) {
   const classes = useStyles();
 
   return (
@@ -31,8 +31,8 @@ export default function() {
           <Typography variant="h5" className={classes.title}>
             Travel-Bum
           </Typography>
-          <Button variant="h5" color="inherit" className={classes.button}>Login</Button>
-          <Button color="inherit" className={classes.button}>Sign Up</Button>
+          <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
+          <Button color="inherit" className={classes.button} onClick={() => props.setSignUpModal(!props.SignUpOn)}>Sign Up</Button>
         </Toolbar>
       </AppBar>
     </div>

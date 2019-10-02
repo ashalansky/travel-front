@@ -6,8 +6,6 @@ import LocalAirportIcon from '@material-ui/icons/LocalAirport';
 import ShareIcon from '@material-ui/icons/Share';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import EventIcon from '@material-ui/icons/Event';
-import BlueGrey from '@material-ui/core/colors/blueGrey';
-import LightBlue from '@material-ui/core/colors/lightBlue';
    
 
 const useStyles = makeStyles(theme => ({

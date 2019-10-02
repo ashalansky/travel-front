@@ -58,7 +58,7 @@ export default function HeroBanner(props) {
     <div className={classes.container}>
         <Typography className={classes.title} data-aos='fade-up' data-aos-delay='900' data-aos-easing='ease-in-out' data-aos-duration='700' variant="h1" >Travel Bum</Typography>
         <AirplanemodeActiveIcon className={classes.plane} data-aos='fade-up' data-aos-delay='1000' data-aos-easing='ease-in-out' data-aos-duration='900'></AirplanemodeActiveIcon>
-        <Button className={classes.button}>Create Trip</Button>
+        <Button className={classes.button} onClick={() => props.setModal(!props.modalOn)}>Create Trip</Button>
     </div>
     );
 };
