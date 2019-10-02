@@ -210,6 +210,13 @@ export default function CalendarComponent(props) {
           </div>
         )
       }
+      if (stayDuration === 1) {
+        return (
+          <div>
+            You are staying at {city} for {stayDuration} day, you are leaving on {departureDate}
+          </div>
+        )
+      }
       return (
         <div>
           You are staying at {city} for {stayDuration} days, you are leaving on {departureDate}
@@ -237,10 +244,13 @@ export default function CalendarComponent(props) {
     if (index === 0 || !state.values[index-1]) {
       return new Date()
     }
-    let departingDate = state.values[index-1].slice(-1)[0];
-    let departDate = moment(departingDate);
-    let newDate = moment(departDate).add(1, 'days');
-    return newDate["_d"]
+    if (state.numberOfCities < state.cities.length) {
+      let departingDate = state.values[index-1].slice(-1)[0];
+      let departDate = moment(departingDate);
+      let newDate = moment(departDate).add(1, 'days');
+      return newDate["_d"]
+    }
+
   }
 
   const updateDates = function(startDate, stopDate, selectedCity) {
@@ -248,9 +258,12 @@ export default function CalendarComponent(props) {
     let currentDates = [...state.values];
     let currentDate = moment(startDate);
     stopDate = moment(stopDate);
+    if (index === currentDates.length - 1) {
+      return currentDates;
+    }
     if(currentDates[index].includes(moment(stopDate)["_d"].toDateString())){
       let foundIndex = currentDates[index].indexOf(moment(stopDate)["_d"].toDateString());
-      let joiningDates = currentDates[index].slice(foundIndex, currentDates[index].length);
+      let joiningDates = currentDates[index].slice(foundIndex + 1, currentDates[index].length);
       let changedDates = currentDates[index].slice(0, foundIndex + 1);
       let updatedDates = currentDates[index + 1].concat(joiningDates);
       currentDates[index] = changedDates;
@@ -258,7 +271,7 @@ export default function CalendarComponent(props) {
     } else if (currentDates[index + 1].includes(moment(stopDate)["_d"].toDateString())) {
       let foundIndex = currentDates[index + 1].indexOf(moment(stopDate)["_d"].toDateString());
       let joiningDates = currentDates[index + 1].slice(0, foundIndex + 1);
-      let changedDates = currentDates[index + 1].slice(foundIndex, currentDates[index + 1].length);
+      let changedDates = currentDates[index + 1].slice(foundIndex + 1, currentDates[index + 1].length);
       let updatedDates = currentDates[index].concat(joiningDates);
       currentDates[index] = updatedDates;
       currentDates[index + 1] = changedDates;
@@ -271,6 +284,7 @@ export default function CalendarComponent(props) {
       let newDates = currentDates.slice(0, index + 1);
       currentDates = newDates;
     }
+    console.log(currentDates);
     
     return currentDates;
   }
@@ -278,7 +292,6 @@ export default function CalendarComponent(props) {
 
   const onChange = (values) => {
 
-    console.log(state.numberOfCities < state.cities.length);
     const arrivalDate = values[0];
     const departingDate = values[1];
     let dateArray = getDates(arrivalDate,departingDate);
