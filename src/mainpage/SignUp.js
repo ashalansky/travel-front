@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useReducer} from 'react';
 import { Paper, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -40,8 +41,39 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SignUp() {
+const SET_USERNAME = 'SET_USERNAME';
+const SET_EMAIL= 'SET_EMAIL';
+const SET_CITY = 'SET_CITY';
+const SET_PASSWORD = 'SET_PASSWORD';
+
+const reducer = ((state, action) => {
+  switch(action.type) {
+    case SET_USERNAME:
+      return { ...state, username: action.username}
+    case SET_EMAIL:
+      return { ...state, email: action.email}
+    case SET_CITY:
+      return { ...state, city: action.city}
+    case SET_PASSWORD:
+      return { ...state, password: action.password}
+  }
+})
+
+
+export default function SignUp(props) {
+  const [state, dispatch] = useReducer(reducer, {
+    username: "",
+    email: "",
+    password: "",
+    city: ""
+  })
   const classes = useStyles();
+
+  
+  const save = (() => {
+    props.register(state.username, state.email, state.password, state.city)
+    props.close()
+  })
 
   return (
       <Grid 
@@ -61,48 +93,60 @@ export default function SignUp() {
           <div>
           <TextField
               id="outlined-username-input"
+              name="username"
               label="Username"
               className={classes.textField}
               type="username"
               autoComplete="current-username"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_USERNAME, username : e.target.value})}
+              value={state.username}
             />
           </div>
           <div>
           <TextField
               id="outlined-city-input"
-              label="Origin City"
+              name="city"
+              label="city"
               className={classes.textField}
               type="city"
               autoComplete="current-city"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_CITY, city : e.target.value})}
+              value={state.city}
             />
           </div>
           <div>
           <TextField
               id="outlined-email-input"
+              name="email"
               label="Email"
               className={classes.textField}
               type="email"
               autoComplete="current-email"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_EMAIL, email : e.target.value})}
+              value={state.email}
             />
           </div>
           <div>
           <TextField
               id="outlined-password-input"
+              name="password"
               label="Password"
               className={classes.textField}
               type="password"
               autoComplete="current-password"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_PASSWORD, password : e.target.value})}
+              value={state.password}
             />
           </div>
-          <Button variant="contained" color="primary" className={classes.button}>
+          <Button variant="contained" onClick={() => save()} color="primary" className={classes.button}>
             Sign Up
           </Button>
           </Paper>
