@@ -6,8 +6,6 @@ import LocalAirportIcon from '@material-ui/icons/LocalAirport';
 import ShareIcon from '@material-ui/icons/Share';
 import LocationCityIcon from '@material-ui/icons/LocationCity';
 import EventIcon from '@material-ui/icons/Event';
-import BlueGrey from '@material-ui/core/colors/blueGrey';
-import LightBlue from '@material-ui/core/colors/lightBlue';
    
 
 const useStyles = makeStyles(theme => ({
@@ -15,7 +13,7 @@ const useStyles = makeStyles(theme => ({
     gridGap: theme.spacing(3),
     alignItems: 'center',
     justify: 'center',
-    background: LightBlue[50],
+    background: 'white',
     marginTop: 30
   },
   title: {
@@ -37,7 +35,7 @@ const useStyles = makeStyles(theme => ({
   },
   description: {
     textAlign: 'center',
-    color: BlueGrey[500],
+    color: 'BlueGrey[500]',
     fontSize: 24,
   },
   icon: {

@@ -9,24 +9,37 @@ import Flight from '@material-ui/icons/Flight';
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
+    backgroundColor: 'white',
+    height: 80
   },
   title: {
     flexGrow: 1,
+    fontFamily: 'Ubuntu',
+    color: 'black'
   },
+  button: {
+    fontFamily: 'Ubuntu',
+    fontSize: 20,
+    color: 'black'
+  },
+  plane: {
+    color: 'black'
+  }
 }));
 
-export default function() {
+export default function(props) {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed">
-        <Toolbar>
-          <Flight/>
-          <Typography variant="h6" className={classes.title}>
+    <div>
+      <AppBar position="fixed" className={classes.root}>
+        <Toolbar className={classes.root}>
+          <Flight className={classes.plane}/>
+          <Typography variant="h5" className={classes.title}>
             Travel-Bum
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
+          <Button color="inherit" className={classes.button} onClick={() => props.setSignUpModal(!props.SignUpOn)}>Sign Up</Button>
         </Toolbar>
       </AppBar>
     </div>

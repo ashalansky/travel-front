@@ -5,12 +5,13 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
+import AOS from 'aos'
 
 const useStyles = makeStyles({
   card: {
     maxWidth: 325,
     height: 380,
-    minWidth: 280
+    minWidth: 280,
   },
   media: {
     height: 290
@@ -22,8 +23,13 @@ export default function() {
   const classes = useStyles();
 
   return (
-    <Card className={classes.card}>
-      
+    <Card data-aos='fade-up'  
+      data-aos-anchor-placement='top-bottom' 
+      data-aos-easing='ease-in-out' 
+      data-aos-duration='600'
+      data-aos-delay='350'
+      className={classes.card}
+      >
       <CardActionArea className={classes.actionArea}>
         <CardMedia
           className={classes.media}
@@ -35,10 +41,7 @@ export default function() {
         <Typography gutterBottom variant="h5" component="h2">
            Florence (Prop)
           </Typography>
-    
            Italy (Prop)
-      
-
         </CardContent>
       </CardActionArea>
     </Card>
