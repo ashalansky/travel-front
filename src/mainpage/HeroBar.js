@@ -47,6 +47,7 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     fontSize: 70,
     animation: 0.3,
+    rotate: '90deg'
   }
 }))
 

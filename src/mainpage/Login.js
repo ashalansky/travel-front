@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     margin: theme.spacing(1),
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
+    fontSize: '1.5rem'
   },
   button: {
     margin: theme.spacing(2),
@@ -58,18 +59,26 @@ export default function Login() {
               </Typography>
             </div>
             <div>
-              <TextField 
-                variant='outlined' 
-                placeholder='Email' 
-                className={classes.textField}> 
-              </TextField>
+            <TextField
+              id="outlined-email-input"
+              label="Email"
+              className={classes.textField}
+              type="email"
+              autoComplete="current-email"
+              margin="normal"
+              variant="outlined"
+            />
             </div>
             <div>
-              <TextField 
-                variant='outlined' 
-                placeholder='Password' 
-                className={classes.textField}>
-              </TextField>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
             </div>
             <Button variant="contained" color="primary" className={classes.button} >
               Login

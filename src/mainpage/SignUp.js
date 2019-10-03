@@ -31,7 +31,8 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
     margin: theme.spacing(1),
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
+    fontSize: '1.5rem'
   },
   button: {
     margin: theme.spacing(2),
@@ -58,20 +59,48 @@ export default function SignUp() {
               </Typography>
             </div>
           <div>
-            <TextField variant='outlined' placeholder='Username' className={classes.textField}> 
-            </TextField>
+          <TextField
+              id="outlined-username-input"
+              label="Username"
+              className={classes.textField}
+              type="username"
+              autoComplete="current-username"
+              margin="normal"
+              variant="outlined"
+            />
           </div>
           <div>
-            <TextField variant='outlined' placeholder='Origin City' className={classes.textField}>
-            </TextField>
+          <TextField
+              id="outlined-city-input"
+              label="Origin City"
+              className={classes.textField}
+              type="city"
+              autoComplete="current-city"
+              margin="normal"
+              variant="outlined"
+            />
           </div>
           <div>
-            <TextField variant='outlined' placeholder='Email' className={classes.textField}>
-            </TextField>
+          <TextField
+              id="outlined-email-input"
+              label="Email"
+              className={classes.textField}
+              type="email"
+              autoComplete="current-email"
+              margin="normal"
+              variant="outlined"
+            />
           </div>
           <div>
-            <TextField variant='outlined' placeholder='Password' className={classes.textField}>
-            </TextField>
+          <TextField
+              id="outlined-password-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
           </div>
           <Button variant="contained" color="primary" className={classes.button}>
             Sign Up
