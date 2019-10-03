@@ -7,6 +7,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Calendar from './modal/Calendar';
+import NavBar from './mainpage/NavBar';
+import HeroBar from './mainpage/HeroBar';
+import CardGrid from './mainpage/CardGrid';
+import AppDescription from './mainpage/AppDescription';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,23 +24,18 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function ButtonAppBar() {
+export default function App() {
   const classes = useStyles();
-
   return (
-    <div className={classes.root}>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Travel Bum
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-      <Calendar></Calendar>
+
+    <div>
+      <NavBar></NavBar>
+      <HeroBar></HeroBar>
+      <div><CardGrid></CardGrid></div>
+      <div><AppDescription></AppDescription></div>
     </div>
-  );
+  )
 }
+
+
+

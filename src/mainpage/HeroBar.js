@@ -3,15 +3,17 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
-// import classnames from "classnames";
+import {Animated} from "react-animated-css";
+
 
 const useStyles = makeStyles(theme => ({
   container: {
+    marginTop: 40,
     display: 'grid',
     gridTemplateRows: '25% 25% auto',
     gridTemplateColumns: '90px auto 90px',
     width: '100%',
-    background: 'white',
+    background: 'linear-gradient(0deg, rgba(54,104,173,1) 0%, rgba(255,255,255,1) 0%, rgba(100,148,233,1) 100%)',
     fontFamily: 'Roboto',
     height: '70vh',
   },
@@ -33,6 +35,7 @@ const useStyles = makeStyles(theme => ({
     placeSelf: 'center',
     fontStyle: "Helvetica Neue",
     color: 'black',
+
   },
   plane: {
     gridRow: 2,
@@ -49,9 +52,11 @@ export default function HeroBanner(props) {
   
   return (
     <div className={classes.container}>
-        <Typography variant="h4" className={classes.title}>Travel Bum</Typography>
+      <Animated animationIn="fadeInUp" className={classes.title}>
+        <Typography variant="h4" >Travel Bum</Typography>
+      </Animated>
         <AirplanemodeActiveIcon className={classes.plane}></AirplanemodeActiveIcon>
-        <Button className={classes.button}>Create Trip</Button>
+        <Button className={classes.button} onClick={() => props.setModal(!props.modalOn)}>Create Trip</Button>
     </div>
     );
 };
