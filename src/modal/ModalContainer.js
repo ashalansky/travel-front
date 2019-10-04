@@ -18,6 +18,6 @@ export default function(props) {
   return (
   <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>
     <ModalLayout></ModalLayout>
-    </Modal>
+  </Modal>
   );
 }
