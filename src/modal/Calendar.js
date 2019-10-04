@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Paper } from "@material-ui/core";
 import Calendar from 'react-calendar';
 import './styles/calendar.css';
 import moment from 'moment';
@@ -29,6 +30,16 @@ const useStyles = makeStyles(theme => ({
   },
   reactCalendarTileSelectedPrevious6: {
     background: '#5c3a58',
+  },
+  container: {
+    justify: "center"
+  },
+  paper: {
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    height: "60vh"
   }
 }));
 
@@ -341,33 +352,44 @@ export default function CalendarComponent(props) {
   }
 
   return (
-    <section>
-      {cityList}
-      <Calendar
-        calendarType="US"
-        minDate={new Date()}
-        selectRange={true}
-        value={updateArrivingDate(state.city)}
-        onChange={(value) => {onChange(value)}}
-        tileClassName={(tile) => {
-          let setActive = [];
-          for (let i = 0; (i< state.values.length) && (i < 6); i++) {
-            if (i === 0 && tile.view === "month" && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length -1)){
-              setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
-            }  else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && (state.values[i].indexOf(tile.date.toDateString()) === 0) && state.values[i].length === 1) {
-              setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
-            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === 0) {
-              setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
-            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length - 1)) {
-              setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
-            } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString())) {
-              setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
-            }
-          }
-          return setActive
-        }}
-      />
-    </section>
+    <Paper>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={5}>
+          <Paper className={classes.paper}>
+            
+          </Paper>
+        </Grid>
+        <Grid item sm={7} xs={12}>
+          <section>
+            {cityList}
+            <Calendar
+              calendarType="US"
+              minDate={new Date()}
+              selectRange={true}
+              value={updateArrivingDate(state.city)}
+              onChange={(value) => {onChange(value)}}
+              tileClassName={(tile) => {
+                let setActive = [];
+                for (let i = 0; (i< state.values.length) && (i < 6); i++) {
+                  if (i === 0 && tile.view === "month" && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length -1)){
+                    setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
+                  }  else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && (state.values[i].indexOf(tile.date.toDateString()) === 0) && state.values[i].length === 1) {
+                    setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
+                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === 0) {
+                    setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
+                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length - 1)) {
+                    setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
+                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString())) {
+                    setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
+                  }
+                }
+                return setActive
+              }}
+            />
+          </section>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 
 }

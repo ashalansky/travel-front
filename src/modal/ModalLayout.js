@@ -119,9 +119,7 @@ export default function ModalLayout() {
   const classes = useStyles();
 
   return (
-
       <Grid container spacing={3}>
-    
         <Grid item xs={12} sm={5}>
           <Paper className={classes.paper}>
             <AddButton></AddButton>
@@ -144,6 +142,5 @@ export default function ModalLayout() {
           </Paper>
         </Grid>
       </Grid>
-  
   );
 }
