@@ -7,10 +7,12 @@ const mapsApiKey = process.env.REACT_APP_MAPS_API_KEY;
 class Map extends Component {
   
   renderPolylines (map, maps) {
-    /** Example of rendering geodesic polyline */
+    //Renders lines on the map using the GoogleMapApi
+    //The entire map has to be re-rendered to update these
+    //Above in ModalLayout the map key is updated to force a re-render
    
     const routesList = this.props.routes;
-    console.log("ROUTESLIST", routesList)
+   
     if(routesList.length > 1){
       for(let i = 0; i < routesList.length -1; i++){
         const markersArr = [{lat: routesList[i].lat, lng: routesList[i].lng},{lat: routesList[i+1].lat, lng: routesList[i+1].lng} ]
@@ -23,22 +25,23 @@ class Map extends Component {
           strokeWeight: 4
         })
         geodesicPolyline.setMap(map)
-
-
-
       }
     }    
-    this.fitBounds(map, maps)
+    if(routesList.length > 0)
+      this.fitBounds(map, maps)
   }
 
   fitBounds (map, maps) {
-    var bounds = new maps.LatLngBounds()
+    //updates the bounds of the map so as much of the routes are shown as possible
+
+    let bounds = new maps.LatLngBounds()
     for (let marker of this.props.routes) {
       bounds.extend(
         new maps.LatLng(marker.lat, marker.lng)
       )
     }
     map.fitBounds(bounds)
+
   }
 
   createMarkers(routes){
@@ -64,12 +67,8 @@ class Map extends Component {
 }
 
 Map.defaultProps = {
-  markers: [
-    {lat: 53.42728, lng: -6.24357},
-    {lat: 43.681583, lng: -79.61146}
-  ],
-  center: [47.367347, 8.5500025],
-  zoom: 4
+  center: [51.0447, -114.0719],
+  zoom: 0
 }
 
 export default Map

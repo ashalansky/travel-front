@@ -10,8 +10,11 @@ import ListItem from "@material-ui/core/ListItem";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import IconButton from "@material-ui/core/IconButton";
 import ListItemText from '@material-ui/core/ListItemText';
+import Route from './Route'
+
 
 const initial = [{ id: 1, name: "Calgary", lat:  51.049999, lng:  -114.066666 }, { id: 3, name: "London", lat: 51.509865, lng: -0.118092 }, { id: 2, name: "Chicago", lat:  41.881832, lng: -87.623177 }];
+
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
@@ -20,29 +23,29 @@ const reorder = (list, startIndex, endIndex) => {
   return result;
 };
 
-function Route({ route, index }) {
-  return (
-    <Draggable draggableId={route.id} index={index}>
-      {provided => (
-        <ListItem
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-        >
-          <DragIndicatorIcon />
-         <ListItemText primary={route.name}/>
-          <IconButton edge="end" aria-label="delete">
-            <DeleteOutlineIcon/>
-          </IconButton>
-        </ListItem>
-      )}
-    </Draggable>
-  );
-}
+// function Route({ route, index }) {
+//   return (
+//     <Draggable draggableId={route.id} index={index}>
+//       {provided => (
+//         <ListItem
+//           ref={provided.innerRef}
+//           {...provided.draggableProps}
+//           {...provided.dragHandleProps}
+//         >
+//           <DragIndicatorIcon />
+//          <ListItemText primary={route.name}/>
+//           <IconButton edge="end" aria-label="delete">
+//             <DeleteOutlineIcon/>
+//           </IconButton>
+//         </ListItem>
+//       )}
+//     </Draggable>
+//   );
+// }
 
-const RouteList = React.memo(function QuoteList({ routes }) {
+const RouteList = React.memo(function({ routes, deleteCity }) {
   return routes.map((route, index) => (
-    <Route route={route} index={index} key={route.id} />
+    <Route route={route} index={index} key={route.id} deleteCity={deleteCity} />
   ));
 });
 
@@ -77,21 +80,21 @@ const useStyles = makeStyles({
 });
 
 export default function ModalLayout() {
-  const [state, setState] = useState({ routes: initial, key: 1 });
+  const [state, setState] = useState({ routes: [], key: 1 });
 
   const addCity = function(city) {
+   if(state.routes.length !== 6){
     const id = getNextAvailableId(state.routes);
     const newCit = city;
     newCit.id = id;
     setState({ routes: [...state.routes, newCit], key: state.key+1 });
+   }
   };
 
-  const deleteCity = function(cityId){
-    const newRoutes = state.routes.filter(function(route) {
-      return !route.id === cityId;
-    })
-
-    setState({ routes: newRoutes, key: state.key })
+  const deleteCity = function(index){
+    let arr = [...state.routes]
+    arr.splice(index,1)
+    setState({ routes: arr, key: state.key+1 })
   }
 
 
@@ -116,7 +119,7 @@ export default function ModalLayout() {
   const classes = useStyles();
 
   return (
-    <Paper>
+
       <Grid container spacing={3}>
     
         <Grid item xs={12} sm={5}>
@@ -127,7 +130,7 @@ export default function ModalLayout() {
               <Droppable droppableId="list">
                 {provided => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
-                    <RouteList routes={state.routes} />
+                    <RouteList routes={state.routes}  deleteCity={deleteCity}/>
                     {provided.placeholder}
                   </div>
                 )}
@@ -141,6 +144,6 @@ export default function ModalLayout() {
           </Paper>
         </Grid>
       </Grid>
-    </Paper>
+  
   );
 }
