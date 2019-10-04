@@ -1,20 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useReducer } from "react";
 import Modal from "@material-ui/core/Modal";
 import { makeStyles } from '@material-ui/core/styles';
 import ModalFirstPage from "./ModalLayout"
 import ModalSecondPage from "./Calendar"
 import ModalLastPage from "./FlightComp"
 import ModalNav from "./Nav";
-import { Grid, Paper, Button, Typography } from "@material-ui/core";
+import { Grid, Button, Typography } from "@material-ui/core";
+
+const HANDLE_NEXT = "HANDLE_NEXT";
+const HANDLE_BACK = "HANDLE_BACK";
+const HANDLE_RESET = "HANDLE_RESET";
+
 
 const useStyles = makeStyles({
  modal: {
-   width: "80%",
-   height: "80%",
-   padding: "5% 5% 10% 10%"
+   width: "90%",
+   height: "95%",
+   margin: "auto",
+   background: "white"
  },
  div: {
   textAlign: 'center',
+  },
+  container: {
+    backgroundColor: "#FFF",
+    borderRadius: "5px",
   }
 });
 
@@ -35,67 +45,86 @@ function getStepContent(step) {
   }
 }
 
+const reducer = function(state, action) {
+  switch (action.type) {
+    case HANDLE_NEXT:
+      let oldStep = action.step;
+      let newStep = oldStep + 1;
+      return {...state, step: newStep};
+    case HANDLE_BACK:
+      let currentStep = action.step;
+      let updateStep = currentStep - 1;
+      return {...state, step: updateStep};
+    case HANDLE_RESET:
+      return {...state, step: 0};
+    default:
+      return state;
+  }
+}
+
 export default function(props) {
 
-  const [activeStep, setActiveStep] = useState(0);
+  const classes = useStyles();
+
+  const [state, dispatch] = useReducer(reducer, {
+    step: 0,
+    cities: [],
+    key: 1
+  })
+
   const steps = getSteps();
 
-  const handleNext = () => {
-    setActiveStep(prevActiveStep => prevActiveStep + 1);
-  };
+  const currentDisplay  = function(){
+    if (state.step === 0) {
+      return (<ModalFirstPage routes = {state.cities} key={state.keys}></ModalFirstPage>)
+    } else if (state.step === 1) {
+      return (<ModalSecondPage></ModalSecondPage>)
+    } else if (state.step === 2) {
+      return (<ModalLastPage></ModalLastPage>)
+    }
+  }
 
-  const handleBack = () => {
-    setActiveStep(prevActiveStep => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
-  const classes = useStyles();
   return (
     <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>
-      <Paper>
-        <Grid container spacing={3}>
+        <Grid container className={classes.container} spacing={3}>
           <Grid item xs={12}>
-            <ModalNav className={classes.nav}></ModalNav>
+            <ModalNav steps={steps} activeStep={state.step} className={classes.nav}></ModalNav>
           </Grid>
           <Grid item xs={12}>
-            <ModalFirstPage></ModalFirstPage>
+            {currentDisplay()}
           </Grid>
-          {/* <Grid item xs={12}>
+          <Grid item xs={12}>
             <div>
-              {activeStep === steps.length ? (
+              {state.step === steps.length ? (
                 <div>
                   <Typography className={classes.instructions}>
                     All steps completed - you&apos;re finished
                   </Typography>
-                  <Button onClick={handleReset} className={classes.button}>
+                  <Button onClick={() => dispatch({type: HANDLE_RESET})} className={classes.button}>
                     Reset
                   </Button>
                 </div>
               ) : (
                 <div className={classes.div}>
-                  <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+                  <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
                   <div>
-                    <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                    <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
                       Back
                     </Button>
                     <Button
                       variant="contained"
                       color="primary"
-                      onClick={handleNext}
+                      onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
                       className={classes.button}
                     >
-                      {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                      {state.step === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                   </div>
                 </div>
               )}
             </div>
-          </Grid> */}
+          </Grid>
         </Grid>
-      </Paper>
     </Modal>
   );
 }
