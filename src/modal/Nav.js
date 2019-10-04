@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function getSteps() {
-  return ['Select Destinations', 'Select Dates', 'Select Flights', 'Save'];
+  return ['Select Destinations', 'Select Dates', 'Select Flights'];
 }
 
 function getStepContent(step) {
@@ -35,8 +35,6 @@ function getStepContent(step) {
       return 'Select Dates';
     case 2:
       return 'Select Flights';
-    case 3:
-      return 'Save';
     default:
       return 'Unknown step';
   }

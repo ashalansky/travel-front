@@ -1,7 +1,22 @@
 import React from 'react'
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Paper } from "@material-ui/core";
+
 require('dotenv').config()
+
+const useStyles = makeStyles({
+  container: {
+    justify: "center"
+  },
+  paper: {
+    padding: 20,
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
+    height: "60vh"
+  }
+});
 
 const callApi = (() => {
   
@@ -38,11 +53,24 @@ const callApi = (() => {
     })
 })
 
-export default function flightComps(props) {
+export default function FlightComps(props) {
+
+  const classes = useStyles();
 
   return (
-    <Button variant="contained" onClick={() => callApi()} color="primary">
-      See flight data
-    </Button>
+    <Paper>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={5}>
+          <Paper className={classes.paper}>
+            
+          </Paper>
+        </Grid>
+        <Grid item sm={7} xs={12}>
+          <section>
+            
+          </section>
+        </Grid>
+      </Grid>
+    </Paper>
   )
 }
