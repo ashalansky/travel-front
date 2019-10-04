@@ -30,6 +30,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Ubuntu',
     color: '#ffc250',
     fontSize: 24,
+    padding: '6px 16px'
   }
 }));
 
@@ -71,6 +72,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
+              <Button variant="h5" color="inherit" className={classes.button}>My Trips</Button>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>
