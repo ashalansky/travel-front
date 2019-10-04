@@ -8,7 +8,6 @@ let types = [
   ];
   
 
-
 class Search extends Component {
   constructor(props){
     super(props)
