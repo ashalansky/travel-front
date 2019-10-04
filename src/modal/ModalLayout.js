@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import ModalNav from "./Nav";
 import AddButton from "./AddButton";
 import Map from "./Map";
 import Search from "./Search";
@@ -33,7 +32,7 @@ function Route({ route, index }) {
           <DragIndicatorIcon />
          <ListItemText primary={route.name}/>
           <IconButton edge="end" aria-label="delete">
-            <DeleteOutlineIcon />
+            <DeleteOutlineIcon/>
           </IconButton>
         </ListItem>
       )}
@@ -87,6 +86,15 @@ export default function ModalLayout() {
     setState({ routes: [...state.routes, newCit], key: state.key+1 });
   };
 
+  const deleteCity = function(cityId){
+    const newRoutes = state.routes.filter(function(route) {
+      return !route.id === cityId;
+    })
+
+    setState({ routes: newRoutes, key: state.key })
+  }
+
+
   function onDragEnd(result) {
     if (!result.destination) {
       return;
@@ -106,13 +114,11 @@ export default function ModalLayout() {
   }
 
   const classes = useStyles();
-  console.log(state.routes);
+
   return (
     <Paper>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
-          <ModalNav className={classes.nav}></ModalNav>
-        </Grid>
+    
         <Grid item xs={12} sm={5}>
           <Paper className={classes.paper}>
             <AddButton></AddButton>
