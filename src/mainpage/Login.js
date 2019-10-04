@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import { Paper, Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -40,8 +40,29 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function Login() {
+const SET_EMAIL= 'SET_EMAIL';
+const SET_PASSWORD = 'SET_PASSWORD';
+
+const reducer = ((state, action) => {
+  switch(action.type) {
+    case SET_EMAIL:
+      return { ...state, email: action.email}
+    case SET_PASSWORD:
+      return { ...state, password: action.password}
+  }
+})
+
+export default function Login(props) {
+  const[state, dispatch] = useReducer(reducer, {
+    email: "",
+    password: ""
+  })
   const classes = useStyles();
+
+  const login = (() => {
+    props.login(state.email, state.password)
+    props.close()
+  })
 
   return (
       <Grid 
@@ -67,6 +88,8 @@ export default function Login() {
               autoComplete="current-email"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_EMAIL, email : e.target.value})}
+              value={state.email}
             />
             </div>
             <div>
@@ -78,9 +101,11 @@ export default function Login() {
               autoComplete="current-password"
               margin="normal"
               variant="outlined"
+              onChange={(e) => dispatch({type: SET_PASSWORD, password : e.target.value})}
+              value={state.password}
             />
             </div>
-            <Button variant="contained" color="primary" className={classes.button} >
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => login()} >
               Login
             </Button>
           </Paper>

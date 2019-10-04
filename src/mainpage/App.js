@@ -8,10 +8,6 @@ import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
 import axios from 'axios';
 
-const login = ((username, password) => {
-   return axios.post("/login")
-})
-
 const register = ((username, email, password, city) => {
   let url = "http://localhost:8080/users/register";
   let data = {
@@ -30,22 +26,34 @@ const register = ((username, email, password, city) => {
 })
 
 
+
 export default function App() {
+
   const [modalOn, setModal] = useState(false);
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
- 
+  const [username, setUsername] = useState("");
+
+  const login = ((email, password) => {
+     return axios.post("http://localhost:8080/users/login", {email, password})
+     .then((data)=>{
+       let name = data.data.user[0].username 
+       setUsername(name)
+     });
+  })
+   
+  const logout = (() => {
+    setUsername("")
+  })
+
   const closeModal = () => {
     setModal(false);
     setLoginModal(false);
     setSignUpModal(false);
-
   }
-
-
   return (
       <div>
-        <NavBar setLoginModal={setLoginModal} setSignUpModal={setSignUpModal} LoginOn={LoginOn} SignUpOn={SignUpOn}></NavBar>
+        <NavBar user={username} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal} LoginOn={LoginOn} SignUpOn={SignUpOn} logout={logout}></NavBar>
         <HeroBar setModal={setModal} modalOn={modalOn}></HeroBar>
         <ModalContainer open={modalOn} closeModal={closeModal}></ModalContainer>
         <LoginModal login={login} open={LoginOn} closeModal={closeModal}></LoginModal>
