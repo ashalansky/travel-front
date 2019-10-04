@@ -68,7 +68,6 @@ export default function SignUp(props) {
     city: ""
   })
   const classes = useStyles();
-
   
   const save = (() => {
     props.register(state.username, state.email, state.password, state.city)
