@@ -13,15 +13,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Route from './Route'
 
 
-const initial = [{ id: 1, name: "Calgary", lat:  51.049999, lng:  -114.066666 }, { id: 3, name: "London", lat: 51.509865, lng: -0.118092 }, { id: 2, name: "Chicago", lat:  41.881832, lng: -87.623177 }];
+// const initial = [{ id: 1, name: "Calgary", lat:  51.049999, lng:  -114.066666 }, { id: 3, name: "London", lat: 51.509865, lng: -0.118092 }, { id: 2, name: "Chicago", lat:  41.881832, lng: -87.623177 }];
 
-const reorder = (list, startIndex, endIndex) => {
-  const result = Array.from(list);
-  const [removed] = result.splice(startIndex, 1);
-  result.splice(endIndex, 0, removed);
+// const reorder = (list, startIndex, endIndex) => {
+//   const result = Array.from(list);
+//   const [removed] = result.splice(startIndex, 1);
+//   result.splice(endIndex, 0, removed);
 
-  return result;
-};
+//   return result;
+// };
 
 // function Route({ route, index }) {
 //   return (
@@ -49,22 +49,22 @@ const RouteList = React.memo(function({ routes, deleteCity }) {
   ));
 });
 
-const getNextAvailableId = function(routesArr) {
-  //Hardcoded for six possible spots
+// const getNextAvailableId = function(routesArr) {
+//   //Hardcoded for six possible spots
 
-  const arr = [-1, 0, 0, 0, 0, 0, 0];
-  if (routesArr.length < 6) {
-    for (let i = 0; i < routesArr.length; i++) {
-      arr[routesArr[i].id] = routesArr[i].id;
-    }
+//   const arr = [-1, 0, 0, 0, 0, 0, 0];
+//   if (routesArr.length < 6) {
+//     for (let i = 0; i < routesArr.length; i++) {
+//       arr[routesArr[i].id] = routesArr[i].id;
+//     }
 
-    for (let j = 1; j < arr.length; j++) {
-      if (arr[j] <= 0) {
-        return j;
-      }
-    }
-  }
-};
+//     for (let j = 1; j < arr.length; j++) {
+//       if (arr[j] <= 0) {
+//         return j;
+//       }
+//     }
+//   }
+// };
 
 const useStyles = makeStyles({
   container: {
@@ -79,42 +79,41 @@ const useStyles = makeStyles({
   }
 });
 
-export default function ModalLayout() {
-  const [state, setState] = useState({ routes: [], key: 1 });
+export default function ModalLayout(props) {
+  
+  // const addCity = function(city) {
+  //  if(state.routes.length !== 6){
+  //   const id = getNextAvailableId(state.routes);
+  //   const newCit = city;
+  //   newCit.id = id;
+  //   setState({ routes: [...state.routes, newCit], key: state.key+1 });
+  //  }
+  // };
 
-  const addCity = function(city) {
-   if(state.routes.length !== 6){
-    const id = getNextAvailableId(state.routes);
-    const newCit = city;
-    newCit.id = id;
-    setState({ routes: [...state.routes, newCit], key: state.key+1 });
-   }
-  };
-
-  const deleteCity = function(index){
-    let arr = [...state.routes]
-    arr.splice(index,1)
-    setState({ routes: arr, key: state.key+1 })
-  }
+  // const deleteCity = function(index){
+  //   let arr = [...state.routes]
+  //   arr.splice(index,1)
+  //   setState({ routes: arr, key: state.key+1 })
+  // }
 
 
-  function onDragEnd(result) {
-    if (!result.destination) {
-      return;
-    }
+  // function onDragEnd(result) {
+  //   if (!result.destination) {
+  //     return;
+  //   }
 
-    if (result.destination.index === result.source.index) {
-      return;
-    }
+  //   if (result.destination.index === result.source.index) {
+  //     return;
+  //   }
 
-    const routes = reorder(
-      state.routes,
-      result.source.index,
-      result.destination.index
-    );
+  //   const routes = reorder(
+  //     state.routes,
+  //     result.source.index,
+  //     result.destination.index
+  //   );
 
-    setState({ routes, key: state.key+1 });
-  }
+  //   setState({ routes, key: state.key+1 });
+  // }
 
   const classes = useStyles();
 
@@ -123,12 +122,12 @@ export default function ModalLayout() {
         <Grid item xs={12} sm={5}>
           <Paper className={classes.paper}>
             <AddButton></AddButton>
-            <Search addCity={addCity}></Search>
-            <DragDropContext onDragEnd={onDragEnd}>
+            <Search addCity={props.addCity}></Search>
+            <DragDropContext onDragEnd={props.onDragEnd}>
               <Droppable droppableId="list">
                 {provided => (
                   <div ref={provided.innerRef} {...provided.droppableProps}>
-                    <RouteList routes={state.routes}  deleteCity={deleteCity}/>
+                    <RouteList routes={props.routes}  deleteCity={props.deleteCity}/>
                     {provided.placeholder}
                   </div>
                 )}
@@ -138,7 +137,7 @@ export default function ModalLayout() {
         </Grid>
         <Grid item sm={7} xs={12}>
           <Paper className={classes.paper}>
-            <Map key={state.key} routes={state.routes}></Map>
+            <Map key={props.key} routes={props.routes}></Map>
           </Paper>
         </Grid>
       </Grid>
