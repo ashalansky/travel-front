@@ -10,6 +10,9 @@ import { Grid, Button, Typography } from "@material-ui/core";
 const HANDLE_NEXT = "HANDLE_NEXT";
 const HANDLE_BACK = "HANDLE_BACK";
 const HANDLE_RESET = "HANDLE_RESET";
+const ADD_CITY = "ADD_CITY";
+const DELETE_CITY = "DELETE_CITY";
+const ON_DRAG_END = "ON_DRAG_END"
 
 
 const useStyles = makeStyles({
@@ -45,6 +48,31 @@ function getStepContent(step) {
   }
 }
 
+const getNextAvailableId = function(routesArr) {
+  //Hardcoded for six possible spots
+
+  const arr = [-1, 0, 0, 0, 0, 0, 0];
+  if (routesArr.length < 6) {
+    for (let i = 0; i < routesArr.length; i++) {
+      arr[routesArr[i].id] = routesArr[i].id;
+    }
+
+    for (let j = 1; j < arr.length; j++) {
+      if (arr[j] <= 0) {
+        return j;
+      }
+    }
+  }
+};
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
+
 const reducer = function(state, action) {
   switch (action.type) {
     case HANDLE_NEXT:
@@ -57,6 +85,37 @@ const reducer = function(state, action) {
       return {...state, step: updateStep};
     case HANDLE_RESET:
       return {...state, step: 0};
+    case ADD_CITY:
+      if(state.routes.length !== 6){
+        const id = getNextAvailableId(action.routes);
+        const newCity = action.city;
+        newCity.id = id;
+        let currentRoutes = [...action.routes];
+        let currentKey = state.key;
+        let newRoutes = currentRoutes.concat([newCity]);
+        return {...state, routes: newRoutes, key: currentKey + 1}
+      }
+      return {...state}
+    case DELETE_CITY:
+      let arr = [...state.routes]
+      arr.splice(action.index,1)
+      return {...state, routes: arr, key: (state.key + 1)}
+    case ON_DRAG_END:
+      if (!action.result.destination) {
+        return;
+      }
+  
+      if (action.result.destination.index === action.result.source.index) {
+        return;
+      }
+  
+      const routes = reorder(
+        state.routes,
+        action.result.source.index,
+        action.result.destination.index
+      );
+  
+      return {...state, routes, key : (state.key + 1)}
     default:
       return state;
   }
@@ -68,15 +127,27 @@ export default function(props) {
 
   const [state, dispatch] = useReducer(reducer, {
     step: 0,
-    cities: [],
+    routes: [],
     key: 1
   })
+
+  const addCity = function(city) {
+    dispatch({ type: ADD_CITY, routes: state.routes, city})
+   };
+ 
+   const deleteCity = function(index){
+     dispatch({ type: DELETE_CITY, index})
+   }
+ 
+   const onDragEnd = function (result) {
+     dispatch({ type: ON_DRAG_END, result})
+   }
 
   const steps = getSteps();
 
   const currentDisplay  = function(){
     if (state.step === 0) {
-      return (<ModalFirstPage routes = {state.cities} key={state.keys}></ModalFirstPage>)
+      return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
       return (<ModalSecondPage></ModalSecondPage>)
     } else if (state.step === 2) {

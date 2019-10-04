@@ -14,6 +14,7 @@ class Map extends Component {
     const routesList = this.props.routes;
    
     if(routesList.length > 1){
+      console.log(routesList);
       for(let i = 0; i < routesList.length -1; i++){
         const markersArr = [{lat: routesList[i].lat, lng: routesList[i].lng},{lat: routesList[i+1].lat, lng: routesList[i+1].lng} ]
 
