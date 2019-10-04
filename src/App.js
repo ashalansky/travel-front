@@ -11,6 +11,8 @@ import NavBar from './mainpage/NavBar';
 import HeroBar from './mainpage/HeroBar';
 import CardGrid from './mainpage/CardGrid';
 import AppDescription from './mainpage/AppDescription';
+import FlightComp from "./modal/FlightComp";
+
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,12 +29,12 @@ const useStyles = makeStyles(theme => ({
 export default function App() {
   const classes = useStyles();
   return (
-
     <div>
       <NavBar></NavBar>
       <HeroBar></HeroBar>
       <div><CardGrid></CardGrid></div>
       <div><AppDescription></AppDescription></div>
+      <div><FlightComp></FlightComp></div>
     </div>
   )
 }

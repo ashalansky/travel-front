@@ -6,6 +6,7 @@ import AppDescription from './AppDescription';
 import ModalContainer from '../modal/ModalContainer';
 import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
+import FlightComp from '../modal/FlightComp'
 import axios from 'axios';
 
 const login = ((username, password) => {
@@ -52,6 +53,7 @@ export default function App() {
         <SignupModal register={register} open={SignUpOn} closeModal={closeModal}></SignupModal>
         <div><CardGrid></CardGrid></div>
         <div><AppDescription></AppDescription></div>
+        <div><FlightComp></FlightComp></div>
       </div>
      
   )
