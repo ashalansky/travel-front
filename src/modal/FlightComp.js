@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper } from "@material-ui/core";
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 require('dotenv').config()
 
@@ -53,24 +55,17 @@ const callApi = (() => {
     })
 })
 
-export default function FlightComps(props) {
+export default function FlightComp(props) {
 
   const classes = useStyles();
 
   return (
     <Paper>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={5}>
-          <Paper className={classes.paper}>
-            
-          </Paper>
-        </Grid>
-        <Grid item sm={7} xs={12}>
-          <section>
-            
-          </section>
-        </Grid>
-      </Grid>
+      <List>
+        <ListItem>
+          
+        </ListItem>
+      </List>
     </Paper>
   )
 }
