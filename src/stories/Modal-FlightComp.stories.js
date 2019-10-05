@@ -4,4 +4,4 @@ import { storiesOf } from "@storybook/react";
 
 
 storiesOf("FlightComp", module)
-.add("Basic", () => <FlightComp></FlightComp>);
+.add("Basic", () => (<FlightComp></FlightComp>));
