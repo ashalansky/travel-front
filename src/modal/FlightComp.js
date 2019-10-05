@@ -8,18 +8,41 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   container: {
+    justify: 'center',
+    margin: 'auto',
     display: 'grid',
-    gridTemplateColumns: 'repeat(12, 3fr)',
+
+     
   },
   paper: {
+    display: 'grid',
+    gridTemplateColumns: '40% auto 40%',
+    gridTemplateRows: '50% 50%',
+    textAlign: "center",
+    alignItems: 'center',
+    padding: 20,
     marginTop: 10,
     marginBottom: 10,
-    textAlign: "center",
+    height: 90,
+    fontFamily: 'Ubuntu',
+    color: '#a5a0aa',
+    '&:hover': {
+      boxShadow: '-5px 0px 1px 0px rgba(155,139,247,1);'
+    }
   },
   button: {
     margin: theme.spacing(1),
-    backgroundColor: '#ffc250',
-    cursor: 'pointer'
+    background: 'white',
+    cursor: 'pointer',
+    border: '1px solid #f29e92',
+    color: '#a5a0aa',
+    width: '60%',
+    margin: 'auto',
+    '&:hover': {
+      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+      color: 'white',
+      boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
+    }
   }
 }));
 
@@ -66,17 +89,17 @@ export default function FlightComp(props) {
       <Grid container className={classes.container} spacing={3}>
         <Grid item xs={12} sm={7}>
           <Paper className={classes.paper}>
-            <Typography variant="body2">
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 30}}>
               YYC
             </Typography>
-            <ArrowForwardIosIcon></ArrowForwardIosIcon>
-            <Typography variant="body2">
+            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 30}}>
               YEG
             </Typography>
             <Typography>
               23 Oct, 16:30
             </Typography>
-            <Typography variant="body2">
+            <Typography style={{ fontSize: 24, color: '#9b8bf7'}}>
               $450
             </Typography>
             <Button variant="outlined" className={classes.button}>
