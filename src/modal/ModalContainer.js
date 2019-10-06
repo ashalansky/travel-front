@@ -298,6 +298,7 @@ export default function(props) {
         </div>
       ))
     }
+  }
 
   const closeAndReset = function(){
     props.closeModal();
