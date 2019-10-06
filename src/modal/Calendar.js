@@ -43,12 +43,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
 const classnames = require('classnames');
-
-const cities = [
-  "Calgary", "Edmonton", "Toronto", "Montreal", "Kelowna", " Vancouver" 
-]
 
 const getDates = function (startDate, stopDate) {
   let dateArray = [];
@@ -72,148 +67,145 @@ export default function CalendarComponent(props) {
   const classes = useStyles();
 
   const [state, setState] = useState({
-    cities: cities,
-    values: [],
     numberOfCities: 0,
     lastDate: new Date(),
-    city: cities[0],
   });
 
-  //Changes selected city
-  const changeSelectedCity = function (cityName) {
-    setState({...state, city: cityName});
-  }
-
   // Creates list of cities
-  const cityList = state.cities.map((city) => {
-    if (city === state.city) {
-      const index = state.cities.indexOf(city) + 1;
+  const cityList = props.cities.map((city) => {
+    if (city.name === props.city) {
+      let index = 0;
+      for (let i = 0; i < props.cities.length; i++) {
+        if (props.cities[i].name === props.city) {
+          index = i + 1;
+        }
+      }
       let selectedClass = classnames(classes.fab)
       switch (index) {
         case 1:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         case 2:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious2)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         case 3:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious3)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         case 4:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious4)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         case 5:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious5)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         case 6:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious6)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
         default:
           selectedClass = classnames(classes.fab)
-          if (state.values.length !== state.cities.length){
+          if (props.travelDates.length !== props.cities.length){
             return (
             <Fab variant="extended" className={selectedClass}>
-              {city}
+              {city.name}
             </Fab>
             )
           }
           return (
-            <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-              {city}
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+              {city.name}
             </Fab>
           )
       }
     }
     let selectedClass = classnames(classes.fab)
-    if (state.values.length !== state.cities.length){
+    if (props.travelDates.length !== props.cities.length){
       return (
       <Fab variant="extended" className={selectedClass}>
-        {city}
+        {city.name}
       </Fab>
       )
     }
     return (
-      <Fab variant="extended" className={selectedClass} onClick= {() => changeSelectedCity(city)}>
-        {city}
+      <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+        {city.name}
       </Fab>
     )
   });
 
   // Displays the number of days in certain city
-  const numberOfDaysAtCity = state.cities.map((city) => {
-    const index = state.cities.indexOf(city);
+  const numberOfDaysAtCity = props.cities.map((city) => {
+    const index = props.cities.indexOf(city);
     let stayDuration = 0
-    if (state.values[index]) {
-      let departureDate = state.values[index].slice(-1)[0];
-      stayDuration = state.values[index].length;
+    if (props.travelDates[index]) {
+      let departureDate = props.travelDates[index].slice(-1)[0];
+      stayDuration = props.travelDates[index].length;
     
-      if (index === 0 && state.values[index]) {
+      if (index === 0 && props.travelDates[index]) {
         return (
           <div>
             You are leaving {city} on the  {departureDate}
@@ -250,20 +242,26 @@ export default function CalendarComponent(props) {
   })
   
   const updateArrivingDate = function(city) {
-    let index = state.cities.indexOf(city);
-    if (index === 0 && state.values[index]) {
-      let departingDate = state.values[index].slice(-1)[0];
+    let index = 0
+    for (let i = 0; i < props.cities.length; i++) {
+      if (props.cities[i].name === city) {
+        index = i;
+      }
+    }
+    
+    if (index === 0 && props.travelDates[index]) {
+      let departingDate = props.travelDates[index].slice(-1)[0];
       let departDate = moment(departingDate);
       let newDate = moment(departDate);
       return newDate["_d"]
     }
 
-    if (!state.values[index-1]) {
+    if (!props.travelDates[index-1]) {
       return new Date()
     }
 
     
-    let departingDate = state.values[index-1].slice(-1)[0];
+    let departingDate = props.travelDates[index-1].slice(-1)[0];
     let departDate = moment(departingDate);
     let newDate = moment(departDate).add(1, 'days');
     return newDate["_d"]
@@ -271,8 +269,13 @@ export default function CalendarComponent(props) {
   }
 
   const updateDates = function(startDate, stopDate, selectedCity) {
-    let index = state.cities.indexOf(selectedCity);
-    let currentDates = [...state.values];
+    let index = 0
+    for (let i = 0; i < props.cities.length; i++) {
+      if (props.cities[i].name === selectedCity) {
+        index = i;
+      }
+    }
+    let currentDates = [...props.travelDates];
     let currentDate = moment(startDate);
     stopDate = moment(stopDate);
     if (currentDates[index+1]) {
@@ -324,72 +327,81 @@ export default function CalendarComponent(props) {
     let dateArray = getDates(arrivalDate,departingDate);
     const newDate = setNewDate(departingDate);
 
-    let newValues = state.values.concat([dateArray]);
+    let newValues = props.travelDates.concat([dateArray]);
     let cityNumber = state.numberOfCities;
     
-    if (state.numberOfCities < state.cities.length){
+    if (state.numberOfCities < props.cities.length){
       cityNumber++;
-      let selectedCity = state.cities[cityNumber];
-      if (cityNumber === state.cities.length) {
-        selectedCity = state.cities[cityNumber - 1];
+      let selectedCity = "";
+      if (cityNumber < props.cities.length){
+        selectedCity = props.cities[cityNumber].name
       }
-      if (state.values.length < state.cities.length && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && !(moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
-        setState({...state, values: newValues, numberOfCities: cityNumber, lastDate: newDate["_d"], city: selectedCity})
+      if (cityNumber === props.cities.length) {
+        selectedCity = props.cities[cityNumber - 1].name;
+      }
+      if (props.travelDates.length < props.cities.length && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && !(moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
+        setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+        props.updateTravelDates(newValues);
+        props.changeSelectedCity(selectedCity);
       } 
     }
 
-    if (state.numberOfCities === state.cities.length && state.city){
-      let updatedDates = updateDates(arrivalDate, departingDate, state.city);
-      let selectedCity = state.cities[updatedDates.length];
-      if (updatedDates.length !== state.cities.length) {
+    if (state.numberOfCities === props.cities.length && props.city){
+      let updatedDates = updateDates(arrivalDate, departingDate, props.city);
+      let selectedCity = props.cities[updatedDates.length - 1].name;
+      if (updatedDates.length !== props.cities.length) {
         cityNumber = updatedDates.length;
       } else {
-        let index = state.cities.indexOf(state.city);
-        selectedCity = state.cities[index];
+        let index = 0;
+        for (let i = 0; i < props.cities.length; i++) {
+          if (props.cities[i].name === props.city) {
+            index = i;
+          }
+        }
+        selectedCity = props.cities[index].name;
       }
-      setState({...state, values: updatedDates, numberOfCities: cityNumber, lastDate: newDate["_d"], city: selectedCity})
+      setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+      props.updateTravelDates(updateDates);
+      props.changeSelectedCity(selectedCity);
     }
   }
 
   return (
-    <Paper>
-      <Grid container spacing={3}>
-        <Grid item xs={12} sm={5}>
-          <Paper className={classes.paper}>
-            
-          </Paper>
-        </Grid>
-        <Grid item sm={7} xs={12}>
-          <section>
-            {cityList}
-            <Calendar
-              calendarType="US"
-              minDate={new Date()}
-              selectRange={true}
-              value={updateArrivingDate(state.city)}
-              onChange={(value) => {onChange(value)}}
-              tileClassName={(tile) => {
-                let setActive = [];
-                for (let i = 0; (i< state.values.length) && (i < 6); i++) {
-                  if (i === 0 && tile.view === "month" && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length -1)){
-                    setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
-                  }  else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && (state.values[i].indexOf(tile.date.toDateString()) === 0) && state.values[i].length === 1) {
-                    setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
-                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === 0) {
-                    setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
-                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString()) && state.values[i].indexOf(tile.date.toDateString()) === (state.values[i].length - 1)) {
-                    setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
-                  } else if (tile.view === "month" && state.values[i].includes(tile.date.toDateString())) {
-                    setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
-                  }
-                }
-                return setActive
-              }}
-            />
-          </section>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={5}>
+        <Paper className={classes.paper}>
+          {cityList}
+        </Paper>
       </Grid>
-    </Paper>
+      <Grid item sm={7} xs={12}>
+        <Paper className={classes.paper}>
+          <Calendar
+            calendarType="US"
+            minDate={new Date()}
+            selectRange={true}
+            value={updateArrivingDate(props.city)}
+            onChange={(value) => {onChange(value)}}
+            tileClassName={(tile) => {
+              let setActive = [];
+              for (let i = 0; (i < props.travelDates.length) && (i < 6); i++) {
+                if (i === 0 && tile.view === "month" && props.travelDates[i].indexOf(tile.date.toDateString()) === (props.travelDates[i].length -1)){
+                  setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
+                }  else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && (props.travelDates[i].indexOf(tile.date.toDateString()) === 0) && props.travelDates[i].length === 1) {
+                  setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
+                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && props.travelDates[i].indexOf(tile.date.toDateString()) === 0) {
+                  setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
+                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && props.travelDates[i].indexOf(tile.date.toDateString()) === (props.travelDates[i].length - 1)) {
+                  setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
+                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString())) {
+                  setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
+                }
+              }
+              return setActive
+            }}
+          />
+        </Paper>
+      </Grid>
+    </Grid>
   )
 
 }

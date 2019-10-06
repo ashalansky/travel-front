@@ -13,7 +13,8 @@ const HANDLE_RESET = "HANDLE_RESET";
 const ADD_CITY = "ADD_CITY";
 const DELETE_CITY = "DELETE_CITY";
 const ON_DRAG_END = "ON_DRAG_END"
-
+const CHANGE_SELECTED_CITY = "CHANGE_SELECTED_CITY"
+const UPDATE_TRAVEL_DATES = "UPDATE_TRAVEL_DATES"
 
 const useStyles = makeStyles({
  modal: {
@@ -31,11 +32,11 @@ const useStyles = makeStyles({
   }
 });
 
-function getSteps() {
+const getSteps = function () {
   return ['Select Destinations', 'Select Dates', 'Select Flights'];
 }
 
-function getStepContent(step) {
+const getStepContent = function (step) {
   switch (step) {
     case 0:
       return 'Select Destinations';
@@ -93,20 +94,25 @@ const reducer = function(state, action) {
         let currentRoutes = [...action.routes];
         let currentKey = state.key;
         let newRoutes = currentRoutes.concat([newCity]);
-        return {...state, routes: newRoutes, key: currentKey + 1}
+        return {...state, routes: newRoutes, key: currentKey + 1, selectedCity: newRoutes[0].name}
       }
       return {...state}
     case DELETE_CITY:
       let arr = [...state.routes]
-      arr.splice(action.index,1)
-      return {...state, routes: arr, key: (state.key + 1)}
+      if (arr.length === 1) {
+        arr.splice(action.index,1)
+        return {...state, routes: arr, key: (state.key + 1), selectedCity: null}
+      } else {
+        arr.splice(action.index,1)
+        return {...state, routes: arr, key: (state.key + 1)}
+      }
     case ON_DRAG_END:
       if (!action.result.destination) {
-        return;
+        return {...state};
       }
   
       if (action.result.destination.index === action.result.source.index) {
-        return;
+        return {...state};
       }
   
       const routes = reorder(
@@ -115,9 +121,14 @@ const reducer = function(state, action) {
         action.result.destination.index
       );
   
-      return {...state, routes, key : (state.key + 1)}
+      return {...state, routes, key : (state.key + 1), selectedCity: routes[0].name}
+
+    case CHANGE_SELECTED_CITY:
+      return {...state, selectedCity: action.city}
+    case UPDATE_TRAVEL_DATES:
+      return {...state, travelDates: action.travelDates}
     default:
-      return state;
+      return {...state};
   }
 }
 
@@ -128,7 +139,9 @@ export default function(props) {
   const [state, dispatch] = useReducer(reducer, {
     step: 0,
     routes: [],
-    key: 1
+    key: 1,
+    selectedCity: "",
+    travelDates : []
   })
 
   const addCity = function(city) {
@@ -143,13 +156,21 @@ export default function(props) {
      dispatch({ type: ON_DRAG_END, result})
    }
 
+   const changeSelectedCity = function (cityName) {
+    dispatch({ type:CHANGE_SELECTED_CITY, city: cityName });
+  }
+
+  const updateTravelDates = function (travelDates) {
+    dispatch({ type: UPDATE_TRAVEL_DATES, travelDates})
+  }
+
   const steps = getSteps();
 
   const currentDisplay  = function(){
     if (state.step === 0) {
       return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
-      return (<ModalSecondPage></ModalSecondPage>)
+      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates = {state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates}></ModalSecondPage>)
     } else if (state.step === 2) {
       return (<ModalLastPage></ModalLastPage>)
     }
