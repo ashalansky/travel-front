@@ -4,6 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 
 const useStyles = makeStyles(theme => ({
@@ -12,13 +17,27 @@ const useStyles = makeStyles(theme => ({
     margin: 'auto',
     display: 'grid',
   },
+    formControl: {
+      margin: theme.spacing(1),
+      minWidth: 10,
+      color: '#9b8bf7',
+      padding: '0px',
+    }, 
+    formInput: {
+      color: '#9b8bf7', 
+      fontSize: 10,
+  },
   paper: {
+    display: 'grid',
+    gridTemplateColumns: '50% 50%',
+    gridTemplateRows: '50% 50%',
     textAlign: "center",
     alignItems: 'center',
+    margin: 'auto',
     padding: 10,
     marginTop: 5,
     marginBottom: 5,
-    height: 60,
+    height: 'auto',
     fontFamily: 'Ubuntu',
     borderRadius: 15,
     marginLeft: 10
@@ -42,7 +61,7 @@ const useStyles = makeStyles(theme => ({
     }
   },
   button: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
     background: 'white',
     cursor: 'pointer',
     border: '1px solid #f29e92',
@@ -96,15 +115,15 @@ const useStyles = makeStyles(theme => ({
 // })
 
 export default function FlightComp(props) {
-
   const classes = useStyles();
 
   return (
       <Paper>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
-            <Paper className={classes.paper}>
-            
+            <Paper className={classes.paper} style={{gridColumn: 1}}>
+ 
+      
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
