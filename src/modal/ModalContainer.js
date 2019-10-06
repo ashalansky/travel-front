@@ -298,11 +298,11 @@ export default function(props) {
         </div>
       ))
     }
+  }
 
   const closeAndReset = function(){
     props.closeModal();
     dispatch({ type: HANDLE_RESET})
-
   }
 
   return (
