@@ -9,7 +9,7 @@ import Flight from '@material-ui/icons/Flight';
 const useStyles = makeStyles(theme => ({
   root: {
     backgroundColor: 'white',
-    height: 80
+    height: 70
   },
   title: {
     flexGrow: 3,

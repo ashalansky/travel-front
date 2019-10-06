@@ -20,11 +20,12 @@ const useStyles = makeStyles(theme => ({
     gridTemplateRows: '50% 50%',
     textAlign: "center",
     alignItems: 'center',
-    padding: 20,
-    marginTop: 10,
-    marginBottom: 10,
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
     height: 90,
     fontFamily: 'Ubuntu',
+    borderRadius: 15,
     color: '#a5a0aa',
     '&:hover': {
       boxShadow: '-5px 0px 1px 0px rgba(155,139,247,1);'
@@ -38,6 +39,7 @@ const useStyles = makeStyles(theme => ({
     color: '#a5a0aa',
     width: '60%',
     margin: 'auto',
+    borderRadius: 15,
     '&:hover': {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
       color: 'white',
@@ -89,11 +91,11 @@ export default function FlightComp(props) {
       <Grid container className={classes.container} spacing={3}>
         <Grid item xs={12} sm={7}>
           <Paper className={classes.paper}>
-            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 30}}>
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 25}}>
               YYC
             </Typography>
             <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 30}}>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 25}}>
               YEG
             </Typography>
             <Typography>
