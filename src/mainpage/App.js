@@ -32,6 +32,7 @@ export default function App() {
   const [modalOn, setModal] = useState(false);
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
+
   const [username, setUsername] = useState("");
 
   const login = ((email, password) => {
@@ -58,7 +59,7 @@ export default function App() {
         <ModalContainer open={modalOn} closeModal={closeModal}></ModalContainer>
         <LoginModal login={login} open={LoginOn} closeModal={closeModal}></LoginModal>
         <SignupModal register={register} open={SignUpOn} closeModal={closeModal}></SignupModal>
-        <div><CardGrid></CardGrid></div>
+        <div><CardGrid setModal={setModal} modalOn={modalOn}></CardGrid></div>
         <div><AppDescription></AppDescription></div>
       </div>
      
