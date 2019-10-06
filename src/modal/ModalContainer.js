@@ -84,7 +84,11 @@ const reducer = function(state, action) {
       let updateStep = currentStep - 1;
       return {...state, step: updateStep};
     case HANDLE_RESET:
-      return {...state, step: 0};
+      return {
+        step: 0,
+        routes: [],
+        key: 1
+      };
     case ADD_CITY:
       if(state.routes.length !== 6){
         const id = getNextAvailableId(action.routes);
@@ -122,7 +126,6 @@ const reducer = function(state, action) {
 }
 
 export default function(props) {
-
   const classes = useStyles();
 
   const [state, dispatch] = useReducer(reducer, {
@@ -155,8 +158,13 @@ export default function(props) {
     }
   }
 
+  const closeAndReset = function(){
+    props.closeModal();
+    dispatch({ type: HANDLE_RESET})
+  }
+
   return (
-    <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>
+    <Modal className={classes.modal} open={props.open} onClose={closeAndReset}>
         <Grid container className={classes.container} spacing={3}>
           <Grid item xs={12}>
             <ModalNav steps={steps} activeStep={state.step} className={classes.nav}></ModalNav>

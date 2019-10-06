@@ -12,7 +12,8 @@ const useStyles = makeStyles({
   cityContainer: {
     width: "100%",
     height: "40vh",
-    position: "relative"
+    position: "relative",
+    minHeight: "125px"
   },
   img: {
     width: "100%",
