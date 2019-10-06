@@ -192,9 +192,117 @@ export default function(props) {
     }
   }
 
+  const departureDateCheck = function () {
+    let counter = 0;
+    for (let route of state.routes) {
+      if (route.departureDate) {
+        counter ++
+      }
+    }
+    if (counter === state.routes.length) {
+      return true
+    } else {
+      return false
+    }
+    
+  }
+
+  const navBarDisplay = function() {
+    if (state.step === 0) {
+      return (state.routes.length >= 2 ? (
+        <div className={classes.div}>
+          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+          <div>
+            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
+              className={classes.button}
+            >
+              Next
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className={classes.div}>
+          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+          <div>
+            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+              Back
+            </Button>
+            <Button disabled={state.routes.length < 2}> Next </Button>
+          </div>
+        </div>
+      ))
+    } else if (state.step === 1) {
+      return (
+       departureDateCheck() ? (
+          <div className={classes.div}>
+            <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+            <div>
+              <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
+                className={classes.button}
+              >
+                Next
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className={classes.div}>
+            <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+            <div>
+              <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+                Back
+              </Button>
+              <Button disabled={true}> Next </Button>
+            </div>
+          </div>
+        )
+      )
+    } else if (state.step === 2) {
+      return (state.routes.length >= 2 ? (
+        <div className={classes.div}>
+          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+          <div>
+            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+              Back
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
+              className={classes.button}
+            >
+              Finished
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div className={classes.div}>
+          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+          <div>
+            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+              Back
+            </Button>
+            <Button disabled={state.routes.length < 2}> Finished </Button>
+          </div>
+        </div>
+      ))
+    }
+
   const closeAndReset = function(){
     props.closeModal();
     dispatch({ type: HANDLE_RESET})
+
   }
 
   return (
@@ -208,33 +316,7 @@ export default function(props) {
           </Grid>
           <Grid item xs={12}>
             <div>
-              {state.step === steps.length ? (
-                <div>
-                  <Typography className={classes.instructions}>
-                    All steps completed - you&apos;re finished
-                  </Typography>
-                  <Button onClick={() => dispatch({type: HANDLE_RESET})} className={classes.button}>
-                    Reset
-                  </Button>
-                </div>
-              ) : (
-                <div className={classes.div}>
-                  <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
-                  <div>
-                    <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
-                      Back
-                    </Button>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
-                      className={classes.button}
-                    >
-                      {state.step === steps.length - 1 ? 'Finish' : 'Next'}
-                    </Button>
-                  </div>
-                </div>
-              )}
+              {navBarDisplay()}
             </div>
           </Grid>
         </Grid>
