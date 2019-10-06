@@ -18,6 +18,7 @@ export default function Route({ route, index, deleteCity }) {
         >
           <DragIndicatorIcon />
          <ListItemText primary={route.name}/>
+         {index === 0? "(Origin City)": ""}
           <IconButton edge="end" aria-label="delete" onClick={()=> deleteCity(index)}>
             <DeleteOutlineIcon/>
           </IconButton>

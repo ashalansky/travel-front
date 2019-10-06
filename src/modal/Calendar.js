@@ -5,10 +5,12 @@ import Calendar from 'react-calendar';
 import './styles/calendar.css';
 import moment from 'moment';
 import Fab from '@material-ui/core/Fab'
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(theme => ({
   fab: {
     margin: theme.spacing(1),
+    width: "200px"
   },
   extendedIcon: {
     marginRight: theme.spacing(1),
@@ -40,6 +42,16 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 10,
     textAlign: "center",
     height: "60vh"
+  },
+  numCircle: {
+    borderRadius: "50%",
+    width: "36px",
+    height: "36px",
+    padding: "8px",
+    border: "2px",
+    color: "black",
+    textAlign: "center",
+    fontSize: "32px"
   }
 }));
 
@@ -75,99 +87,127 @@ export default function CalendarComponent(props) {
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         case 2:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious2)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         case 3:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious3)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         case 4:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious4)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         case 5:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious5)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         case 6:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious6)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
         default:
           selectedClass = classnames(classes.fab)
           if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
+              <div>
             <Fab variant="extended" className={selectedClass}>
               {city.name}
             </Fab>
+            </div>
             )
           }
           return (
+            <div>
             <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
               {city.name}
             </Fab>
+            </div>
           )
       }
     }
@@ -282,8 +322,11 @@ export default function CalendarComponent(props) {
     <Grid container spacing={3}>
       <Grid item xs={12} sm={5}>
         <Paper className={classes.paper}>
+ 
           {cityList}
-          <Fab onClick={()=> reset()}> Reset </Fab>
+         <div>
+          <Button onClick={()=> reset()}> Reset </Button>
+          </div>
         </Paper>
       </Grid>
       <Grid item sm={7} xs={12}>
