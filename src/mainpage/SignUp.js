@@ -68,7 +68,6 @@ export default function SignUp(props) {
     city: ""
   })
   const classes = useStyles();
-
   
   const save = (() => {
     props.register(state.username, state.email, state.password, state.city)
@@ -108,7 +107,7 @@ export default function SignUp(props) {
           <TextField
               id="outlined-city-input"
               name="city"
-              label="city"
+              label="City"
               className={classes.textField}
               type="city"
               autoComplete="current-city"

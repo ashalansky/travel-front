@@ -3,7 +3,6 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { Grid } from '@material-ui/core';
-import Search from './Search'
 import InputBase from '@material-ui/core/InputBase';
 
 const useStyles = makeStyles(theme => ({
