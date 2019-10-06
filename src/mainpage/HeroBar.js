@@ -30,6 +30,10 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     fontWeight: 'bold',
     fontFamily: 'Ubuntu',
+    '&:hover': {
+      background: 'white',
+      color: '#ffc250'
+    }
   },
   title: {
     gridRow: 1,
@@ -57,9 +61,23 @@ export default function HeroBanner(props) {
   
   return (
     <div className={classes.container}>
-        <Typography className={classes.title} data-aos='fade-up' data-aos-delay='900' data-aos-easing='ease-in-out' data-aos-duration='700' variant="h1" >Travel Bum</Typography>
-        <AirplanemodeActiveIcon className={classes.plane} data-aos='fade-up' data-aos-delay='1000' data-aos-easing='ease-in-out' data-aos-duration='900'></AirplanemodeActiveIcon>
-        <Button className={classes.button} onClick={() => props.setModal(!props.modalOn)}>Create Trip</Button>
+        <Typography className={classes.title} 
+          data-aos='fade-up' 
+          data-aos-delay='900' 
+          data-aos-easing='ease-in-out' 
+          data-aos-duration='700' 
+          variant="h1" >Travel Bum</Typography>
+        <AirplanemodeActiveIcon className={classes.plane} 
+          data-aos='fade-up' 
+          data-aos-delay='1000' 
+          data-aos-easing='ease-in-out' 
+          data-aos-duration='900'></AirplanemodeActiveIcon>
+        <Button className={classes.button} 
+          onClick={() => props.setModal(!props.modalOn)}
+          data-aos='fade-up' 
+          data-aos-delay='1000' 
+          data-aos-easing='ease-in-out' 
+          data-aos-duration='1000'>Create Trip</Button>
     </div>
     );
 };

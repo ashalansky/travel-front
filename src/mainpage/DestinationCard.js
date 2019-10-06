@@ -11,9 +11,11 @@ const useStyles = makeStyles({
     maxWidth: 325,
     height: 380,
     minWidth: 280,
+    margin: '50px 0',
+    fontFamily: 'Ubuntu'
   },
   media: {
-    height: 290
+    height: 290,
   },
  
 });

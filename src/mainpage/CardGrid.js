@@ -10,7 +10,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
     fontFamily: 'Ubuntu',
     whiteSpace: 'nowrap',
-    marginBottom: 30
+    marginBottom: 30,
+    color: 'grey',
   }
 });
 
