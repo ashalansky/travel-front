@@ -15,6 +15,7 @@ const DELETE_CITY = "DELETE_CITY";
 const ON_DRAG_END = "ON_DRAG_END"
 const CHANGE_SELECTED_CITY = "CHANGE_SELECTED_CITY"
 const UPDATE_TRAVEL_DATES = "UPDATE_TRAVEL_DATES"
+const UPDATE_DEPARTURE_DATE = "UPDATE_DEPARTURE_DATE"
 
 const useStyles = makeStyles({
  modal: {
@@ -127,6 +128,14 @@ const reducer = function(state, action) {
       return {...state, selectedCity: action.city}
     case UPDATE_TRAVEL_DATES:
       return {...state, travelDates: action.travelDates}
+    case UPDATE_DEPARTURE_DATE:
+      let updatedRoutesInformation = [...state.routes]
+      for (let i = 0; i < updatedRoutesInformation.length; i++) {
+        if (updatedRoutesInformation[i].name === action.selectedCity) {
+          updatedRoutesInformation[i]["departureDate"] = action.departureDate;
+        }
+      }
+      return {...state, routes: updatedRoutesInformation}
     default:
       return {...state};
   }
@@ -164,13 +173,17 @@ export default function(props) {
     dispatch({ type: UPDATE_TRAVEL_DATES, travelDates})
   }
 
+  const updateDepartureDate = function (departureDate, selectedCity) {
+    dispatch({ type: UPDATE_DEPARTURE_DATE, departureDate, selectedCity})
+  }
+
   const steps = getSteps();
 
   const currentDisplay  = function(){
     if (state.step === 0) {
       return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
-      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates = {state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates}></ModalSecondPage>)
+      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates = {state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
       return (<ModalLastPage></ModalLastPage>)
     }
