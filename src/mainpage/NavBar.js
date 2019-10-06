@@ -60,6 +60,7 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
 
+
   if (props.user) {
     return(
       <div>
@@ -94,4 +95,5 @@ export default function(props) {
       </div>
     );
   }
+
 }

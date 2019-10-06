@@ -14,9 +14,22 @@ const useStyles = makeStyles({
   }
 });
 
-export default function() {
-  const classes = useStyles();
 
+const destinationList = [{name: "Florence", photo: "https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
+}, {name: "Paris", photo: "https://static.independent.co.uk/s3fs-public/thumbnails/image/2019/08/07/08/paris.jpg?w968h681"}, {name: "Cancun", photo: "https://cdn.travelpulse.com/images/99999999-9999-9999-9999-999999999999/42c9d71d-0a9d-c6a3-bf2d-e485fa153bb8/630x355.jpg"}]
+
+
+
+
+
+export default function(props) {
+  const classes = useStyles();
+  const destinationComponents = destinationList.map(city => {
+   
+   return <DestinationCard setModal={props.setModal} modalOn={props.modalOn} name={city.name} photo={city.photo}></DestinationCard>
+
+  })
+  
 
   return (
   <Fragment>
@@ -37,9 +50,7 @@ export default function() {
       justify="space-around"
       alignItems="center"
     >
-      <DestinationCard></DestinationCard>
-      <DestinationCard></DestinationCard>
-      <DestinationCard></DestinationCard>
+  {destinationComponents}
     </Grid>
     </Fragment>
   )

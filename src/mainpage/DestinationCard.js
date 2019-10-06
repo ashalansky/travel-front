@@ -18,7 +18,7 @@ const useStyles = makeStyles({
  
 });
 
-export default function() {
+export default function(props) {
   const classes = useStyles();
 
   return (
@@ -29,18 +29,17 @@ export default function() {
       data-aos-delay='350'
       className={classes.card}
       >
-      <CardActionArea className={classes.actionArea}>
+      <CardActionArea className={classes.actionArea} onClick={() => props.setModal(!props.modalOn)}>
         <CardMedia
           className={classes.media}
-          image="https://handluggageonly.co.uk/wp-content/uploads/2018/02/Hand-Luggage-Only-8-5.jpg"
+          image={props.photo}
           title="Italy"
         >
           </CardMedia>
         <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
-           Florence (Prop)
+           {props.name}
           </Typography>
-           Italy (Prop)
         </CardContent>
       </CardActionArea>
     </Card>
