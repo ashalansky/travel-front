@@ -115,6 +115,22 @@ const useStyles = makeStyles(theme => ({
 // })
 
 export default function FlightComp(props) {
+  const [values, setValues] = React.useState({
+    adults: '',
+    name: 'hai',
+  })
+
+  const handleChange = event => {
+    setValues(oldValues => ({
+      ...oldValues,
+      [event.target.name]: event.target.value,
+    }));
+  };
+  const inputLabel = React.useRef(null);
+  const [labelWidth, setLabelWidth] = React.useState(0);
+  React.useEffect(() => {
+    setLabelWidth(inputLabel.current.offsetWidth);
+  }, []);
   const classes = useStyles();
 
   return (
@@ -122,8 +138,75 @@ export default function FlightComp(props) {
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
             <Paper className={classes.paper} style={{gridColumn: 1}}>
- 
-      
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1}}>
+                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
+                  Adults
+                </InputLabel>
+                <Select
+                  value={values.adults}
+                  onChange={handleChange}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'adults',
+                    id: 'outlined-adults-simple',
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={3}>4</MenuItem>
+                  <MenuItem value={3}>5</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 2}}>
+                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
+                  Children
+                </InputLabel>
+                <Select
+                  value={values.adults}
+                  onChange={handleChange}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'children',
+                    id: 'outlined-children-simple',
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={3}>4</MenuItem>
+                  <MenuItem value={3}>5</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 2}}>
+                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
+                  Infants
+                </InputLabel>
+                <Select
+                  value={values.adults}
+                  onChange={handleChange}
+                  labelWidth={labelWidth}
+                  inputProps={{
+                    name: 'infants',
+                    id: 'outlined-infants-simple',
+                  }}
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>1</MenuItem>
+                  <MenuItem value={2}>2</MenuItem>
+                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={3}>4</MenuItem>
+                  <MenuItem value={3}>5</MenuItem>
+                </Select>
+              </FormControl>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
