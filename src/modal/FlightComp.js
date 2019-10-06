@@ -11,10 +11,19 @@ const useStyles = makeStyles(theme => ({
     justify: 'center',
     margin: 'auto',
     display: 'grid',
-
-     
   },
   paper: {
+    textAlign: "center",
+    alignItems: 'center',
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    height: 60,
+    fontFamily: 'Ubuntu',
+    borderRadius: 15,
+    marginLeft: 10
+  },
+  flight: {
     display: 'grid',
     gridTemplateColumns: '40% auto 40%',
     gridTemplateRows: '50% 50%',
@@ -22,8 +31,9 @@ const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     padding: 10,
     marginTop: 5,
+    marginRight: 10,
     marginBottom: 5,
-    height: 90,
+    height: 60,
     fontFamily: 'Ubuntu',
     borderRadius: 15,
     color: '#a5a0aa',
@@ -37,8 +47,10 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     border: '1px solid #f29e92',
     color: '#a5a0aa',
-    width: '60%',
+    fontSize: 12,
+    width: '50%',
     margin: 'auto',
+    padding: '2px 8px',
     borderRadius: 15,
     '&:hover': {
       background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -88,27 +100,34 @@ export default function FlightComp(props) {
   const classes = useStyles();
 
   return (
-      <Grid container className={classes.container} spacing={3}>
-        <Grid item xs={12} sm={7}>
-          <Paper className={classes.paper}>
-            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 25}}>
-              YYC
-            </Typography>
-            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 25}}>
-              YEG
-            </Typography>
-            <Typography>
-              23 Oct, 16:30
-            </Typography>
-            <Typography style={{ fontSize: 24, color: '#9b8bf7'}}>
-              $450
-            </Typography>
-            <Button variant="outlined" className={classes.button}>
-              SELECT
-            </Button>
-          </Paper>
+      <Paper>
+        <Grid container spacing={3}>
+          <Grid item xs={12} sm={5}>
+            <Paper className={classes.paper}>
+            
+            </Paper>
+          </Grid>
+          <Grid item xs={12} sm={7}>
+            <Paper className={classes.flight}>
+              <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+                YYC
+              </Typography>
+              <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+              <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+                YEG
+              </Typography>
+              <Typography style={{ fontSize: 12}}>
+                23 Oct, 16:30
+              </Typography>
+              <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
+                $450
+              </Typography>
+              <Button variant="outlined" className={classes.button}>
+                SELECT
+              </Button>
+            </Paper>
+          </Grid>
         </Grid>
-      </Grid>
+      </Paper>
   )
 }
