@@ -45,17 +45,6 @@ const useStyles = makeStyles(theme => ({
 
 const classnames = require('classnames');
 
-const getDates = function (startDate, stopDate) {
-  let dateArray = [];
-  let currentDate = moment(startDate);
-  stopDate = moment(stopDate);
-  while (currentDate <= stopDate) {
-      dateArray.push(moment(currentDate)["_d"].toDateString());
-      currentDate = moment(currentDate).add(1, 'days');
-  }
-  return dateArray;
-};
-
 const setNewDate = function (departingDate) {
   let departDate = moment(departingDate);
   let newDate = moment(departDate).add(1, 'days');
@@ -84,7 +73,7 @@ export default function CalendarComponent(props) {
       switch (index) {
         case 1:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -98,7 +87,7 @@ export default function CalendarComponent(props) {
           )
         case 2:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious2)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -112,7 +101,7 @@ export default function CalendarComponent(props) {
           )
         case 3:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious3)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -126,7 +115,7 @@ export default function CalendarComponent(props) {
           )
         case 4:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious4)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -140,7 +129,7 @@ export default function CalendarComponent(props) {
           )
         case 5:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious5)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -154,7 +143,7 @@ export default function CalendarComponent(props) {
           )
         case 6:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious6)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -168,7 +157,7 @@ export default function CalendarComponent(props) {
           )
         default:
           selectedClass = classnames(classes.fab)
-          if (props.travelDates.length !== props.cities.length){
+          if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
             return (
             <Fab variant="extended" className={selectedClass}>
               {city.name}
@@ -183,7 +172,7 @@ export default function CalendarComponent(props) {
       }
     }
     let selectedClass = classnames(classes.fab)
-    if (props.travelDates.length !== props.cities.length){
+    if (!Object.keys(props.cities[state.numberOfCities]).includes("departureDate")){
       return (
       <Fab variant="extended" className={selectedClass}>
         {city.name}
@@ -197,161 +186,60 @@ export default function CalendarComponent(props) {
     )
   });
 
-  // Displays the number of days in certain city
-  const numberOfDaysAtCity = props.cities.map((city) => {
-    const index = props.cities.indexOf(city);
-    let stayDuration = 0
-    if (props.travelDates[index]) {
-      let departureDate = props.travelDates[index].slice(-1)[0];
-      stayDuration = props.travelDates[index].length;
-    
-      if (index === 0 && props.travelDates[index]) {
-        return (
-          <div>
-            You are leaving {city} on the  {departureDate}
-          </div>
-        )
-      }
-      if (stayDuration === 1) {
-        return (
-          <div>
-            You are staying at {city} for {stayDuration} day, you are leaving on {departureDate}
-          </div>
-        )
-      }
-      return (
-        <div>
-          You are staying at {city} for {stayDuration} days, you are leaving on {departureDate}
-        </div>
-      )
+  const reset = function() {
+    for (let i = 0; i < props.cities.length; i++) {
+      delete props.cities[i].departureDate;
     }
-    
-    if (index === 0 ) {
-      return (
-        <div>
-          You are leaving {city} on the 
-        </div>
-      )
-    }
+    props.changeSelectedCity(props.cities[0].name);
+    setState({...state, numberOfCities: 0, lastDate: new Date()})
+  }
 
-    return (
-      <div>
-        You are staying at {city} for {stayDuration} days
-      </div>
-    )
-  })
-  
   const updateArrivingDate = function(city) {
+
     let index = 0
     for (let i = 0; i < props.cities.length; i++) {
       if (props.cities[i].name === city) {
         index = i;
       }
     }
-    
-    if (index === 0 && props.travelDates[index]) {
-      let departingDate = props.travelDates[index].slice(-1)[0];
-      let departDate = moment(departingDate);
-      let newDate = moment(departDate);
-      return newDate["_d"]
+    if (props.cities[index].departureDate) {
+      return moment(props.cities[index].departureDate)["_d"];
     }
-
-    if (!props.travelDates[index-1]) {
-      return new Date()
-    }
-
-    
-    let departingDate = props.travelDates[index-1].slice(-1)[0];
-    let departDate = moment(departingDate);
-    let newDate = moment(departDate).add(1, 'days');
-    return newDate["_d"]
-   
   }
-
-  const updateDates = function(startDate, stopDate, selectedCity) {
-    let index = 0
-    for (let i = 0; i < props.cities.length; i++) {
-      if (props.cities[i].name === selectedCity) {
-        index = i;
-      }
-    }
-    let currentDates = [...props.travelDates];
-    let currentDate = moment(startDate);
-    stopDate = moment(stopDate);
-    if (currentDates[index+1]) {
-      if(currentDates[index].includes(moment(stopDate)["_d"].toDateString())){
-        let foundIndex = currentDates[index].indexOf(moment(stopDate)["_d"].toDateString());
-        let joiningDates = currentDates[index].slice(foundIndex + 1, currentDates[index].length);
-        let changedDates = currentDates[index].slice(0, foundIndex + 1);
-        let updatedDates = joiningDates.concat(currentDates[index + 1]);
-        currentDates[index] = changedDates;
-        currentDates[index + 1] = updatedDates;
-      } else if (currentDates[index + 1].includes(moment(stopDate)["_d"].toDateString())) {
-        let foundIndex = currentDates[index + 1].indexOf(moment(stopDate)["_d"].toDateString());
-        let joiningDates = currentDates[index + 1].slice(0, foundIndex + 1);
-        let changedDates = currentDates[index + 1].slice(foundIndex + 1, currentDates[index + 1].length);
-        let updatedDates = currentDates[index].concat(joiningDates);
-        currentDates[index] = updatedDates;
-        currentDates[index + 1] = changedDates;
-      } else {
-        currentDates[index] = [];
-        while (currentDate <= stopDate) {
-          currentDates[index].push(moment(currentDate)["_d"].toDateString());
-          currentDate = moment(currentDate).add(1, 'days');
-        }
-        let newDates = currentDates.slice(0, index + 1);
-        currentDates = newDates;
-      }
-    } else {
-      let lastChosenDate = moment(currentDates[index - 1].slice(-1)[0]);
-      while (currentDate <= lastChosenDate) {
-        currentDate = moment(currentDate).add(1, 'days');
-      }
-      currentDates[index] = [];
-      while (currentDate <= stopDate) {
-        currentDates[index].push(moment(currentDate)["_d"].toDateString());
-        currentDate = moment(currentDate).add(1, 'days');
-      }
-      let newDates = currentDates.slice(0, index + 1);
-      currentDates = newDates;
-    }
-    
-    return currentDates;
-  }
-  
 
   const onChange = (values) => {
-
-    const arrivalDate = values[0];
-    const departingDate = values[1];
-    let dateArray = getDates(arrivalDate,departingDate);
-    const newDate = setNewDate(departingDate);
-
-    let newValues = props.travelDates.concat([dateArray]);
+    
+    const departingDate = values
+    let selectedCity = "";
     let cityNumber = state.numberOfCities;
     
-    if (state.numberOfCities < props.cities.length){
-      cityNumber++;
-      let selectedCity = "";
-      if (cityNumber < props.cities.length){
-        selectedCity = props.cities[cityNumber].name
-      }
-      if (cityNumber === props.cities.length) {
-        selectedCity = props.cities[cityNumber - 1].name;
-      }
-      if (props.travelDates.length < props.cities.length && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && !(moment(arrivalDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
-        setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-        props.updateTravelDates(newValues);
-        props.changeSelectedCity(selectedCity);
-      } 
+    if (cityNumber < props.cities.length){
+      selectedCity = props.cities[cityNumber].name
+    }
+    if (cityNumber === props.cities.length) {
+      selectedCity = props.cities[cityNumber - 1].name;
     }
 
-    if (state.numberOfCities === props.cities.length && props.city){
-      let updatedDates = updateDates(arrivalDate, departingDate, props.city);
-      let selectedCity = props.cities[updatedDates.length - 1].name;
-      if (updatedDates.length !== props.cities.length) {
-        cityNumber = updatedDates.length;
-      } else {
+    const newDate = setNewDate(departingDate);
+
+    if (props.cities[cityNumber]){
+      if (cityNumber === 0) {
+        console.log("in citynumber === 0")
+        props.updateDepartureDate(values.toDateString(), selectedCity);
+        cityNumber++;
+        selectedCity = props.cities[cityNumber].name
+        props.changeSelectedCity(selectedCity);
+        setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+      } else if (!props.cities[cityNumber].departureDate && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate))) {
+        props.updateDepartureDate(values.toDateString(), selectedCity);
+        if (cityNumber < props.cities.length - 1) {
+          cityNumber++;
+        }
+        selectedCity = props.cities[cityNumber].name
+        props.changeSelectedCity(selectedCity);
+        setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+      } else if (props.cities[cityNumber].departureDate && selectedCity){
+        let selectedCity = props.cities[cityNumber].name;
         let index = 0;
         for (let i = 0; i < props.cities.length; i++) {
           if (props.cities[i].name === props.city) {
@@ -359,10 +247,34 @@ export default function CalendarComponent(props) {
           }
         }
         selectedCity = props.cities[index].name;
+        if (index === 0) {
+          props.updateDepartureDate(values.toDateString(), selectedCity);
+          selectedCity = props.cities[index + 1].name;
+          props.changeSelectedCity(selectedCity);
+          if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) {
+            for (let i = index + 1; i < props.cities.length; i++) {
+              delete props.cities[i].departureDate;
+            }
+            cityNumber = index + 1
+          }
+          setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+        } else if (index > 0 && moment(values).isAfter(moment(props.cities[index-1].departureDate)["_d"])) {
+          props.updateDepartureDate(values.toDateString(), selectedCity);
+          if (props.cities[index + 1]){
+            selectedCity = props.cities[index + 1].name;
+          }
+          props.changeSelectedCity(selectedCity);
+          if (props.cities[index + 1]){
+            if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) {
+              for (let i = index + 1; i < props.cities.length; i++) {
+                delete props.cities[i].departureDate;
+              }
+              cityNumber = index + 1
+            }
+          }
+          setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
+        }
       }
-      setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-      props.updateTravelDates(updateDates);
-      props.changeSelectedCity(selectedCity);
     }
   }
 
@@ -371,30 +283,32 @@ export default function CalendarComponent(props) {
       <Grid item xs={12} sm={5}>
         <Paper className={classes.paper}>
           {cityList}
+          <Fab onClick={()=> reset()}> Reset </Fab>
         </Paper>
       </Grid>
       <Grid item sm={7} xs={12}>
         <Paper className={classes.paper}>
+          <p> When would you like to depart from {props.city}</p>
           <Calendar
             calendarType="US"
             minDate={new Date()}
-            selectRange={true}
             value={updateArrivingDate(props.city)}
+            selectRange = {false}
             onChange={(value) => {onChange(value)}}
             tileClassName={(tile) => {
               let setActive = [];
-              for (let i = 0; (i < props.travelDates.length) && (i < 6); i++) {
-                if (i === 0 && tile.view === "month" && props.travelDates[i].indexOf(tile.date.toDateString()) === (props.travelDates[i].length -1)){
+              for (let i = 0; i < props.cities.length; i++) {
+                if (i === 0 && tile.view === "month" && props.cities[i].departureDate === tile.date.toDateString()){
                   setActive.push(classnames([`react-calendar__tiles-leavingOriginCity`]));
-                }  else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && (props.travelDates[i].indexOf(tile.date.toDateString()) === 0) && props.travelDates[i].length === 1) {
+                } else if ( i > 0 && tile.view === "month" && props.cities[i].departureDate === tile.date.toDateString() && props.cities[i].departureDate === moment(props.cities[i-1].departureDate).add(1, 'days')["_d"].toDateString()) {
                   setActive.push(classnames([`react-calendar__tile-onlySelectedPrevious${i+1}`]))
-                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && props.travelDates[i].indexOf(tile.date.toDateString()) === 0) {
+                } else if ( i > 0 && tile.view === "month" && moment(props.cities[i].departureDate) >= moment(tile.date.toDateString()) && tile.date.toDateString() === moment(props.cities[i-1].departureDate).add(1, 'days')["_d"].toDateString()) {
                   setActive.push(classnames([`react-calendar__tile-firstSelectedPrevious${i+1}`]))
-                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString()) && props.travelDates[i].indexOf(tile.date.toDateString()) === (props.travelDates[i].length - 1)) {
-                  setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`])) 
-                } else if (tile.view === "month" && props.travelDates[i].includes(tile.date.toDateString())) {
+                } else if ( i > 0 && tile.view === "month" && props.cities[i].departureDate === tile.date.toDateString() && moment(tile.date.toDateString()) > moment(props.cities[i-1].departureDate)) {
+                  setActive.push(classnames([`react-calendar__tile-lastSelectedPrevious${i+1}`]))
+                } else if ( i > 0 && tile.view === "month" && moment(props.cities[i].departureDate) >= moment(tile.date.toDateString()) && moment(tile.date.toDateString()) > moment(props.cities[i-1].departureDate)) {
                   setActive.push(classnames([`react-calendar__tile-selectedPrevious${i+1}`]))
-                }
+                } 
               }
               return setActive
             }}
@@ -405,3 +319,5 @@ export default function CalendarComponent(props) {
   )
 
 }
+
+
