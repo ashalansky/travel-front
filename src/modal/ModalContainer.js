@@ -303,7 +303,6 @@ export default function(props) {
   const closeAndReset = function(){
     props.closeModal();
     dispatch({ type: HANDLE_RESET})
-
   }
 
   return (
