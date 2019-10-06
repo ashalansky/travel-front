@@ -172,7 +172,7 @@ export default function(props) {
     } else if (state.step === 1) {
       return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates = {state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity}></ModalLastPage>)
     }
   }
 
