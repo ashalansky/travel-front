@@ -14,10 +14,14 @@ const useStyles = makeStyles(theme => ({
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
-    justifyContent: 'center'
+    justifyContent: 'center',
+    fontFamily: 'Ubuntu'
   },
   div: {
     textAlign: 'center',
+  },
+  font: {
+    fontFamily: 'Ubuntu'
   }
 }));
 
@@ -26,13 +30,13 @@ export default function ModalNav(props) {
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={props.activeStep}>
+      <Stepper className={classes.font}activeStep={props.activeStep}>
         {props.steps.map((label, index) => {
           const stepProps = {};
           const labelProps = {};
           return (
             <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+              <StepLabel className={classes.font}{...labelProps}>{label}</StepLabel>
             </Step>
           );
         })}

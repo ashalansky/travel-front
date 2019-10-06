@@ -30,7 +30,7 @@ class Search extends Component {
     
   return (
      
-        <Geosuggest 
+        <Geosuggest
         onSuggestSelect={this.onSuggestSelect}
         types={types}
         placeholder="Add City"

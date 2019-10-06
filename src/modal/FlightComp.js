@@ -6,7 +6,6 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
@@ -41,7 +40,7 @@ const useStyles = makeStyles(theme => ({
     marginBottom: 5,
     fontFamily: 'Ubuntu',
     borderRadius: 15,
-    marginLeft: 10
+    marginLeft: 10,
   },
   flight: {
     display: 'grid',
@@ -53,8 +52,9 @@ const useStyles = makeStyles(theme => ({
     marginTop: 5,
     marginRight: 10,
     marginBottom: 5,
-    height: 60,
+    height: 90,
     fontFamily: 'Ubuntu',
+    border: '1px solid #8d9ae8',
     borderRadius: 15,
     color: '#a5a0aa',
     '&:hover': {
@@ -65,9 +65,9 @@ const useStyles = makeStyles(theme => ({
     // margin: theme.spacing(1),
     background: 'white',
     cursor: 'pointer',
-    border: '1px solid #f29e92',
+    border: '2px solid #f29e92',
     color: '#a5a0aa',
-    fontSize: 12,
+    fontSize: 20,
     width: '50%',
     margin: 'auto',
     padding: '2px 8px',
@@ -222,7 +222,7 @@ export default function FlightComp(props) {
               <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
                 YEG
               </Typography>
-              <Typography style={{ fontSize: 12}}>
+              <Typography style={{ fontSize: 16}}>
                 23 Oct, 16:30
               </Typography>
               <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>

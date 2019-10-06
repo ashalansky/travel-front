@@ -57,9 +57,7 @@ export default function AddButton(props) {
   return (
     <Grid container justify="center" xs={12}>
         <Fab variant="outlined" color="primary" aria-label="add" className={classes.fab}>
-     
-            <Search></Search>
- 
+            {/* <Search></Search> */}
         </Fab>
     </Grid>
   )

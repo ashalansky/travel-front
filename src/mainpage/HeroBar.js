@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
+import RemoveIcon from '@material-ui/icons/Remove';
 import AOS from 'aos'
 
 
@@ -49,9 +50,16 @@ const useStyles = makeStyles(theme => ({
     gridColumn: 2,
     placeSelf: 'center',
     color: 'white',
-    fontSize: 70,
-    animation: 0.3,
-    rotate: '90deg'
+    fontSize: 150,
+    transform: 'rotate(90deg)'
+  },
+  line: {
+    gridRow: 2,
+    gridColumn: 2,
+    placeSelf: 'center',
+    color: '#ffc250',
+    fontSize: 150,
+
   }
 }))
 
@@ -67,11 +75,28 @@ export default function HeroBanner(props) {
           data-aos-easing='ease-in-out' 
           data-aos-duration='700' 
           variant="h1" >Travel Bum</Typography>
+          <RemoveIcon className={classes.line}
+            data-aos='fade-right' 
+            data-aos-delay='1300' 
+            data-aos-easing='ease-in-out' 
+            data-aos-duration='1000'></RemoveIcon>
+          <RemoveIcon className={classes.line}
+            data-aos='fade-right' 
+            data-aos-delay='1200' 
+            data-aos-easing='ease-in-out' 
+            data-aos-duration='1000'></RemoveIcon>
+          <RemoveIcon className={classes.line}
+            data-aos='fade-right' 
+            data-aos-delay='1100' 
+            data-aos-easing='ease-in-out' 
+            data-aos-duration='1000'></RemoveIcon>
         <AirplanemodeActiveIcon className={classes.plane} 
-          data-aos='fade-up' 
+          data-aos='fade-right' 
           data-aos-delay='1000' 
           data-aos-easing='ease-in-out' 
-          data-aos-duration='900'></AirplanemodeActiveIcon>
+          data-aos-duration='1000'
+          >
+          </AirplanemodeActiveIcon>
         <Button className={classes.button} 
           onClick={() => props.setModal(!props.modalOn)}
           data-aos='fade-up' 

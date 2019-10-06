@@ -22,7 +22,8 @@ const useStyles = makeStyles({
    width: "90%",
    height: "95%",
    margin: "auto",
-   background: "white"
+   background: "white",
+   borderColor: '#a5a0aa'
  },
  div: {
   textAlign: 'center',

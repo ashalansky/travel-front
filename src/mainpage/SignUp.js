@@ -42,9 +42,9 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     border: '1px solid #f29e92',
     color: '#a5a0aa',
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    color: 'white',
     '&:hover': {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-      color: 'white',
       boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
     }
   }
