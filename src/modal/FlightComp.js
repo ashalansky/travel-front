@@ -16,28 +16,29 @@ const useStyles = makeStyles(theme => ({
     justify: 'center',
     margin: 'auto',
     display: 'grid',
+    gridTemplateRows: '90% 10%',
   },
     formControl: {
       margin: theme.spacing(1),
-      minWidth: 10,
+      minWidth: 15,
       color: '#9b8bf7',
       padding: '0px',
+      width: '50%'
     }, 
     formInput: {
       color: '#9b8bf7', 
       fontSize: 10,
   },
   paper: {
+    justifyItems: 'center',
     display: 'grid',
-    gridTemplateColumns: '50% 50%',
-    gridTemplateRows: '50% 50%',
-    textAlign: "center",
+    gridTemplateColumns: '100%',
+    gridTemplateRows: '25% 25% 25% 25%',
     alignItems: 'center',
     margin: 'auto',
     padding: 10,
     marginTop: 5,
     marginBottom: 5,
-    height: 'auto',
     fontFamily: 'Ubuntu',
     borderRadius: 15,
     marginLeft: 10
@@ -76,7 +77,7 @@ const useStyles = makeStyles(theme => ({
       color: 'white',
       boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
     }
-  }
+  },
 }));
 
 // const callApi = (() => {
@@ -116,6 +117,8 @@ const useStyles = makeStyles(theme => ({
 
 export default function FlightComp(props) {
   const [values, setValues] = React.useState({
+    children: '',
+    infants: '',
     adults: '',
     name: 'hai',
   })
@@ -137,8 +140,8 @@ export default function FlightComp(props) {
       <Paper>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
-            <Paper className={classes.paper} style={{gridColumn: 1}}>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1}}>
+            <Paper className={classes.paper}>
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 1}}>
                 <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
                   Adults
                 </InputLabel>
@@ -161,12 +164,12 @@ export default function FlightComp(props) {
                   <MenuItem value={3}>5</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 2}}>
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 2}}>
                 <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
                   Children
                 </InputLabel>
                 <Select
-                  value={values.adults}
+                  value={values.children}
                   onChange={handleChange}
                   labelWidth={labelWidth}
                   inputProps={{
@@ -184,12 +187,12 @@ export default function FlightComp(props) {
                   <MenuItem value={3}>5</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 2}}>
+              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 3}}>
                 <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
                   Infants
                 </InputLabel>
                 <Select
-                  value={values.adults}
+                  value={values.infants}
                   onChange={handleChange}
                   labelWidth={labelWidth}
                   inputProps={{
@@ -207,6 +210,7 @@ export default function FlightComp(props) {
                   <MenuItem value={3}>5</MenuItem>
                 </Select>
               </FormControl>
+              <Button variant="outlined" className={classes.button} style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5}}>Generate Flights </Button>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
