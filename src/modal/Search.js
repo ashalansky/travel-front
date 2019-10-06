@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-
 import Geosuggest from 'react-geosuggest';
 import './geosuggest.css';
 
@@ -16,8 +15,10 @@ class Search extends Component {
 
   onSuggestSelect(suggest) {
   if(suggest){
-    this.addCity({name: suggest.gmaps.name, lat: suggest.location.lat, lng: suggest.location.lng});
+    this.addCity({name: suggest.gmaps.name, lat: suggest.location.lat, lng: suggest.location.lng, photo: suggest.gmaps.photos[0].getUrl()});
   }
+  console.log(suggest)
+  console.log(suggest.gmaps.photos[0].getUrl())
 }
 
   render() {
@@ -27,7 +28,7 @@ class Search extends Component {
         <Geosuggest 
         onSuggestSelect={this.onSuggestSelect}
         types={types}
-        placeholder="Find City"
+        placeholder="Add City"
         queryDelay="500"
         addCity={this.props.addCity}
         />     

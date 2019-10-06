@@ -42,7 +42,8 @@ class Map extends Component {
       )
     }
     map.fitBounds(bounds)
-
+    if(this.props.routes.length === 1)
+     map.setOptions({ zoom: 0})
   }
 
   createMarkers(routes){

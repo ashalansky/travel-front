@@ -35,10 +35,10 @@ export default function(props) {
       <AppBar position="fixed" className={classes.root}>
         <Toolbar className={classes.root}>
           <Flight className={classes.plane}/>
-          <Typography variant="h5" className={classes.title}>
+`          <Typography variant="h5" className={classes.title}>
             Travel-Bum
-          </Typography>
-          <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
+          </Typography>`
+          <Button  color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
           <Button color="inherit" className={classes.button} onClick={() => props.setSignUpModal(!props.SignUpOn)}>Sign Up</Button>
         </Toolbar>
       </AppBar>

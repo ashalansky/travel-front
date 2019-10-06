@@ -51,25 +51,16 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function AddButton() {
+export default function AddButton(props) {
   const classes = useStyles();
 
 
   return (
     <Grid container justify="center" xs={12}>
         <Fab variant="outlined" color="primary" aria-label="add" className={classes.fab}>
-          <div className={classes.search}>
-            <div className={classes.addIcon}>
-              <AddIcon />
-            </div>
-            <InputBase
-              placeholder='Add City'
-              classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-              }}>
-            </InputBase>
-          </div>
+     
+            <Search></Search>
+ 
         </Fab>
     </Grid>
   )
