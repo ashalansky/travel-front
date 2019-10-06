@@ -5,7 +5,6 @@ import Calendar from 'react-calendar';
 import './styles/calendar.css';
 import moment from 'moment';
 import Fab from '@material-ui/core/Fab'
-import { resetWarningCache } from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   fab: {
@@ -45,17 +44,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const classnames = require('classnames');
-
-const getDates = function (startDate, stopDate) {
-  let dateArray = [];
-  let currentDate = moment(startDate);
-  stopDate = moment(stopDate);
-  while (currentDate <= stopDate) {
-      dateArray.push(moment(currentDate)["_d"].toDateString());
-      currentDate = moment(currentDate).add(1, 'days');
-  }
-  return dateArray;
-};
 
 const setNewDate = function (departingDate) {
   let departDate = moment(departingDate);
@@ -288,7 +276,6 @@ export default function CalendarComponent(props) {
         }
       }
     }
-    console.log(props.cities);
   }
 
   return (
