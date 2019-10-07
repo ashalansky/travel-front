@@ -34,28 +34,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-// const LOGOUT = 'LOGOUT';
-
-// const reducer = ((state, action) => {
-//   switch(action.type) {
-//     case LOGOUT:
-//       return {...state}
-//   }
-// })
-
-// export default function Logout(props) {
-//   const [state, dispatch] = useReducer(reducer, {
-//     username: "",
-//     email: "",
-//     password: "",
-//     city: ""
-//   })
-
-//   const logout = (() => {
-//     props.logout(state.username, state.email, state.password, state.city)
-//   })
-// }
-
 
 export default function(props) {
   const classes = useStyles();
@@ -73,7 +51,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
-              <Button variant="h5" color="inherit" className={classes.button}>My Trips</Button>
+              <Button variant="h5" color="inherit" className={classes.button} >My Trips</Button>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>
