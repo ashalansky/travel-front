@@ -116,7 +116,9 @@ export default function FlightComp(props) {
       "params": apiParams
       })
       .then((response)=>{
-        console.log(response)
+        setTimeout(()=> {
+          console.log(response)
+        }, 2000)
       })
       .catch((error)=>{
         console.log(error)

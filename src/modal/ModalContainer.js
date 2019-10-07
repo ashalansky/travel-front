@@ -210,12 +210,12 @@ export default function(props) {
 
   const departureDateCheck = function () {
     let counter = 0;
-    for (let route of state.routes) {
-      if (route.departureDate) {
+    for (let i =0; i < state.routes.length - 1; i++) {
+      if (state.routes[i].departureDate) {
         counter ++
       }
     }
-    if (counter === state.routes.length) {
+    if (counter === state.routes.length -1 ) {
       return true
     } else {
       return false
