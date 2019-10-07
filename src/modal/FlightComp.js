@@ -10,6 +10,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 
+const axios = require("axios");
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -80,41 +81,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-// const callApi = (() => {
-  
-//   axios({
-//     "method":"GET",
-//     "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
-//     "headers":{
-//     "content-type":"application/octet-stream",
-//     "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
-//     "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
-//     },"params":{
-//     "infants_lap":"0",
-//     "children":"0",
-//     "seniors":"0",
-//     "country":"CA",
-//     "from0":"YYC",
-//     "to0":"YEG",
-//     "date0":"Jan 20 2020",
-//     "from1":"YEG",
-//     "to1":"YVR",
-//     "date1":"Jan 30 2020",
-//     "from2":"YVR",
-//     "to2":"YYC",
-//     "date2":"Feb 7 2020",
-//     "pax":"1",
-//     "cabin":"Coach"
-//     }
-//     })
-//     .then((response)=>{
-//       console.log(response)
-//     })
-//     .catch((error)=>{
-//       console.log(error)
-//     })
-// })
-
 export default function FlightComp(props) {
   const [values, setValues] = React.useState({
     children: '',
@@ -122,6 +88,88 @@ export default function FlightComp(props) {
     adults: '',
     name: 'hai',
   })
+
+  const callFlightsApi = (() => {
+    
+    let apiParams = {
+      "infants_lap":values.infants || 0,
+      "children": values.children || 0,
+      "seniors": "0",
+      "pax": values.adults || 0,
+      "country":"CA",
+      "cabin":"Coach"
+    }
+    for (let i = 0 ; i < props.cities.length - 1; i++) {
+      apiParams[`from${i}`] = props.cities[i].cityCode
+      apiParams[`to${i}`] = props.cities[i + 1].cityCode
+      apiParams[`date${i}`] = props.cities[i].departureDate
+    }
+
+    axios({
+      "method":"GET",
+      "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
+      "headers":{
+      "content-type":"application/octet-stream",
+      "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
+      "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
+      },
+      "params": apiParams
+      })
+      .then((response)=>{
+        console.log(response)
+      })
+      .catch((error)=>{
+        console.log(error)
+      })
+  })
+  
+
+  const getCityCodes = (() => {
+    console.log("in getCityCodes");
+    for (let i = 0; i < props.cities.length; i++) {
+
+    axios({
+      "method":"GET",
+      "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/locations/search",
+      "headers":{
+      "content-type":"application/octet-stream",
+      "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
+      "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
+      },"params":{
+      "query": props.cities[i].name
+      }
+      })
+      .then((response)=>{
+        props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
+      })
+      .catch((error)=>{
+        console.log(error)
+      });
+
+    if (i === props.cities.length - 1) {
+      axios({
+        "method":"GET",
+        "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/locations/search",
+        "headers":{
+        "content-type":"application/octet-stream",
+        "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
+        "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
+        },"params":{
+        "query": props.cities[i].name
+        }
+        })
+        .then((response)=>{
+          props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
+        })
+        .then(() => {
+          callFlightsApi();
+        })
+        .catch((error)=>{
+          console.log(error)
+        });
+    }
+    }
+  });
 
   const handleChange = event => {
     setValues(oldValues => ({
@@ -210,7 +258,7 @@ export default function FlightComp(props) {
                   <MenuItem value={3}>5</MenuItem>
                 </Select>
               </FormControl>
-              <Button variant="outlined" className={classes.button} style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5}}>Generate Flights </Button>
+              <Button variant="outlined" className={classes.button} style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5} } onClick={() => getCityCodes()}>Generate Flights </Button>
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
