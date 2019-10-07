@@ -156,7 +156,9 @@ const reducer = function(state, action) {
     case UPDATE_FLIGHT_PLAN:
       return {...state, flightPlans: action.flightPlans}
     case SELECT_FLIGHT_PLAN:
-      return {...state, selectedFlight: action.selectedFlight}
+      let updatedFlightPlans = [...state.selectedFlightPlans];
+      updatedFlightPlans.push(action.selectedFlight)
+      return {...state, selectedFlightPlans: updatedFlightPlans}
     default:
       return {...state};
   }
@@ -171,7 +173,7 @@ export default function(props) {
     key: 1,
     selectedCity: "",
     flightPlans: [],
-    selectedFlight: {}
+    selectedFlightPlans: []
   })
 
   const addCity = function(city) {
@@ -218,7 +220,7 @@ export default function(props) {
     } else if (state.step === 1) {
       return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} flightPlans={state.flightPlans} selectedFlight={state.selectedFlight} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan}></ModalLastPage>)
     }
   }
 
