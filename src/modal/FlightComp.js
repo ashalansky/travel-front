@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import VerticalTabs from './TabPanel'
 require('dotenv').config()
 
 const axios = require("axios");
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => ({
       color: '#9b8bf7',
       padding: '0px',
       width: '50%'
-    }, 
+    },
     formInput: {
       color: '#9b8bf7', 
       fontSize: 10,
@@ -202,6 +203,8 @@ export default function FlightComp(props) {
       [event.target.name]: event.target.value,
     }));
   };
+
+
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
   React.useEffect(() => {
@@ -316,6 +319,26 @@ export default function FlightComp(props) {
           </Grid>
           <Grid item xs={12} sm={7}>
             {flightList()}
+            <VerticalTabs>
+              <Paper className={classes.flight}>
+                <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+                  YYC
+                </Typography>
+                <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+                <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+                  YEG
+                </Typography>
+                <Typography style={{ fontSize: 16}}>
+                  23 Oct, 16:30
+                </Typography>
+                <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
+                  $450
+                </Typography>
+                <Button variant="outlined" className={classes.button}>
+                  SELECT
+                </Button>
+              </Paper>
+            </VerticalTabs>
             <Paper className={classes.flight}>
               <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
                 YYC
