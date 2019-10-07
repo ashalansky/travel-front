@@ -150,7 +150,6 @@ const reducer = function(state, action) {
           newCityCodeInformation[i]["cityCode"] = action.cityCode;
         }
       }
-      console.log("new city code information", newCityCodeInformation);
       return {...state, routes: newCityCodeInformation}
     return
     default:

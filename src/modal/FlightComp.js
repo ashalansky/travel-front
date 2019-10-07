@@ -116,8 +116,30 @@ export default function FlightComp(props) {
       "params": apiParams
       })
       .then((response)=>{
-        setTimeout(()=> {
-          console.log(response)
+        return setTimeout(()=> {
+          console.log(response);
+          let cheapestFlights = [];
+          let priceList = [];
+          const itineraryList = response.data.itins
+
+          for (let itinerary in itineraryList) {
+            if (!priceList.includes(itineraryList[itinerary].unround_price)){
+              priceList.push(itineraryList[itinerary].unround_price)
+            }
+          }
+
+          priceList.sort((a,b) => a - b);
+
+          while (cheapestFlights.length < 0) {
+            for (let price of priceList) {
+              for (let itinerary in itineraryList) {
+                if (itineraryList[itinerary].unround_price === price){
+                  cheapestFlights.push(itineraryList[itinerary]);
+                }
+              }
+            }
+          }
+
         }, 2000)
       })
       .catch((error)=>{
@@ -127,7 +149,6 @@ export default function FlightComp(props) {
   
 
   const getCityCodes = (() => {
-    console.log("in getCityCodes");
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
@@ -184,6 +205,7 @@ export default function FlightComp(props) {
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+
   const classes = useStyles();
 
   return (
