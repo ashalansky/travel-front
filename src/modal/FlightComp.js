@@ -212,7 +212,7 @@ export default function FlightComp(props) {
 
   const flightList = function () {
     if (props.flightPlans.length) {
-      props.flightPlans.map((flightPlan) => {
+      let flightPlans = props.flightPlans.map((flightPlan) => {
         return (
           <Paper className={classes.flight}>
             <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
