@@ -1,5 +1,4 @@
 import React from 'react'
-// import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -8,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+require('dotenv').config()
 
 const axios = require("axios");
 
@@ -116,7 +116,31 @@ export default function FlightComp(props) {
       "params": apiParams
       })
       .then((response)=>{
-        console.log(response)
+        return setTimeout(()=> {
+          console.log(response);
+          let cheapestFlights = [];
+          let priceList = [];
+          const itineraryList = response.data.itins
+
+          for (let itinerary in itineraryList) {
+            if (!priceList.includes(itineraryList[itinerary].unrounded_price)){
+              priceList.push(itineraryList[itinerary].unrounded_price)
+            }
+          }
+
+          priceList.sort((a,b) => a - b);
+
+          while (cheapestFlights.length < 0) {
+            for (let price of priceList) {
+              for (let itinerary in itineraryList) {
+                if (itineraryList[itinerary].unrounded_price === price){
+                  cheapestFlights.push(itineraryList[itinerary]);
+                }
+              }
+            }
+          }
+          props.updateFlightPlans(cheapestFlights);
+        }, 2000)
       })
       .catch((error)=>{
         console.log(error)
@@ -125,7 +149,8 @@ export default function FlightComp(props) {
   
 
   const getCityCodes = (() => {
-    console.log("in getCityCodes");
+    console.log(process.env.REACT_APP_HIPMUNK_HOST);
+    console.log(process.env.REACT_APP_HIPMUNK_KEY)
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
@@ -182,7 +207,35 @@ export default function FlightComp(props) {
   React.useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
+
   const classes = useStyles();
+
+  const flightList = function () {
+    if (props.flightPlans.length) {
+      props.flightPlans.map((flightPlan) => {
+        return (
+          <Paper className={classes.flight}>
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+              {props.cities[0].cityCode}
+            </Typography>
+            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+              {props.cities[props.cities.length - 1].cityCode}
+            </Typography>
+            <Typography style={{ fontSize: 16}}>
+              23 Oct, 16:30
+            </Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
+              {flightPlan.unrounded_price}
+            </Typography>
+            <Button variant="outlined" className={classes.button} onClick={() => props.selectFlightPlan(flightPlan)}>
+              SELECT
+            </Button>
+          </Paper>
+        )
+      })
+    }
+  }
 
   return (
       <Paper>
@@ -262,6 +315,7 @@ export default function FlightComp(props) {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
+            {flightList()}
             <Paper className={classes.flight}>
               <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
                 YYC
