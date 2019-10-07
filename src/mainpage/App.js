@@ -8,28 +8,12 @@ import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
 import axios from 'axios';
 
-const register = ((username, email, password, city) => {
-  let url = "http://localhost:8080/users/register";
-  let data = {
-    username,
-    email,
-    password,
-    city
-  }
-  axios.post(
-    url,
-    data
-  )
-  .then(() => {
-    console.log("added new user");
-  })
-})
+
 
 export default function App() {
   const [modalOn, setModal] = useState(false);
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
-
   const [username, setUsername] = useState("");
 
   const login = ((email, password) => {
@@ -38,6 +22,26 @@ export default function App() {
        let name = data.data.user[0].username 
        setUsername(name)
      });
+  })
+
+  const register = ((username, email, password, city) => {
+    let url = "http://localhost:8080/users/register";
+    let data = {
+      username, 
+      email,
+      password,
+      city
+    }
+    console.log(data)
+    axios.post(
+      url,
+      data
+    )
+    .then((data) => {
+      let name = data.data.user[0].username 
+      setUsername(name)
+    });
+    
   })
    
   const logout = (() => {
