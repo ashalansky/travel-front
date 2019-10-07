@@ -103,7 +103,7 @@ const reducer = function(state, action) {
         let currentRoutes = [...action.routes];
         let currentKey = state.key;
         let newRoutes = currentRoutes.concat([newCity]);
-        return {...state, routes: newRoutes, key: currentKey + 1, selectedCity: newRoutes[0].name}
+        return {...state, routes: newRoutes, key: currentKey + 1, selectedCity: newRoutes[0].id}
       }
       return {...state}
     case DELETE_CITY:
@@ -139,7 +139,7 @@ const reducer = function(state, action) {
     case UPDATE_DEPARTURE_DATE:
       let updatedRoutesInformation = [...state.routes]
       for (let i = 0; i < updatedRoutesInformation.length; i++) {
-        if (updatedRoutesInformation[i].name === action.selectedCity) {
+        if (updatedRoutesInformation[i].id === action.selectedCity) {
           updatedRoutesInformation[i]["departureDate"] = action.departureDate;
         }
       }
@@ -171,7 +171,7 @@ export default function(props) {
     step: 0,
     routes: [],
     key: 1,
-    selectedCity: "",
+    selectedCity: 0,
     flightPlans: [],
     selectedFlightPlans: []
   })
