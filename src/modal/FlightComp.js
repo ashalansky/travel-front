@@ -32,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   paper: {
     justifyItems: 'center',
     display: 'grid',
-    gridTemplateColumns: '100%',
+    gridTemplateColumns: '50% 50%',
     gridTemplateRows: '25% 25% 25% 25%',
     alignItems: 'center',
     margin: 'auto',
