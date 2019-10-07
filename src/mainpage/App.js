@@ -25,10 +25,7 @@ const register = ((username, email, password, city) => {
   })
 })
 
-
-
 export default function App() {
-
   const [modalOn, setModal] = useState(false);
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
@@ -62,7 +59,6 @@ export default function App() {
         <div><CardGrid setModal={setModal} modalOn={modalOn}></CardGrid></div>
         <div><AppDescription></AppDescription></div>
       </div>
-     
   )
 }
 

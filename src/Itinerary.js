@@ -7,7 +7,7 @@ import SaveAltIcon from "@material-ui/icons/SaveAlt";
 
 const useStyles = makeStyles({
   mainContainer: {
-    marginTop: "80px",
+    marginTop: "70px",
   },
   cityContainer: {
     width: "100%",
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
   button: {
     position: "fixed",
-    marginTop: "80px",
+    marginTop: "70px",
     marginRight: "10px",
     top: 0,
     right: 0,
@@ -46,7 +46,6 @@ const useStyles = makeStyles({
     borderTopRightRadius: 0,
     zIndex: 10
   },
-  
 });
 
 const sampleCitydata = [{
@@ -104,11 +103,9 @@ export default function Itinerary(props) {
         <p>Flight Component Here</p>
       </div>
       </div>
-    
     )
-    })
+  })
 
-  
   return (
     <Container className={classes.mainContainer} maxWidth="md">
       <NavBar />
