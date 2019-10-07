@@ -43,15 +43,21 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: 300,
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    fontFamily: 'Ubuntu',
+    borderRadius: 15,
+    marginLeft: 10,
+    height: "60vh"
   },
   tabs: {
+    minWidth: "200px",
     borderRight: `1px solid ${theme.palette.divider}`,
   },
   tabPanel: {
-    width: '100%',
     overflow: 'auto',
-    maxHeight: 300
+    width: "100%",
   },
   flight: {
     display: 'grid',
@@ -91,7 +97,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function VerticalTabs() {
+export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 
@@ -99,8 +105,24 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
+  const createTabs = function () {
+    console.log(props.cities);
+    let tabs = [];
+    for (let i = 0; i < props.cities.length - 1; i++) {
+      let message = `${props.cities[i].name} > ${props.cities[i + 1].name}`
+      tabs.push(
+        <Tab label={message} {...a11yProps(i)} />
+      )
+    }
+    return tabs;
+  }
+
+  const tabPanels = function () {
+    
+  }
+
   return (
-    <div className={classes.root}>
+    <Paper className={classes.root}>
       <Tabs
         orientation="vertical"
         variant="scrollable"
@@ -109,13 +131,9 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
         className={classes.tabs}
       >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
+        {createTabs()}
       </Tabs>
+      {tabPanels()}
       <TabPanel value={value} index={0} 
         className={classes.tabPanel}
         orientation="vertical"
@@ -209,6 +227,6 @@ export default function VerticalTabs() {
       <TabPanel value={value} index={5} className={classes.tabPanel}>
         Item Six
       </TabPanel>
-    </div>
+    </Paper>
   );
 }

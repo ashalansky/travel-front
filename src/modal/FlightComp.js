@@ -50,7 +50,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 5,
     marginRight: 10,
     marginBottom: 5,
-    height: 90,
+    height: "60vh",
     fontFamily: 'Ubuntu',
     border: '1px solid #8d9ae8',
     borderRadius: 15,
@@ -118,19 +118,14 @@ export default function FlightComp(props) {
   }
 
   return (
-      <Paper>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
-            <Paper>
-              <PeopleTab></PeopleTab>
-            </Paper>
+              <PeopleTab ></PeopleTab>
           </Grid>
           <Grid item xs={12} sm={7}>
-            {flightList()}
-            <VerticalTabs>
+            <VerticalTabs cities={props.cities}>
             </VerticalTabs>
           </Grid>
         </Grid>
-      </Paper>
   )
 }

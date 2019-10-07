@@ -33,6 +33,7 @@ const useStyles = makeStyles(theme => ({
     fontFamily: 'Ubuntu',
     borderRadius: 15,
     marginLeft: 10,
+    height: "60vh"
   },
   button: {
     // margin: theme.spacing(1),
