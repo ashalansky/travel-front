@@ -261,8 +261,8 @@ export default function FlightComp(props) {
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
                 </Select>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 2}}>
@@ -284,8 +284,8 @@ export default function FlightComp(props) {
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
                 </Select>
               </FormControl>
               <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 3}}>
@@ -307,8 +307,8 @@ export default function FlightComp(props) {
                   <MenuItem value={1}>1</MenuItem>
                   <MenuItem value={2}>2</MenuItem>
                   <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
+                  <MenuItem value={4}>4</MenuItem>
+                  <MenuItem value={5}>5</MenuItem>
                 </Select>
               </FormControl>
               <Button variant="outlined" className={classes.button} style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5} } onClick={() => getCityCodes()}>Generate Flights </Button>
