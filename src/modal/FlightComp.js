@@ -123,8 +123,8 @@ export default function FlightComp(props) {
           const itineraryList = response.data.itins
 
           for (let itinerary in itineraryList) {
-            if (!priceList.includes(itineraryList[itinerary].unround_price)){
-              priceList.push(itineraryList[itinerary].unround_price)
+            if (!priceList.includes(itineraryList[itinerary].unrounded_price)){
+              priceList.push(itineraryList[itinerary].unrounded_price)
             }
           }
 
@@ -133,13 +133,13 @@ export default function FlightComp(props) {
           while (cheapestFlights.length < 0) {
             for (let price of priceList) {
               for (let itinerary in itineraryList) {
-                if (itineraryList[itinerary].unround_price === price){
+                if (itineraryList[itinerary].unrounded_price === price){
                   cheapestFlights.push(itineraryList[itinerary]);
                 }
               }
             }
           }
-
+          props.updateFlightPlans(cheapestFlights);
         }, 2000)
       })
       .catch((error)=>{
@@ -207,6 +207,33 @@ export default function FlightComp(props) {
   }, []);
 
   const classes = useStyles();
+
+  const flightList = function () {
+    if (props.flightPlans.length) {
+      props.flightPlans.map((flightPlan) => {
+        return (
+          <Paper className={classes.flight}>
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+              {props.cities[0].cityCode}
+            </Typography>
+            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+              {props.cities[props.cities.length - 1].cityCode}
+            </Typography>
+            <Typography style={{ fontSize: 16}}>
+              23 Oct, 16:30
+            </Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
+              {flightPlan.unrounded_price}
+            </Typography>
+            <Button variant="outlined" className={classes.button} onClick={() => props.selectFlightPlan(flightPlan)}>
+              SELECT
+            </Button>
+          </Paper>
+        )
+      })
+    }
+  }
 
   return (
       <Paper>
@@ -286,6 +313,7 @@ export default function FlightComp(props) {
             </Paper>
           </Grid>
           <Grid item xs={12} sm={7}>
+            {flightList()}
             <Paper className={classes.flight}>
               <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
                 YYC

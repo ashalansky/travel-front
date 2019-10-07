@@ -17,6 +17,8 @@ const CHANGE_SELECTED_CITY = "CHANGE_SELECTED_CITY";
 const UPDATE_TRAVEL_DATES = "UPDATE_TRAVEL_DATES";
 const UPDATE_DEPARTURE_DATE = "UPDATE_DEPARTURE_DATE";
 const UPDATE_CITY_CODE = "UPDATE_CITY_CODE";
+const UPDATE_FLIGHT_PLAN = "UPDATE_FLIGHT_PLAN";
+const SELECT_FLIGHT_PLAN = "SELECT_FLIGHT_PLAN"
 
 const useStyles = makeStyles({
  modal: {
@@ -151,7 +153,10 @@ const reducer = function(state, action) {
         }
       }
       return {...state, routes: newCityCodeInformation}
-    return
+    case UPDATE_FLIGHT_PLAN:
+      return {...state, flightPlans: action.flightPlans}
+    case SELECT_FLIGHT_PLAN:
+      return {...state, selectedFlight: action.selectedFlight}
     default:
       return {...state};
   }
@@ -165,7 +170,8 @@ export default function(props) {
     routes: [],
     key: 1,
     selectedCity: "",
-    travelDates : []
+    flightPlans: [],
+    selectedFlight: {}
   })
 
   const addCity = function(city) {
@@ -195,6 +201,15 @@ export default function(props) {
   const updateCityCode = function (cityName, cityCode) {
     dispatch({ type: UPDATE_CITY_CODE, cityName, cityCode});
   }
+
+  const updateFlightPlans = function (flightPlans) {
+    dispatch( {type: UPDATE_FLIGHT_PLAN, flightPlans})
+  }
+
+  const selectFlightPlan = function (selectedFlight) {
+    dispatch( {type:SELECT_FLIGHT_PLAN, selectedFlight})
+  }
+
   const steps = getSteps();
 
   const currentDisplay  = function(){
@@ -203,7 +218,7 @@ export default function(props) {
     } else if (state.step === 1) {
       return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} updateCityCode={updateCityCode}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} flightPlans={state.flightPlans} selectedFlight={state.selectedFlight} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan}></ModalLastPage>)
     }
   }
 
