@@ -1,5 +1,4 @@
 import React from 'react'
-// import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -8,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+require('dotenv').config()
 
 const axios = require("axios");
 
@@ -149,6 +149,8 @@ export default function FlightComp(props) {
   
 
   const getCityCodes = (() => {
+    console.log(process.env.REACT_APP_HIPMUNK_HOST);
+    console.log(process.env.REACT_APP_HIPMUNK_KEY)
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
