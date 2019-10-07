@@ -40,7 +40,7 @@ export default function(props) {
   const classes = useStyles();
 
   const linkParams = {
-    pathname: "/courses",
+    pathname: "/itinerary",
     state: { user: props.user }
   }
 

@@ -110,6 +110,10 @@ const sampleCitydata = [{
 export default function Itinerary(props) {
   const classes = useStyles();
 
+  const test = function () {
+    console.log(props);
+  }
+
   const tripList = sampleCitydata.map(city => {
     return(
       <div>
@@ -174,12 +178,13 @@ export default function Itinerary(props) {
 
   return (
     <Container className={classes.mainContainer} maxWidth="md">
-      <NavBar />
+      <NavBar user={props.location.state.user}/>
       <Button className={classes.button}>
           <SaveAltIcon></SaveAltIcon>
            Save Trip
           </Button>
     {tripList}
+    <Button onClick={()=>test()}> test </Button>
     </Container>
   );
 }
