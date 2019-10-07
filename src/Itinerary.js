@@ -159,10 +159,10 @@ export default function Itinerary(props) {
                 JFK
               </Typography>
               <Typography style={{ fontSize: 16}}>
-                23 Oct, 16:30
+                25 Oct, 16:30
               </Typography>
               <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
-                $450
+                $650
               </Typography>
             </Paper></p>
         <p>Flight Component Here</p>
