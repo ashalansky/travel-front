@@ -90,10 +90,8 @@ export default function FlightComp(props) {
   const classes = useStyles();
 
   const flightList = function () {
-    console.log(props);
-    console.log(props.flightPlans)
-    if (props.flightPlans.length) { 
-      props.flightPlans.map((flightPlan) => {
+    if (props.flightPlans.length) {
+      let flightPlans = props.flightPlans.map((flightPlan) => {
         return (
           <Paper className={classes.flight}>
             <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
