@@ -12,10 +12,11 @@ const HANDLE_BACK = "HANDLE_BACK";
 const HANDLE_RESET = "HANDLE_RESET";
 const ADD_CITY = "ADD_CITY";
 const DELETE_CITY = "DELETE_CITY";
-const ON_DRAG_END = "ON_DRAG_END"
-const CHANGE_SELECTED_CITY = "CHANGE_SELECTED_CITY"
-const UPDATE_TRAVEL_DATES = "UPDATE_TRAVEL_DATES"
-const UPDATE_DEPARTURE_DATE = "UPDATE_DEPARTURE_DATE"
+const ON_DRAG_END = "ON_DRAG_END";
+const CHANGE_SELECTED_CITY = "CHANGE_SELECTED_CITY";
+const UPDATE_TRAVEL_DATES = "UPDATE_TRAVEL_DATES";
+const UPDATE_DEPARTURE_DATE = "UPDATE_DEPARTURE_DATE";
+const UPDATE_CITY_CODE = "UPDATE_CITY_CODE";
 
 const useStyles = makeStyles({
  modal: {
@@ -141,6 +142,17 @@ const reducer = function(state, action) {
         }
       }
       return {...state, routes: updatedRoutesInformation}
+    case UPDATE_CITY_CODE:
+      
+      let newCityCodeInformation = [...state.routes]
+      for (let i = 0; i < newCityCodeInformation.length; i++) {
+        if (newCityCodeInformation[i].name.toLowerCase() === action.cityName) {
+          newCityCodeInformation[i]["cityCode"] = action.cityCode;
+        }
+      }
+      console.log("new city code information", newCityCodeInformation);
+      return {...state, routes: newCityCodeInformation}
+    return
     default:
       return {...state};
   }
@@ -181,15 +193,18 @@ export default function(props) {
     dispatch({ type: UPDATE_DEPARTURE_DATE, departureDate, selectedCity})
   }
 
+  const updateCityCode = function (cityName, cityCode) {
+    dispatch({ type: UPDATE_CITY_CODE, cityName, cityCode});
+  }
   const steps = getSteps();
 
   const currentDisplay  = function(){
     if (state.step === 0) {
       return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
-      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates = {state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
+      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} updateCityCode={updateCityCode}></ModalLastPage>)
     }
   }
 
