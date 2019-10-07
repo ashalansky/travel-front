@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 import Flight from '@material-ui/icons/Flight';
 
 const useStyles = makeStyles(theme => ({
@@ -38,6 +39,10 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
 
+  const linkParams = {
+    pathname: "/courses",
+    state: { user: props.user }
+  }
 
   if (props.user) {
     return(
@@ -51,7 +56,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
-              <Button variant="h5" color="inherit" className={classes.button} >My Trips</Button>
+              <Link to={linkParams}>My Trips</Link>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>
