@@ -9,7 +9,7 @@ const useStyles = makeStyles({
  }
 })
 
-export default function(props) {
+export default function LoginModal(props) {
   const classes = useStyles();
   return (
   <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>

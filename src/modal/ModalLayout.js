@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -6,7 +6,6 @@ import Map from "./Map";
 import Search from "./Search";
 import { DragDropContext, Droppable} from "react-beautiful-dnd";
 import Route from './Route'
-
 
 const RouteList = React.memo(function({ routes, deleteCity }) {
   return routes.map((route, index) => (
