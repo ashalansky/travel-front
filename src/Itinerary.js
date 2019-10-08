@@ -109,11 +109,7 @@ const sampleCitydata = [{
 
 export default function Itinerary(props) {
   const classes = useStyles();
-
-  const test = function () {
-    console.log(props);
-  }
-
+  
   const tripList = sampleCitydata.map(city => {
     return(
       <div>

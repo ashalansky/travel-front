@@ -7,6 +7,7 @@ import NavBar from './NavBar';
 import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
 import Cookies from 'universal-cookie';
+import MyTrips from '../MyTrips';
 
 const cookies = new Cookies();
 
@@ -80,7 +81,13 @@ export default function App() {
 
       <Route 
         path="/itineraries/:id" 
-        component={Itin}
+        component={Itinerary}
+      />
+
+
+      <Route 
+        path="/mytrips/" 
+        component={MyTrips}
       />
 
     </Router>

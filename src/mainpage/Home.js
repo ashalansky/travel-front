@@ -14,7 +14,7 @@ export default function Home(props){
     setModal(false)
   }
 
- return (
+return (
       <div>
         <HeroBar setModal={setModal} modalOn={modalOn}></HeroBar>
         <ModalContainer open={modalOn} closeModal={closeMainModal} userId={cookies.get("userId")}></ModalContainer>
