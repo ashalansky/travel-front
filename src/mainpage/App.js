@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
-import Itin from '../itin';
+import Itinerary from '../itin';
 import axios from 'axios';
 import Home from './Home'
 import { classes } from 'istanbul-lib-coverage';
@@ -8,6 +8,7 @@ import NavBar from './NavBar';
 import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
 import Cookies from 'universal-cookie';
+import MyTrips from '../MyTrips';
 
 const cookies = new Cookies();
 
@@ -70,7 +71,13 @@ export default function App() {
 
       <Route 
         path="/itineraries/:id" 
-        component={Itin}
+        component={Itinerary}
+      />
+
+
+      <Route 
+        path="/mytrips/" 
+        component={MyTrips}
       />
 
     </Router>
