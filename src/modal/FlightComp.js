@@ -4,7 +4,7 @@ import PeopleTab from './PeopleTab';
 import VerticalTabs from './TabPanel'
 
 export default function FlightComp(props) {
-
+console.log("vdgfread in flightCo", props.flightPlans)
   return (
     <Grid container spacing={3}>
       <Grid item xs={12} sm={5}>

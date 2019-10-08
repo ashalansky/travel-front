@@ -106,7 +106,7 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     border: '2px solid #f29e92',
     color: '#a5a0aa',
-    fontSize: 20,
+    fontSize: 15,
     width: '50%',
     margin: 'auto',
     padding: '2px 8px',
@@ -122,7 +122,7 @@ const useStyles = makeStyles(theme => ({
     cursor: 'pointer',
     border: '2px solid #f29e92',
     color: '#fff',
-    fontSize: 20,
+    fontSize: 15,
     width: '50%',
     margin: 'auto',
     padding: '2px 8px',
@@ -206,7 +206,7 @@ export default function VerticalTabs(props) {
     return tabPanels
   }
 
-  if(props.cities) {
+  if(props.cities && props.cities.length) {
     if (props.cities[props.cities.length - 1].cityCode){
       return (
         <Paper className={classes.root}>
@@ -220,12 +220,13 @@ export default function VerticalTabs(props) {
           >
             {createTabs()}
           </Tabs>
-          {tabPanels()}
+          {props.flighPlans && props.flighPlans.length && tabPanels()}
+          {(!props.flighPlans || !props.flighPlans.length) && <Loader />}
         </Paper>
       );
     }
   }
   return (
-    <Paper className={classes.root}></Paper>
+    <Paper className={classes.root}>Uho! No flights here!</Paper>
   )
 }
