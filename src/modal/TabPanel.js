@@ -208,6 +208,7 @@ export default function VerticalTabs(props) {
 
   if(props.cities && props.cities.length) {
     if (props.cities[props.cities.length - 1].cityCode){
+      console.log("how many");
       return (
         <Paper className={classes.root}>
           <Tabs
@@ -220,8 +221,8 @@ export default function VerticalTabs(props) {
           >
             {createTabs()}
           </Tabs>
-          {props.flighPlans && props.flighPlans.length && tabPanels()}
-          {(!props.flighPlans || !props.flighPlans.length) && <Loader />}
+          {props.flightPlans && props.flightPlans.length && tabPanels()}
+          {(!props.flightPlans || !props.flightPlans.length) && <Loader />}
         </Paper>
       );
     }

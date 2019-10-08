@@ -6,6 +6,8 @@ const useStyles = makeStyles(theme => ({
   progress: {
     margin: theme.spacing(2),
     color: '#9b8bf7',
+    alignItems: 'center',
+    margin: 'auto',
   },
 }));
 
