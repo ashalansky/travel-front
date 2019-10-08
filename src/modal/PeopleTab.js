@@ -54,7 +54,6 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 export default function PeopleTab(props) {
   const [values, setValues] = React.useState({
     children: '',
@@ -78,7 +77,6 @@ export default function PeopleTab(props) {
   }, []);
 
   const callFlightsApi = (() => {
-    
     let apiParams = {
       "infants_lap":values.infants || 0,
       "children": values.children || 0,
@@ -126,19 +124,15 @@ export default function PeopleTab(props) {
                 }
               }
             }
-              
             props.updateFlightPlans(cheapestFlights);
-            return true;
-          } else {
-            return false;
           }
         })
         .catch((error)=>{
           console.log(error)
         })
     }
-
   })
+
 
   const getCityCodes = (() => {
     props.setPassenger(values.adults, values.children, values.infants);
@@ -185,7 +179,7 @@ export default function PeopleTab(props) {
           console.log(error)
         });
       
-    }
+      }
     }
   });
 
