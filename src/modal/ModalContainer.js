@@ -238,7 +238,7 @@ export default function(props) {
     dispatch({ type: SET_PASSENGER, adults, children, infants})
   }
 
-  const resetFlightPlans = function() {
+  const flightReset = function() {
     dispatch({ type: RESET_FLIGHT_PLANS })
   }
 
@@ -248,9 +248,9 @@ export default function(props) {
     if (state.step === 0) {
       return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
-      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate} resetFlightPlans={resetFlightPlans}></ModalSecondPage>)
+      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan} setPassenger={setPassenger}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan} setPassenger={setPassenger} resetFlightPlans={flightReset}></ModalLastPage>)
     }
   }
 
