@@ -16,9 +16,6 @@ export default function Home(props){
 
  return (
       <div>
-    
-
-
         <HeroBar setModal={setModal} modalOn={modalOn}></HeroBar>
         <ModalContainer open={modalOn} closeModal={closeMainModal}></ModalContainer>
         <div><CardGrid setModal={setModal} modalOn={modalOn}></CardGrid></div>

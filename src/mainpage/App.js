@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
+import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import Itin from '../itin';
+import axios from 'axios';
+import Home from './Home'
+import { classes } from 'istanbul-lib-coverage';
 import NavBar from './NavBar';
-import HeroBar from './HeroBar';
-import CardGrid from './CardGrid';
-import AppDescription from './AppDescription';
-import ModalContainer from '../modal/ModalContainer';
 import SignupModal from '../mainpage/SignupModal';
 import LoginModal from '../mainpage/LoginModal';
-import axios from 'axios';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 const register = ((username, email, password, city) => {
   let url = "http://localhost:8080/users/register";
@@ -16,49 +19,64 @@ const register = ((username, email, password, city) => {
     password,
     city
   }
+  
   axios.post(
     url,
     data
   )
   .then(() => {
-    console.log("added new user");
+    cookies.set('username', data.username)
   })
 })
 
+
 export default function App() {
-  const [modalOn, setModal] = useState(false);
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
-
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(cookies.get('username'));
 
   const login = ((email, password) => {
      return axios.post("http://localhost:8080/users/login", {email, password})
      .then((data)=>{
        let name = data.data.user[0].username 
+       cookies.set('username', name)
        setUsername(name)
      });
   })
    
-  const logout = (() => {
+  const logout = function(){
+    cookies.remove('username')
     setUsername("")
-  })
+  }
 
-  const closeModal = () => {
-    setModal(false);
+  const closeModal = function(){
     setLoginModal(false);
     setSignUpModal(false);
   }
-  return (
-      <div>
-        <NavBar user={username} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal} LoginOn={LoginOn} SignUpOn={SignUpOn} logout={logout}></NavBar>
-        <HeroBar setModal={setModal} modalOn={modalOn}></HeroBar>
-        <ModalContainer open={modalOn} closeModal={closeModal}></ModalContainer>
-        <LoginModal login={login} open={LoginOn} closeModal={closeModal}></LoginModal>
-        <SignupModal register={register} open={SignUpOn} closeModal={closeModal}></SignupModal>
-        <div><CardGrid setModal={setModal} modalOn={modalOn}></CardGrid></div>
-        <div><AppDescription></AppDescription></div>
-      </div>
+
+  
+  return(
+  
+    <Router>
+
+      <NavBar user={username} setLoginModal={setLoginModal} setSignUpModal={setSignUpModal} LoginOn={LoginOn} SignUpOn={SignUpOn} logout={logout}></NavBar>
+      <LoginModal login={login} open={LoginOn} closeModal={closeModal}></LoginModal>
+      <SignupModal register={register} open={SignUpOn} closeModal={closeModal}></SignupModal>
+
+      <Route 
+        exact path="/" 
+        component={Home}
+      />
+
+      <Route 
+        path="/itineraries/:id" 
+        component={Itin}
+      />
+
+    </Router>
+
+ 
+
   )
 }
 
