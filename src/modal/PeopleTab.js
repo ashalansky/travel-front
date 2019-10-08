@@ -104,6 +104,7 @@ export default function PeopleTab(props) {
         })
         .then((response)=>{
           setTimeout(()=> {
+            console.log(response);
             let cheapestFlights = [];
             let priceList = [];
             const itineraryList = response.data.itins
@@ -136,6 +137,7 @@ export default function PeopleTab(props) {
   })
 
   const getCityCodes = (() => {
+    props.setPassenger(values.adults, values.children, values.infants);
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
