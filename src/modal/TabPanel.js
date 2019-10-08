@@ -205,7 +205,8 @@ export default function VerticalTabs(props) {
     }
     return tabPanels
   }
-  if (props.cities.length) {
+
+  if(props.cities) {
     if (props.cities[props.cities.length - 1].cityCode){
       return (
         <Paper className={classes.root}>

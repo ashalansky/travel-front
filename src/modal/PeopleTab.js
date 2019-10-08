@@ -183,6 +183,7 @@ export default function PeopleTab(props) {
         .catch((error)=>{
           console.log(error)
         });
+      
     }
     }
   });
