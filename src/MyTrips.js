@@ -21,7 +21,9 @@ export default function MyTrips() {
   }
 
   const classes = useStyles();
-  const id = cookies.get('id');
+  const id = cookies.get('userId');
+  console.log("id", id)
+
   // Getter and setter for user state
   const [trips, setTrips] = useState(initialState)
 
