@@ -23,6 +23,7 @@ const UPDATE_FLIGHT_PLAN = "UPDATE_FLIGHT_PLAN";
 const SELECT_FLIGHT_PLAN = "SELECT_FLIGHT_PLAN"
 const SET_PASSENGER = "SET_PASSENGER";
 const FINISH_PLAN = "FINISH_PLAN";
+const RESET_FLIGHT_PLANS = "RESET_FLIGHT_PLANS"
 
 const useStyles = makeStyles({
  modal: {
@@ -168,6 +169,8 @@ const reducer = function(state, action) {
     case SET_PASSENGER:
       let numberOfPassengers = action.adults + action.children + action.infants;
       return {...state, numberOfPassengers}
+    case RESET_FLIGHT_PLANS:
+      return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
       console.log("in Finished Plan in reducer");
       return axios.post("http://localhost:8080/trips/trip", {cityInformation: state.routes, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers});
@@ -235,13 +238,17 @@ export default function(props) {
     dispatch({ type: SET_PASSENGER, adults, children, infants})
   }
 
+  const resetFlightPlans = function() {
+    dispatch({ type: RESET_FLIGHT_PLANS })
+  }
+
   const steps = getSteps();
 
   const currentDisplay  = function(){
     if (state.step === 0) {
       return (<ModalFirstPage routes = {state.routes} key={state.key} addCity={addCity} deleteCity={deleteCity} onDragEnd={onDragEnd}></ModalFirstPage>)
     } else if (state.step === 1) {
-      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
+      return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate} resetFlightPlans={resetFlightPlans}></ModalSecondPage>)
     } else if (state.step === 2) {
       return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan} setPassenger={setPassenger}></ModalLastPage>)
     }
