@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -99,6 +100,25 @@ export default function VerticalTabs() {
     setValue(newValue);
   };
 
+  const [completed, setCompleted] = React.useState(0);
+
+  React.useEffect(() => {
+    function progress() {
+      setCompleted(oldCompleted => {
+        if (oldCompleted === 100) {
+          return 0;
+        }
+        const diff = Math.random() * 10;
+        return Math.min(oldCompleted + diff, 100);
+      });
+    }
+
+    const timer = setInterval(progress, 500);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
+
   return (
     <div className={classes.root}>
       <Tabs
@@ -123,6 +143,11 @@ export default function VerticalTabs() {
         aria-label="Vertical tabs example"
       >
         <Paper className={classes.flight}>
+          <div className={classes.root}>
+            <LinearProgress variant="determinate" value={completed} />
+            <br />
+            <LinearProgress color="secondary" variant="determinate" value={completed} />
+          </div>
           <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
             YYC
           </Typography>
