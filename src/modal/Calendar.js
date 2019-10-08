@@ -216,15 +216,19 @@ export default function CalendarComponent(props) {
     let selectedClass = classnames(classes.fab)
     if (!Object.keys(props.cities[props.cities.length - 2]).includes("departureDate")){
       return (
+        <div>
       <Fab variant="extended" className={selectedClass}>
         {city.name}
       </Fab>
+      </div>
       )
     }
     return (
+      <div>
       <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
         {city.name}
       </Fab>
+      </div>
     )
   });
 

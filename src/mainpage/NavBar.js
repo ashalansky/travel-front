@@ -65,7 +65,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
-              <Link to={linkParams}>My Trips</Link>
+              <Link className={classes.button} style={{ textDecoration: 'none'}} to={linkParams}>MY TRIPS</Link>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>
