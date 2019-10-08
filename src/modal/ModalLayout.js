@@ -7,7 +7,6 @@ import Search from "./Search";
 import { DragDropContext, Droppable} from "react-beautiful-dnd";
 import Route from './Route'
 
-
 const RouteList = React.memo(function({ routes, deleteCity }) {
   return routes.map((route, index) => (
     <Route route={route} index={index} key={route.id} deleteCity={deleteCity} />

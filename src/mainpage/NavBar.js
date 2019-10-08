@@ -80,7 +80,7 @@ export default function(props) {
             <Typography variant="h5" className={classes.title}>
               Travel-Bum
             </Typography>
-            <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
+            <Button color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
             <Button color="inherit" className={classes.button} onClick={() => props.setSignUpModal(!props.SignUpOn)}>Sign Up</Button>
           </Toolbar>
         </AppBar>
