@@ -56,6 +56,8 @@ const reducer = ((state, action) => {
       return { ...state, email: action.email}
     case SET_PASSWORD:
       return { ...state, password: action.password}
+    default:
+      return { ...state}
   }
 })
 
