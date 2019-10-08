@@ -95,12 +95,10 @@ const useStyles = makeStyles(theme => ({
 export default function VerticalTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
+  const [completed, setCompleted] = React.useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const [completed, setCompleted] = React.useState(0);
 
   React.useEffect(() => {
     function progress() {
