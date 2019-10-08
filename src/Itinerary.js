@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Button from "@material-ui/core/Button";
 import SaveAltIcon from "@material-ui/icons/SaveAlt";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles({
@@ -119,6 +119,7 @@ export default function Itinerary(props) {
           src={
             "https://maps.googleapis.com/maps/api/place/js/PhotoService.GetPhoto?1sCmRaAAAApUwQwpKmenj4rRCahXNq_z-Ekj2IK-N4FGxi6pWCNPZrVcv1yES4mLezM2rKVDyUbfU-vEPCo7IkFskhZ5UVIVtqReQlExJWpDyRIhoW1F4D4AsvzI50_Fm61O9ZFXm_EhCq91nKN7FPRn1E-FCYltqTGhQlFQ8AFVm0li_yGinCa3kQEn55cg&3u4618&5m1&2e1&callback=none&key=AIzaSyAGNjTDZVWV_wC0uJuOcf7L5tYMyXytAZ8&token=130394"
           }
+          alt={city}
         />
         <div className={classes.infoDiv}>
           <h2 className={classes.title}>
@@ -174,7 +175,7 @@ export default function Itinerary(props) {
 
   return (
     <Container className={classes.mainContainer} maxWidth="md">
-      <NavBar user={props.location.state.user}/>
+      <NavBar user={props.location.state.user} setLoginModal={props.location.state.setLoginModal} setSignUpModal={props.location.state.setSignUpModal} LoginOn={props.location.state.LoginOn} SignUpOn={props.location.state.SignUpOn} logout={props.location.state.logout}/>
       <Button className={classes.button}>
           <SaveAltIcon></SaveAltIcon>
            Save Trip

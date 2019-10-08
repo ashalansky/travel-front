@@ -39,9 +39,18 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
 
+  let transferState = { 
+    user: props.user,
+    LoginOn: props.LoginOn,
+    SignUpOn: props.SignUpOn,
+    setLoginModal: props.setLoginModal,
+    setSignUpModal: props.setSignUpModal,
+    logout: props.logout
+  };
+
   const linkParams = {
     pathname: "/itinerary",
-    state: { user: props.user }
+    state: transferState
   }
 
   if (props.user) {
@@ -56,7 +65,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
-              <Link to={linkParams}>My Trips</Link>
+              <Link className={classes.button} style={{ textDecoration: 'none'}} to={linkParams}>MY TRIPS</Link>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>
@@ -71,7 +80,7 @@ export default function(props) {
             <Typography variant="h5" className={classes.title}>
               Travel-Bum
             </Typography>
-            <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
+            <Button color="inherit" className={classes.button} onClick={() => props.setLoginModal(!props.LoginOn)}>Login</Button>
             <Button color="inherit" className={classes.button} onClick={() => props.setSignUpModal(!props.SignUpOn)}>Sign Up</Button>
           </Toolbar>
         </AppBar>

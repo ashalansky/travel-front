@@ -37,7 +37,6 @@ const useStyles = makeStyles(theme => ({
   button: {
     margin: theme.spacing(2),
     fontFamily: 'Ubuntu',
-    background: 'white',
     cursor: 'pointer',
     border: '1px solid #f29e92',
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -57,6 +56,8 @@ const reducer = ((state, action) => {
       return { ...state, email: action.email}
     case SET_PASSWORD:
       return { ...state, password: action.password}
+    default:
+      return { ...state}
   }
 })
 
