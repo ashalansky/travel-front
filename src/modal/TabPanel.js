@@ -204,23 +204,24 @@ export default function VerticalTabs(props) {
     }
     return tabPanels
   }
-
-  if (props.cities[props.cities.length - 1].cityCode){
-    return (
-      <Paper className={classes.root}>
-        <Tabs
-          orientation="vertical"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          aria-label="Vertical tabs example"
-          className={classes.tabs}
-        >
-          {createTabs()}
-        </Tabs>
-        {tabPanels()}
-      </Paper>
-    );
+  if (props.cities.length) {
+    if (props.cities[props.cities.length - 1].cityCode){
+      return (
+        <Paper className={classes.root}>
+          <Tabs
+            orientation="vertical"
+            variant="scrollable"
+            value={value}
+            onChange={handleChange}
+            aria-label="Vertical tabs example"
+            className={classes.tabs}
+          >
+            {createTabs()}
+          </Tabs>
+          {tabPanels()}
+        </Paper>
+      );
+    }
   }
   return (
     <Paper className={classes.root}></Paper>
