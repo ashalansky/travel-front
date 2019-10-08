@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
+import Loader from './Loader'
 
 
 function TabPanel(props) {
