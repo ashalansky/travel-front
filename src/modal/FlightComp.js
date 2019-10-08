@@ -1,12 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from "@material-ui/core";
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import Button from '@material-ui/core/Button';
 import PeopleTab from './PeopleTab';
 import VerticalTabs from './TabPanel'
-
-const axios = require("axios");
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -89,41 +85,13 @@ export default function FlightComp(props) {
 
   const classes = useStyles();
 
-  const flightList = function () {
-    if (props.flightPlans.length) {
-      let flightPlans = props.flightPlans.map((flightPlan) => {
-        return (
-          <Paper className={classes.flight}>
-            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-              {props.cities[0].cityCode}
-            </Typography>
-            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-              {props.cities[props.cities.length - 1].cityCode}
-            </Typography>
-            <Typography style={{ fontSize: 16}}>
-              23 Oct, 16:30
-            </Typography>
-            <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-              {flightPlan.unrounded_price}
-            </Typography>
-            <Button variant="outlined" className={classes.button} 
-            onClick={() => props.selectFlightPlan(flightPlan)}>
-              SELECT
-            </Button>
-          </Paper>
-        )
-      })
-    }
-  }
-
   return (
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
-              <PeopleTab ></PeopleTab>
+              <PeopleTab cities={props.cities} flightPlans={props.flightPlans} updateFlightPlans={props.updateFlightPlans} updateCityCode={props.updateCityCode}></PeopleTab>
           </Grid>
           <Grid item xs={12} sm={7}>
-            <VerticalTabs cities={props.cities}>
+            <VerticalTabs cities={props.cities} flightPlans={props.flightPlans} selectedFlight={props.selectFlightPlan}>
             </VerticalTabs>
           </Grid>
         </Grid>
