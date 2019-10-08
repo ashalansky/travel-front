@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
-import LinearProgress from '@material-ui/core/LinearProgress';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -133,7 +133,6 @@ export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
   const [state, setState] = useState({});
-  const [completed, setCompleted] = React.useState(0);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
