@@ -6,7 +6,6 @@ import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AOS from 'aos'
 
-
 const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 70,
