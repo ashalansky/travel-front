@@ -169,7 +169,9 @@ export default function PeopleTab(props) {
         })
         .then((response)=>{
           props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
-          callFlightsApi();
+          setTimeout(() => {
+            callFlightsApi();
+          }, 1000)
         })
         .catch((error)=>{
           console.log(error)

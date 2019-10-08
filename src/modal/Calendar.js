@@ -263,8 +263,6 @@ export default function CalendarComponent(props) {
 
   const onChange = (values) => {
     
-    console.log(props.cities);
-    console.log(props.city);
     const departingDate = values
     let selectedCity = 0;
     let cityNumber = state.numberOfCities;
