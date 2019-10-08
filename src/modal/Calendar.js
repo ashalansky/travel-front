@@ -74,10 +74,10 @@ export default function CalendarComponent(props) {
 
   // Creates list of cities
   const cityList = props.cities.map((city) => {
-    if (city.name === props.city) {
+    if (city.id === props.city) {
       let index = 0;
       for (let i = 0; i < props.cities.length; i++) {
-        if (props.cities[i].name === props.city) {
+        if (props.cities[i].id === props.city) {
           index = i + 1;
         }
       }
@@ -97,7 +97,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -115,7 +115,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -133,7 +133,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -151,7 +151,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -169,7 +169,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -187,7 +187,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -205,7 +205,7 @@ export default function CalendarComponent(props) {
           }
           return (
             <div>
-            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+            <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
               {city.name}
             </Fab>
             </div>
@@ -225,7 +225,7 @@ export default function CalendarComponent(props) {
     }
     return (
       <div>
-      <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.name)}>
+      <Fab variant="extended" className={selectedClass} onClick= {() => props.changeSelectedCity(city.id)}>
         {city.name}
       </Fab>
       </div>
@@ -233,8 +233,12 @@ export default function CalendarComponent(props) {
   });
 
   const instructions = function () {
-    if (props.city !== props.cities[props.cities.length - 1].name) {
-      return (<p> When would you like to depart {props.city}</p>)
+    if (props.city !== props.cities[props.cities.length - 1].id) {
+      for (let i = 0; i <props.cities.length; i ++) {
+        if (props.city === props.cities[i].id){
+          return (<p> When would you like to depart {props.cities[i].name}</p>)
+        }
+      }
     } else {
       return (<p> Press next when you are ready </p>)
     }
@@ -244,7 +248,7 @@ export default function CalendarComponent(props) {
     for (let i = 0; i < props.cities.length; i++) {
       delete props.cities[i].departureDate;
     }
-    props.changeSelectedCity(props.cities[0].name);
+    props.changeSelectedCity(props.cities[0].id);
     setState({...state, numberOfCities: 0, lastDate: new Date()})
   }
 
@@ -252,7 +256,7 @@ export default function CalendarComponent(props) {
 
     let index = 0
     for (let i = 0; i < props.cities.length; i++) {
-      if (props.cities[i].name === city) {
+      if (props.cities[i].id === city) {
         index = i;
       }
     }
@@ -264,14 +268,14 @@ export default function CalendarComponent(props) {
   const onChange = (values) => {
     
     const departingDate = values
-    let selectedCity = "";
+    let selectedCity = 0;
     let cityNumber = state.numberOfCities;
     
     if (cityNumber < props.cities.length){
-      selectedCity = props.cities[cityNumber].name
+      selectedCity = props.cities[cityNumber].id
     }
     if (cityNumber === props.cities.length) {
-      selectedCity = props.cities[cityNumber - 1].name;
+      selectedCity = props.cities[cityNumber - 1].id;
     }
 
     const newDate = setNewDate(departingDate);
@@ -280,7 +284,7 @@ export default function CalendarComponent(props) {
       if (cityNumber === 0 && cityNumber < (props.cities.length - 1)) {
         props.updateDepartureDate(moment(values).format("ll"), selectedCity);
         cityNumber++;
-        selectedCity = props.cities[cityNumber].name
+        selectedCity = props.cities[cityNumber].id
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
       } else if (!props.cities[cityNumber].departureDate && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && cityNumber < (props.cities.length - 1)) {
@@ -288,22 +292,22 @@ export default function CalendarComponent(props) {
         if (cityNumber < props.cities.length - 1) {
           cityNumber++;
         }
-        selectedCity = props.cities[cityNumber].name
+        selectedCity = props.cities[cityNumber].id
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
       } else if (props.cities[cityNumber - 1].departureDate && selectedCity && cityNumber === (props.cities.length - 1)){
-        let selectedCity = props.cities[cityNumber].name;
-        if (!(props.cities[props.cities.length - 1].name === props.city)) {
+        let selectedCity = props.cities[cityNumber].id;
+        if (!(props.cities[props.cities.length - 1].id === props.city)) {
           let index = 0;
           for (let i = 0; i < props.cities.length - 1; i++) {
-            if (props.cities[i].name === props.city) {
+            if (props.cities[i].id === props.city) {
               index = i;
             }
           }
-          selectedCity = props.cities[index].name;
+          selectedCity = props.cities[index].id;
           if (index === 0) {
             props.updateDepartureDate(moment(values).format("ll"), selectedCity);
-            selectedCity = props.cities[index + 1].name;
+            selectedCity = props.cities[index + 1].id;
             props.changeSelectedCity(selectedCity);
             if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) {
               for (let i = index + 1; i < props.cities.length; i++) {
@@ -315,7 +319,7 @@ export default function CalendarComponent(props) {
           } else if (index > 0 && moment(values).isAfter(moment(props.cities[index-1].departureDate)["_d"])) {
             props.updateDepartureDate(moment(values).format("ll"), selectedCity);
             if (props.cities[index + 1]){
-              selectedCity = props.cities[index + 1].name;
+              selectedCity = props.cities[index + 1].id;
             }
             props.changeSelectedCity(selectedCity);
             if (props.cities[index + 1]){
@@ -331,7 +335,6 @@ export default function CalendarComponent(props) {
         }
       }
     }
-    console.log(props.cities);
   }
 
   return (
