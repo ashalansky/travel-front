@@ -39,9 +39,18 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
 
+  let transferState = { 
+    user: props.user,
+    LoginOn: props.LoginOn,
+    SignUpOn: props.SignUpOn,
+    setLoginModal: props.setLoginModal,
+    setSignUpModal: props.setSignUpModal,
+    logout: props.logout
+  };
+
   const linkParams = {
     pathname: "/itinerary",
-    state: { user: props.user }
+    state: transferState
   }
 
   if (props.user) {

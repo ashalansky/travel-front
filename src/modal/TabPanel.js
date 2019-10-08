@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
@@ -44,15 +44,21 @@ const useStyles = makeStyles(theme => ({
     flexGrow: 1,
     backgroundColor: theme.palette.background.paper,
     display: 'flex',
-    height: 300,
+    padding: 10,
+    marginTop: 5,
+    marginBottom: 5,
+    fontFamily: 'Ubuntu',
+    borderRadius: 15,
+    marginLeft: 10,
+    height: "60vh"
   },
   tabs: {
+    minWidth: "200px",
     borderRight: `1px solid ${theme.palette.divider}`,
   },
   tabPanel: {
-    width: '100%',
     overflow: 'auto',
-    maxHeight: 300
+    width: "100%",
   },
   flight: {
     display: 'grid',
@@ -73,6 +79,26 @@ const useStyles = makeStyles(theme => ({
       boxShadow: '-5px 0px 1px 0px rgba(155,139,247,1);'
     }
   },
+  selectedTab: {
+    display: 'grid',
+    gridTemplateColumns: '40% auto 40%',
+    gridTemplateRows: '50% 50%',
+    textAlign: "center",
+    alignItems: 'center',
+    padding: 10,
+    marginTop: 5,
+    marginRight: 10,
+    marginBottom: 5,
+    height: 90,
+    fontFamily: 'Ubuntu',
+    border: '1px solid #8d9ae8',
+    borderRadius: 15,
+    color: '#a5a0aa',
+    '&:hover': {
+      boxShadow: '-5px 0px 1px 0px rgba(155,139,247,1);'
+    },
+    background: "#f3e5f5"
+  },
   button: {
     // margin: theme.spacing(1),
     background: 'white',
@@ -90,149 +116,114 @@ const useStyles = makeStyles(theme => ({
       boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
     }
   },
+  selectedButton: {
+    background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    cursor: 'pointer',
+    border: '2px solid #f29e92',
+    color: '#fff',
+    fontSize: 20,
+    width: '50%',
+    margin: 'auto',
+    padding: '2px 8px',
+    borderRadius: 15,
+  }
 }));
 
-export default function VerticalTabs() {
+export default function VerticalTabs(props) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [state, setState] = useState({});
   const [completed, setCompleted] = React.useState(0);
   
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  React.useEffect(() => {
-    function progress() {
-      setCompleted(oldCompleted => {
-        if (oldCompleted === 100) {
-          return 0;
-        }
-        const diff = Math.random() * 10;
-        return Math.min(oldCompleted + diff, 100);
-      });
+  const createTabs = function () {
+    let tabs = [];
+    for (let i = 0; i < props.cities.length - 1; i++) {
+      let message = `${props.cities[i].cityCode} > ${props.cities[i + 1].cityCode}`
+      tabs.push(
+        <Tab label={message} {...a11yProps(i)} />
+      )
     }
+    return tabs;
+  }
 
-    const timer = setInterval(progress, 500);
-    return () => {
-      clearInterval(timer);
-    };
-  }, []);
+  const selectFlight = function(flightPlan, cityCode) {
+    let currentState = {...state};
+    currentState[cityCode] = flightPlan.iden;
+    setState(currentState) ;
+    props.selectedFlight(flightPlan, cityCode);
+  }
 
+  const tabsContent = function() {
+    let totalTabContent = [];
+    for (let i = 0; i < props.flightPlans.length; i++) {
+      let tabContent = []
+      for (let j = 0; j < props.flightPlans[i].length; j++) {
+        // let selectedTab = (state[props.cities[i].cityCode] === props.flightPlans[i][j].iden) ? classes.selectedTab : classes.flight;
+        let selectedButton = (state[props.cities[i].cityCode] === props.flightPlans[i][j].iden) ? classes.selectedButton : classes.button;
+        tabContent.push(
+          <Paper className={classes.flight}>
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+              {props.cities[i].cityCode}
+            </Typography>
+            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+              {props.cities[i+1].cityCode}
+            </Typography>
+            <Typography style={{ fontSize: 16}}>
+              {props.cities[i].departureDate}
+            </Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
+              ${props.flightPlans[i][j].unrounded_price}
+            </Typography>
+            <Button variant="outlined" className={selectedButton} onClick={() => selectFlight(props.flightPlans[i][j], props.cities[i].cityCode)}>
+              SELECT
+            </Button>
+          </Paper>
+        )
+      }
+      totalTabContent.push(tabContent);
+    }
+    return totalTabContent;
+  }
+  const tabPanels = function () {
+    let tabPanels = [];
+    for (let i = 0; i < props.flightPlans.length; i++) {
+      tabPanels.push(
+        <TabPanel value={value} index={i} 
+          className={classes.tabPanel}
+          orientation="vertical"
+          variant="scrollable"
+          aria-label="Vertical tabs example"
+        >
+          {tabsContent()[i]}
+        </TabPanel>
+        )
+    }
+    return tabPanels
+  }
+
+  if (props.cities[props.cities.length - 1].cityCode){
+    return (
+      <Paper className={classes.root}>
+        <Tabs
+          orientation="vertical"
+          variant="scrollable"
+          value={value}
+          onChange={handleChange}
+          aria-label="Vertical tabs example"
+          className={classes.tabs}
+        >
+          {createTabs()}
+        </Tabs>
+        {tabPanels()}
+      </Paper>
+    );
+  }
   return (
-    <div className={classes.root}>
-      <Tabs
-        orientation="vertical"
-        variant="scrollable"
-        value={value}
-        onChange={handleChange}
-        aria-label="Vertical tabs example"
-        className={classes.tabs}
-      >
-        <Tab label="Item One" {...a11yProps(0)} />
-        <Tab label="Item Two" {...a11yProps(1)} />
-        <Tab label="Item Three" {...a11yProps(2)} />
-        <Tab label="Item Four" {...a11yProps(3)} />
-        <Tab label="Item Five" {...a11yProps(4)} />
-        <Tab label="Item Six" {...a11yProps(5)} />
-      </Tabs>
-      <TabPanel value={value} index={0} 
-        className={classes.tabPanel}
-        orientation="vertical"
-        variant="scrollable"
-        aria-label="Vertical tabs example"
-      >
-        <Paper className={classes.flight}>
-          <div className={classes.root}>
-            <LinearProgress variant="determinate" value={completed} />
-            <br />
-            <LinearProgress color="secondary" variant="determinate" value={completed} />
-          </div>
-          <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-            YYC
-          </Typography>
-          <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-          <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-            YEG
-          </Typography>
-          <Typography style={{ fontSize: 16}}>
-            23 Oct, 16:30
-          </Typography>
-          <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-            $450
-          </Typography>
-          <Button variant="outlined" className={classes.button}>
-            SELECT
-          </Button>
-        </Paper>
-        <Paper className={classes.flight}>
-          <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-            YYC
-          </Typography>
-          <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-          <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-            YEG
-          </Typography>
-          <Typography style={{ fontSize: 16}}>
-            23 Oct, 16:30
-          </Typography>
-          <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-            $500
-          </Typography>
-          <Button variant="outlined" className={classes.button}>
-            SELECT
-          </Button>
-        </Paper>
-        <Paper className={classes.flight}>
-          <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-            YEG
-          </Typography>
-          <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-          <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-            YVR
-          </Typography>
-          <Typography style={{ fontSize: 16}}>
-            23 Oct, 16:30
-          </Typography>
-          <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-            $600
-          </Typography>
-          <Button variant="outlined" className={classes.button}>
-            SELECT
-          </Button>
-        </Paper>
-      </TabPanel>
-      <TabPanel value={value} index={1} className={classes.tabPanel}>
-        <Paper className={classes.flight}>
-          <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-            YEG
-          </Typography>
-          <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-          <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-            YVR
-          </Typography>
-          <Typography style={{ fontSize: 16}}>
-            23 Oct, 16:30
-          </Typography>
-          <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-            $450
-          </Typography>
-          <Button variant="outlined" className={classes.button}>
-            SELECT
-          </Button>
-        </Paper>
-      </TabPanel>
-      <TabPanel value={value} index={2} className={classes.tabPanel}>
-      Item Three
-      </TabPanel>
-      <TabPanel value={value} index={3} className={classes.tabPanel}>
-        Item Four
-      </TabPanel>
-      <TabPanel value={value} index={4} className={classes.tabPanel}>
-        Item Five
-      </TabPanel>
-      <TabPanel value={value} index={5} className={classes.tabPanel}>
-        Item Six
-      </TabPanel>
-    </div>
-  );
+    <Paper className={classes.root}></Paper>
+  )
 }
