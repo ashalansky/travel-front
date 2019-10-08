@@ -88,10 +88,10 @@ export default function PeopleTab(props) {
       "cabin":"Coach"
     }
     for (let i = 0 ; i < props.cities.length - 1; i++) {
-      console.log("props.cities[i].departureDate", props.cities[i].departureDate)
       apiParams["from0"] = props.cities[i].cityCode
       apiParams["to0"] = props.cities[i + 1].cityCode
       apiParams["date0"] = props.cities[i].departureDate
+      
       axios({
         "method":"GET",
         "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
@@ -103,7 +103,8 @@ export default function PeopleTab(props) {
         "params": apiParams
         })
         .then((response)=>{
-          setTimeout(()=> {
+          console.log(response, i);
+          if (response.data.done) {
             console.log(response);
             let cheapestFlights = [];
             let priceList = [];
@@ -125,9 +126,12 @@ export default function PeopleTab(props) {
                 }
               }
             }
-            
+              
             props.updateFlightPlans(cheapestFlights);
-          }, 5000)
+            return true;
+          } else {
+            return false;
+          }
         })
         .catch((error)=>{
           console.log(error)
