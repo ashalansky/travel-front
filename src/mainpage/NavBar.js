@@ -48,10 +48,7 @@ export default function(props) {
     logout: props.logout
   };
 
-  const linkParams = {
-    pathname: "/itinerary",
-    state: transferState
-  }
+
 
   if (props.user) {
     return(
@@ -65,7 +62,7 @@ export default function(props) {
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
               </Typography>
-              <Link className={classes.button} style={{ textDecoration: 'none'}} to={linkParams}>MY TRIPS</Link>
+              <Link className={classes.button} style={{ textDecoration: 'none'}} to="/mytrips">MY TRIPS</Link>
               <Button variant="h5" color="inherit" className={classes.button} onClick={() => props.logout()}>Logout</Button>
             </Toolbar>
         </AppBar>

@@ -11,7 +11,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const useStyles = makeStyles({
   mainContainer: {
-    marginTop: "70px",
+    marginTop: "90px",
   },
   cityContainer: {
     width: "100%",
@@ -121,6 +121,37 @@ export default function Itinerary({match}) {
 
   if(itinerary.cities){
     tripList = itinerary.cities.map(city => {
+      let flightComp = ()=> {};
+      if(city.flight){
+        console.log(city.flight)
+         flightComp = function(){
+          return (
+            <div>
+            <p><Paper className={classes.flight}>
+            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
+              {city.flight.departure_location}
+            </Typography>
+            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
+            {city.flight.arrival_location}
+            </Typography>
+            <Typography style={{ fontSize: 16}}>
+              {city.departure_date}
+            </Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
+              ${city.flight.price}
+            </Typography>
+          </Paper></p>
+              </div>  
+          )
+
+        
+
+        }
+      }
+
+
+
       
       
       
@@ -141,32 +172,11 @@ export default function Itinerary({match}) {
             <div>
             Passengers: {city.numOfTravelers}
             </div>
-            <div>
-              Stay Duration: {city.stayDuration}
-            </div>          
+              
           </h3>
         </div>
       </div>
-      <div>
-        <p><Paper className={classes.flight}>
-        <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-          YYC
-        </Typography>
-        <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-        <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-          YEG
-        </Typography>
-        <Typography style={{ fontSize: 16}}>
-          23 Oct, 16:30
-        </Typography>
-        <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
-          $450
-        </Typography>
-      </Paper></p>
-
-
-
-          </div>
+          {flightComp()}
       </div>
       )
 

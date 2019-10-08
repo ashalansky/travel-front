@@ -3,7 +3,8 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Button from "@material-ui/core/Button";
+import { Link, Redirect } from 'react-router-dom'
 const cookies = new Cookies();
 
 const useStyles = makeStyles({
@@ -27,12 +28,10 @@ export default function MyTrips() {
   useEffect(() => {
     const getTrips = async () => {
       // Pass our param (:id) to the API call
-      const { data } = await axios(`http://localhost:8080/trips/1`)
-      
-      // Update state
+      const { data } = await axios(`http://localhost:8080/trips/${id}`)
+
      setTrips(data)
-      
-      console.log(data)
+         
     }
 
     // Invoke the async function
@@ -40,14 +39,33 @@ export default function MyTrips() {
   }, [])
 
 
+   let tripList = [];
+  if(!trips.loading && trips !== "Not Found"){
+   
+    tripList = trips.map(trip => {
+      let linkUrl = `/itineraries/${trip.id}`; 
+      return(
+         <div>
+         <Button>
+           
+            <Link to={linkUrl}> {trip.name}    {trip.id} </Link>
+            
+          </Button>
+          </div>
+      )
+      
+    })
+
+  }
+
+  console.log("trips", trips)
   return trips.loading ? (
     <div>Loading...</div>
   ) : (
     <Container className={classes.mainContainer} maxWidth="md">
-    <h1>HEY</h1>
-    <h1>HEY</h1>
-
-    <h1>{trips}</h1>
+    <h1>My Trips</h1>
+    {tripList}
+    <h1></h1>
     </Container>
   )
 
