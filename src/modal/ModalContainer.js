@@ -7,6 +7,8 @@ import ModalLastPage from "./FlightComp"
 import ModalNav from "./Nav";
 import { Grid, Button, Typography } from "@material-ui/core";
 
+const axios = require("axios");
+
 const HANDLE_NEXT = "HANDLE_NEXT";
 const HANDLE_BACK = "HANDLE_BACK";
 const HANDLE_RESET = "HANDLE_RESET";
@@ -19,6 +21,7 @@ const UPDATE_DEPARTURE_DATE = "UPDATE_DEPARTURE_DATE";
 const UPDATE_CITY_CODE = "UPDATE_CITY_CODE";
 const UPDATE_FLIGHT_PLAN = "UPDATE_FLIGHT_PLAN";
 const SELECT_FLIGHT_PLAN = "SELECT_FLIGHT_PLAN"
+const FINISH_PLAN = "FINISH_PLAN"
 
 const useStyles = makeStyles({
  modal: {
@@ -103,7 +106,7 @@ const reducer = function(state, action) {
         let currentRoutes = [...action.routes];
         let currentKey = state.key;
         let newRoutes = currentRoutes.concat([newCity]);
-        return {...state, routes: newRoutes, key: currentKey + 1, selectedCity: newRoutes[0].name}
+        return {...state, routes: newRoutes, key: currentKey + 1, selectedCity: newRoutes[0].id}
       }
       return {...state}
     case DELETE_CITY:
@@ -139,7 +142,7 @@ const reducer = function(state, action) {
     case UPDATE_DEPARTURE_DATE:
       let updatedRoutesInformation = [...state.routes]
       for (let i = 0; i < updatedRoutesInformation.length; i++) {
-        if (updatedRoutesInformation[i].name === action.selectedCity) {
+        if (updatedRoutesInformation[i].id === action.selectedCity) {
           updatedRoutesInformation[i]["departureDate"] = action.departureDate;
         }
       }
@@ -154,11 +157,16 @@ const reducer = function(state, action) {
       }
       return {...state, routes: newCityCodeInformation}
     case UPDATE_FLIGHT_PLAN:
-      return {...state, flightPlans: action.flightPlans}
+      let generatedFlightPlans = [...state.flightPlans]
+      generatedFlightPlans.push(action.flightPlans)
+      return {...state, flightPlans: generatedFlightPlans}
     case SELECT_FLIGHT_PLAN:
-      let updatedFlightPlans = [...state.selectedFlightPlans];
-      updatedFlightPlans.push(action.selectedFlight)
+      let updatedFlightPlans = {...state.selectedFlightPlans};
+      updatedFlightPlans[action.cityCode] = action.selectedFlight
       return {...state, selectedFlightPlans: updatedFlightPlans}
+    case FINISH_PLAN:
+      console.log("in Finished Plan in reducer");
+      return axios.post("http://localhost:8080/trips/trip", {cityInformation: state.routes, flightInformation: state.selectedFlightPlans})
     default:
       return {...state};
   }
@@ -171,9 +179,9 @@ export default function(props) {
     step: 0,
     routes: [],
     key: 1,
-    selectedCity: "",
+    selectedCity: 0,
     flightPlans: [],
-    selectedFlightPlans: []
+    selectedFlightPlans: {}
   })
 
   const addCity = function(city) {
@@ -208,8 +216,15 @@ export default function(props) {
     dispatch( {type: UPDATE_FLIGHT_PLAN, flightPlans})
   }
 
-  const selectFlightPlan = function (selectedFlight) {
-    dispatch( {type:SELECT_FLIGHT_PLAN, selectedFlight})
+  const selectFlightPlan = function (selectedFlight, cityCode) {
+    dispatch( {type:SELECT_FLIGHT_PLAN, selectedFlight, cityCode})
+  }
+
+  const finishedPlan = function() {
+    console.log("finishedPlan", finishedPlan);
+    dispatch({ type: FINISH_PLAN })
+    props.closeModal();
+    dispatch({ type: HANDLE_RESET })
   }
 
   const steps = getSteps();
@@ -220,7 +235,7 @@ export default function(props) {
     } else if (state.step === 1) {
       return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} city = {state.selectedCity} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan}></ModalLastPage>)
     }
   }
 
@@ -301,7 +316,7 @@ export default function(props) {
         )
       )
     } else if (state.step === 2) {
-      return (state.routes.length >= 2 ? (
+      return ((state.routes.length-1) === Object.keys(state.selectedFlightPlans).length ? (
         <div className={classes.div}>
           <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
           <div>
@@ -311,10 +326,10 @@ export default function(props) {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => dispatch({type: HANDLE_NEXT, step: state.step})}
+              onClick={() => finishedPlan()}
               className={classes.button}
             >
-              Finished
+              Finish
             </Button>
           </div>
         </div>
@@ -325,7 +340,7 @@ export default function(props) {
             <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
               Back
             </Button>
-            <Button disabled={state.routes.length < 2}> Finished </Button>
+            <Button disabled={true}> Finish </Button>
           </div>
         </div>
       ))

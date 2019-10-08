@@ -51,7 +51,8 @@ const useStyles = makeStyles(theme => ({
     placeSelf: 'center',
     color: 'white',
     fontSize: 150,
-    transform: 'rotate(90deg)',
+    transform: 'rotate(120deg) scale(1.1)'
+    
   },
   line: {
     gridRow: 2,

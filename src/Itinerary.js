@@ -178,7 +178,7 @@ export default function Itinerary(props) {
 
   return (
     <Container className={classes.mainContainer} maxWidth="md">
-      <NavBar user={props.location.state.user}/>
+      <NavBar user={props.location.state.user} setLoginModal={props.location.state.setLoginModal} setSignUpModal={props.location.state.setSignUpModal} LoginOn={props.location.state.LoginOn} SignUpOn={props.location.state.SignUpOn} logout={props.location.state.logout}/>
       <Button className={classes.button}>
           <SaveAltIcon></SaveAltIcon>
            Save Trip

@@ -1,15 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Paper, Typography } from "@material-ui/core";
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
-import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-require('dotenv').config()
-
-const axios = require("axios");
+import PeopleTab from './PeopleTab';
+import VerticalTabs from './TabPanel'
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -24,7 +17,7 @@ const useStyles = makeStyles(theme => ({
       color: '#9b8bf7',
       padding: '0px',
       width: '50%'
-    }, 
+    },
     formInput: {
       color: '#9b8bf7', 
       fontSize: 10,
@@ -53,7 +46,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: 5,
     marginRight: 10,
     marginBottom: 5,
-    height: 90,
+    height: "60vh",
     fontFamily: 'Ubuntu',
     border: '1px solid #8d9ae8',
     borderRadius: 15,
@@ -89,253 +82,18 @@ export default function FlightComp(props) {
     name: 'hai',
   })
 
-  const callFlightsApi = (() => {
-    
-    let apiParams = {
-      "infants_lap":values.infants || 0,
-      "children": values.children || 0,
-      "seniors": "0",
-      "pax": values.adults || 0,
-      "country":"CA",
-      "cabin":"Coach"
-    }
-    for (let i = 0 ; i < props.cities.length - 1; i++) {
-      apiParams[`from${i}`] = props.cities[i].cityCode
-      apiParams[`to${i}`] = props.cities[i + 1].cityCode
-      apiParams[`date${i}`] = props.cities[i].departureDate
-    }
-
-    axios({
-      "method":"GET",
-      "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
-      "headers":{
-      "content-type":"application/octet-stream",
-      "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
-      "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
-      },
-      "params": apiParams
-      })
-      .then((response)=>{
-        return setTimeout(()=> {
-          console.log(response);
-          let cheapestFlights = [];
-          let priceList = [];
-          const itineraryList = response.data.itins
-
-          for (let itinerary in itineraryList) {
-            if (!priceList.includes(itineraryList[itinerary].unrounded_price)){
-              priceList.push(itineraryList[itinerary].unrounded_price)
-            }
-          }
-
-          priceList.sort((a,b) => a - b);
-
-          while (cheapestFlights.length < 0) {
-            for (let price of priceList) {
-              for (let itinerary in itineraryList) {
-                if (itineraryList[itinerary].unrounded_price === price){
-                  cheapestFlights.push(itineraryList[itinerary]);
-                }
-              }
-            }
-          }
-          props.updateFlightPlans(cheapestFlights);
-        }, 2000)
-      })
-      .catch((error)=>{
-        console.log(error)
-      })
-  })
-  
-
-  const getCityCodes = (() => {
-    console.log(process.env.REACT_APP_HIPMUNK_HOST);
-    console.log(process.env.REACT_APP_HIPMUNK_KEY)
-    for (let i = 0; i < props.cities.length; i++) {
-
-    axios({
-      "method":"GET",
-      "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/locations/search",
-      "headers":{
-      "content-type":"application/octet-stream",
-      "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
-      "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
-      },"params":{
-      "query": props.cities[i].name
-      }
-      })
-      .then((response)=>{
-        props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
-      })
-      .catch((error)=>{
-        console.log(error)
-      });
-
-    if (i === props.cities.length - 1) {
-      axios({
-        "method":"GET",
-        "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/locations/search",
-        "headers":{
-        "content-type":"application/octet-stream",
-        "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
-        "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
-        },"params":{
-        "query": props.cities[i].name
-        }
-        })
-        .then((response)=>{
-          props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
-        })
-        .then(() => {
-          callFlightsApi();
-        })
-        .catch((error)=>{
-          console.log(error)
-        });
-    }
-    }
-  });
-
-  const handleChange = event => {
-    setValues(oldValues => ({
-      ...oldValues,
-      [event.target.name]: event.target.value,
-    }));
-  };
-  const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
-    setLabelWidth(inputLabel.current.offsetWidth);
-  }, []);
 
   const classes = useStyles();
 
-  const flightList = function () {
-    if (props.flightPlans.length) {
-      let flightPlans = props.flightPlans.map((flightPlan) => {
-        return (
-          <Paper className={classes.flight}>
-            <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-              {props.cities[0].cityCode}
-            </Typography>
-            <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-            <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-              {props.cities[props.cities.length - 1].cityCode}
-            </Typography>
-            <Typography style={{ fontSize: 16}}>
-              23 Oct, 16:30
-            </Typography>
-            <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-              {flightPlan.unrounded_price}
-            </Typography>
-            <Button variant="outlined" className={classes.button} onClick={() => props.selectFlightPlan(flightPlan)}>
-              SELECT
-            </Button>
-          </Paper>
-        )
-      })
-    }
-  }
-
   return (
-      <Paper>
         <Grid container spacing={3}>
           <Grid item xs={12} sm={5}>
-            <Paper className={classes.paper}>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 1}}>
-                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
-                  Adults
-                </InputLabel>
-                <Select
-                  value={values.adults}
-                  onChange={handleChange}
-                  labelWidth={labelWidth}
-                  inputProps={{
-                    name: 'adults',
-                    id: 'outlined-adults-simple',
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 2}}>
-                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
-                  Children
-                </InputLabel>
-                <Select
-                  value={values.children}
-                  onChange={handleChange}
-                  labelWidth={labelWidth}
-                  inputProps={{
-                    name: 'children',
-                    id: 'outlined-children-simple',
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl variant="outlined" className={classes.formControl} style={{gridColumn: 1, gridRow: 3}}>
-                <InputLabel className={classes.formInput} ref={inputLabel} htmlFor="outlined-adults-simple">
-                  Infants
-                </InputLabel>
-                <Select
-                  value={values.infants}
-                  onChange={handleChange}
-                  labelWidth={labelWidth}
-                  inputProps={{
-                    name: 'infants',
-                    id: 'outlined-infants-simple',
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
-                  <MenuItem value={3}>4</MenuItem>
-                  <MenuItem value={3}>5</MenuItem>
-                </Select>
-              </FormControl>
-              <Button variant="outlined" className={classes.button} style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5} } onClick={() => getCityCodes()}>Generate Flights </Button>
-            </Paper>
+              <PeopleTab cities={props.cities} flightPlans={props.flightPlans} updateFlightPlans={props.updateFlightPlans} updateCityCode={props.updateCityCode}></PeopleTab>
           </Grid>
           <Grid item xs={12} sm={7}>
-            {flightList()}
-            <Paper className={classes.flight}>
-              <Typography variant="body2" style={{ gridColumn: 1, fontSize: 20}}>
-                YYC
-              </Typography>
-              <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
-              <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
-                YEG
-              </Typography>
-              <Typography style={{ fontSize: 16}}>
-                23 Oct, 16:30
-              </Typography>
-              <Typography style={{ fontSize: 18, color: '#9b8bf7'}}>
-                $450
-              </Typography>
-              <Button variant="outlined" className={classes.button}>
-                SELECT
-              </Button>
-            </Paper>
+            <VerticalTabs cities={props.cities} flightPlans={props.flightPlans} selectedFlight={props.selectFlightPlan}>
+            </VerticalTabs>
           </Grid>
         </Grid>
-      </Paper>
   )
 }

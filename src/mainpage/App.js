@@ -11,6 +11,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
+
 const register = ((username, email, password, city) => {
   let url = "http://localhost:8080/users/register";
   let data = {
@@ -30,9 +31,11 @@ const register = ((username, email, password, city) => {
 })
 
 
+
 export default function App() {
   const [LoginOn, setLoginModal] = useState(false);
   const [SignUpOn, setSignUpModal] = useState(false);
+
   const [username, setUsername] = useState(cookies.get('username'));
 
   const login = ((email, password) => {
@@ -42,6 +45,26 @@ export default function App() {
        cookies.set('username', name)
        setUsername(name)
      });
+  })
+
+  const register = ((username, email, password, city) => {
+    let url = "http://localhost:8080/users/register";
+    let data = {
+      username, 
+      email,
+      password,
+      city
+    }
+    console.log(data)
+    axios.post(
+      url,
+      data
+    )
+    .then((data) => {
+      let name = data.data.user[0].username 
+      setUsername(name)
+    });
+    
   })
    
   const logout = function(){
