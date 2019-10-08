@@ -142,7 +142,7 @@ export default function PeopleTab(props) {
 
   const getCityCodes = (() => {
     props.setPassenger(values.adults, values.children, values.infants);
-    props.resetFlightPlans()
+    props.flightReset();
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
