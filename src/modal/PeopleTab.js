@@ -76,6 +76,30 @@ export default function PeopleTab(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
+  const makePlans = function(data) {
+    let cheapestFlights = [];
+    let priceList = [];
+    const itineraryList = data.data.itins
+
+    for (let itinerary in itineraryList) {
+      if (!priceList.includes(itineraryList[itinerary].unrounded_price)){
+        priceList.push(itineraryList[itinerary].unrounded_price)
+      }
+    }
+
+    priceList.sort((a,b) => a - b);
+
+    
+    for (let price of priceList) {
+      for (let itinerary in itineraryList) {
+        if (itineraryList[itinerary].unrounded_price === price && cheapestFlights.length < 5){
+          cheapestFlights.push(itineraryList[itinerary]);
+        }
+      }
+    }
+    props.updateFlightPlans(cheapestFlights);
+  }
+
   const callFlightsApi = (() => {
     let apiParams = {
       "infants_lap":values.infants || 0,
@@ -101,30 +125,38 @@ export default function PeopleTab(props) {
         "params": apiParams
         })
         .then((response)=>{
-          console.log(response, i);
           if (response.data.done) {
-            console.log(response);
-            let cheapestFlights = [];
-            let priceList = [];
-            const itineraryList = response.data.itins
-  
-            for (let itinerary in itineraryList) {
-              if (!priceList.includes(itineraryList[itinerary].unrounded_price)){
-                priceList.push(itineraryList[itinerary].unrounded_price)
+            makePlans(response)
+          } else {
+            axios({
+              "method":"GET",
+              "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
+              "headers":{
+              "content-type":"application/octet-stream",
+              "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
+              "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
+              },
+              "params": apiParams
+              })
+              .then((response2) => {
+                if (response2.data.done) {
+                  makePlans(response2)
+                } else {
+                  axios({
+                    "method":"GET",
+                    "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
+                    "headers":{
+                    "content-type":"application/octet-stream",
+                    "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
+                    "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
+                    },
+                    "params": apiParams
+                    })
+                    .then((response3) => {
+                      makePlans(response3);
+                    });
               }
-            }
-
-            priceList.sort((a,b) => a - b);
-  
-            
-            for (let price of priceList) {
-              for (let itinerary in itineraryList) {
-                if (itineraryList[itinerary].unrounded_price === price && cheapestFlights.length < 5){
-                  cheapestFlights.push(itineraryList[itinerary]);
-                }
-              }
-            }
-            props.updateFlightPlans(cheapestFlights);
+            });
           }
         })
         .catch((error)=>{
@@ -135,8 +167,9 @@ export default function PeopleTab(props) {
 
 
   const getCityCodes = (() => {
-    props.setPassenger(values.adults, values.children, values.infants);
     props.flightReset();
+    props.setPassenger(values.adults, values.children, values.infants);
+    
     for (let i = 0; i < props.cities.length; i++) {
 
     axios({
