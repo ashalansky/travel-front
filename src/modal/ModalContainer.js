@@ -331,34 +331,48 @@ export default function(props) {
         )
       )
     } else if (state.step === 2) {
-      return ((state.routes.length-1) === Object.keys(state.selectedFlightPlans).length ? (
-        <div className={classes.div}>
-          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
-          <div>
-            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
-              Back
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() => finishedPlan()}
-              className={classes.button}
-            >
-              Finish
-            </Button>
+      if (typeof state.selectedFlightPlans === "object") {
+        return ((state.routes.length-1) === Object.keys(state.selectedFlightPlans).length ? (
+          <div className={classes.div}>
+            <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+            <div>
+              <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+                Back
+              </Button>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => finishedPlan()}
+                className={classes.button}
+              >
+                Finish
+              </Button>
+            </div>
           </div>
-        </div>
-      ) : (
-        <div className={classes.div}>
-          <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
-          <div>
-            <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
-              Back
-            </Button>
-            <Button disabled={true}> Finish </Button>
+        ) : (
+          <div className={classes.div}>
+            <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+            <div>
+              <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+                Back
+              </Button>
+              <Button disabled={true}> Finish </Button>
+            </div>
           </div>
-        </div>
-      ))
+        ))
+      } else {
+        return (
+          <div className={classes.div}>
+            <Typography className={classes.instructions}>{getStepContent(state.step)}</Typography>
+            <div>
+              <Button disabled={state.step === 0} onClick={() => dispatch({type: HANDLE_BACK, step: state.step})} className={classes.button}>
+                Back
+              </Button>
+              <Button disabled={true}> Finish </Button>
+            </div>
+          </div>
+        )
+      }
     }
   }
 
