@@ -6,7 +6,7 @@ import App from './mainpage/App';
 import * as serviceWorker from './serviceWorker';
 import axios from "axios";
 import Itinerary from './Itinerary';
-import { Route, Link, BrowserRouter as Router } from 'react-router-dom'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
 
 if (process.env.REACT_APP_API_BASE_URL) {
   axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;

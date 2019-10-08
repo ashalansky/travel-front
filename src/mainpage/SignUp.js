@@ -4,8 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import Login from './Login';
-
 
 const useStyles = makeStyles(theme => ({
   grid: {
@@ -64,6 +62,8 @@ const reducer = ((state, action) => {
       return { ...state, city: action.city}
     case SET_PASSWORD:
       return { ...state, password: action.password}
+    default:
+      return { ...state}
   }
 })
 

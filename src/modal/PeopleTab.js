@@ -88,6 +88,7 @@ export default function PeopleTab(props) {
       "cabin":"Coach"
     }
     for (let i = 0 ; i < props.cities.length - 1; i++) {
+      console.log("props.cities[i].departureDate", props.cities[i].departureDate)
       apiParams["from0"] = props.cities[i].cityCode
       apiParams["to0"] = props.cities[i + 1].cityCode
       apiParams["date0"] = props.cities[i].departureDate
@@ -171,7 +172,7 @@ export default function PeopleTab(props) {
           props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
           setTimeout(() => {
             callFlightsApi();
-          }, 1000)
+          }, 2000)
         })
         .catch((error)=>{
           console.log(error)

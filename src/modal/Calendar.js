@@ -270,6 +270,7 @@ export default function CalendarComponent(props) {
     const departingDate = values
     let selectedCity = 0;
     let cityNumber = state.numberOfCities;
+    console.log("cityNumber", cityNumber);
     
     if (cityNumber < props.cities.length){
       selectedCity = props.cities[cityNumber].id
@@ -282,20 +283,23 @@ export default function CalendarComponent(props) {
 
     if (props.cities[cityNumber]){
       if (cityNumber === 0 && cityNumber < (props.cities.length - 1)) {
+        console.log("in cityNumber === 0");
         props.updateDepartureDate(moment(values).format("ll"), selectedCity);
         cityNumber++;
         selectedCity = props.cities[cityNumber].id
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-      } else if (!props.cities[cityNumber].departureDate && !(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && cityNumber < (props.cities.length - 1)) {
+      } else if (!(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && cityNumber < (props.cities.length - 1)) {
         props.updateDepartureDate(moment(values).format("ll"), selectedCity);
         if (cityNumber < props.cities.length - 1) {
           cityNumber++;
         }
+        console.log("cityNumber in else if", cityNumber);
         selectedCity = props.cities[cityNumber].id
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
       } else if (props.cities[cityNumber - 1].departureDate && selectedCity && cityNumber === (props.cities.length - 1)){
+        console.log("in final else if");
         let selectedCity = props.cities[cityNumber].id;
         if (!(props.cities[props.cities.length - 1].id === props.city)) {
           let index = 0;
