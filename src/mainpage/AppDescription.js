@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     background: 'white',
     marginTop: '40px',
-    marginBottom: '40px'
+    marginBottom: '60px'
 
   },
   item: {
@@ -28,7 +28,8 @@ const useStyles = makeStyles(theme => ({
     color: 'grey',
     whiteSpace: 'nowrap',
     marginBottom: theme.spacing(4),
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
+    marginTop: '32px'
   },
   typography: {
     padding: theme.spacing(1),

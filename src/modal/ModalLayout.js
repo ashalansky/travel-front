@@ -27,6 +27,7 @@ const useStyles = makeStyles({
   },
   input: {
     fontSize: '18px',
+    textAlign: 'center'
   }
 });
 
