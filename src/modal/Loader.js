@@ -6,8 +6,7 @@ const useStyles = makeStyles(theme => ({
   progress: {
     margin: theme.spacing(2),
     color: '#9b8bf7',
-    alignItems: 'center',
-    margin: 'auto',
+    textAlign: 'center',
   },
 }));
 
@@ -28,7 +27,7 @@ export default function Loader() {
   }, []);
 
   return (
-    <div>
+    <div style={{ textAlign: 'center', width: '100%'}}>
       <CircularProgress className={classes.progress} 
       variant="determinate" 
       value={progress} />

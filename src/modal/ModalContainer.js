@@ -31,7 +31,8 @@ const useStyles = makeStyles({
    height: "95%",
    margin: "auto",
    background: "white",
-   borderColor: '#a5a0aa'
+   borderColor: '#a5a0aa',
+   
  },
  div: {
   textAlign: 'center',
@@ -39,7 +40,12 @@ const useStyles = makeStyles({
   container: {
     backgroundColor: "#FFF",
     borderRadius: "5px",
-  }
+    fontFamily: 'Ubuntu'
+  },
+  instructions: {
+    justifyContent: 'center',
+    fontFamily: 'Ubuntu'
+  },
 });
 
 const getSteps = function () {

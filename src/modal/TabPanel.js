@@ -8,6 +8,7 @@ import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import Button from '@material-ui/core/Button';
 import Loader from './Loader'
+import FlightTakeoffIcon from '@material-ui/icons/FlightTakeoff';
 
 
 function TabPanel(props) {
@@ -221,13 +222,15 @@ export default function VerticalTabs(props) {
           >
             {createTabs()}
           </Tabs>
-          {props.flightPlans && props.flightPlans.length && tabPanels()}
           {(!props.flightPlans || !props.flightPlans.length) && <Loader />}
+          {props.flightPlans && props.flightPlans.length && tabPanels()}
         </Paper>
       );
     }
   }
   return (
-    <Paper className={classes.root}>Uho! No flights here!</Paper>
+    <Paper className={classes.root} style={ {alignItems: 'center', justifyContent: 'center' }}>
+      <FlightTakeoffIcon style={{ fontSize: '60px'}}></FlightTakeoffIcon>
+    </Paper>
   )
 }

@@ -18,7 +18,7 @@ const useStyles = makeStyles(theme => ({
     },
     formInput: {
       color: '#9b8bf7', 
-      fontSize: 10,
+      fontSize: '15px',
   },
   paper: {
     justifyItems: 'center',
