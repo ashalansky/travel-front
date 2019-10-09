@@ -57,7 +57,7 @@ export default function(props) {
             <Toolbar className={classes.root}>
               <Flight className={classes.plane}/>
               <Typography variant="h5" className={classes.title}>
-                Travel-Bum
+               <Link className={classes.button} style={{ textDecoration: 'none'}} to="/">Travel-Bum</Link> 
               </Typography>
               <Typography variant="h5" className={classes.user}>
                 Hi, {props.user}!
