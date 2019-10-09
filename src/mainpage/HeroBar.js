@@ -57,7 +57,7 @@ const useStyles = makeStyles(theme => ({
     gridColumn: 2,
     gridRow: 4,
     color: '#c2c0bf',
-    fontSize: '50px',
+    fontSize: '70px',
     placeSelf: 'center',
     textAlign: 'center'
   }
@@ -90,7 +90,6 @@ export default function HeroBanner(props) {
           data-aos-duration='1000'>Create Trip</Button>
           <div class="animated infinite fadeOutDown delay-2s" style={{textAlign: 'center'}}>
           <KeyboardArrowDownIcon className={classes.arrow}>
-
           </KeyboardArrowDownIcon>
           </div>
     </div>

@@ -16,7 +16,7 @@ const RouteList = React.memo(function({ routes, deleteCity }) {
 
 const useStyles = makeStyles({
   container: {
-    justify: "center"
+    justify: "center",
   },
   paper: {
     padding: 20,
@@ -24,6 +24,9 @@ const useStyles = makeStyles({
     marginBottom: 10,
     textAlign: "center",
     height: "60vh"
+  },
+  input: {
+    fontSize: '18px',
   }
 });
 
@@ -36,7 +39,7 @@ export default function ModalLayout(props) {
        
         <Grid item xs={12} sm={5}>
           <Paper className={classes.paper}>
-          Trip Name: <Input value={props.name} onChange={event => props.setTripName(event.target.value)}></Input>
+          <Input className={classes.input} placeholder="Trip Name"value={props.name} onChange={event => props.setTripName(event.target.value)}></Input>
             <Search addCity={props.addCity}></Search>
             <DragDropContext onDragEnd={props.onDragEnd}>
               <Droppable droppableId="list">

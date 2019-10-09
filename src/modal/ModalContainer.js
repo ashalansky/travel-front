@@ -45,8 +45,12 @@ const useStyles = makeStyles({
   },
   instructions: {
     justifyContent: 'center',
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
+    fontSize: '1.2em'
   },
+  nav: {
+    fontSize: '1.2em'
+  }
 });
 
 const getSteps = function () {

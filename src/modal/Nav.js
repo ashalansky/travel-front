@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
     textAlign: 'center',
   },
   font: {
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
   }
 }));
 
