@@ -130,6 +130,7 @@ export default function Itinerary({match}) {
               {city.flight.departure_location}
             </Typography>
             <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+           
             <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
             {city.flight.arrival_location}
             </Typography>
@@ -138,8 +139,9 @@ export default function Itinerary({match}) {
             </Typography>
             <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
               ${city.flight.price}
-             
+            
             </Typography>
+            
           </Paper></p>
               </div>  
           )
@@ -169,7 +171,7 @@ export default function Itinerary({match}) {
           </h2>
           <h3 className={classes.title}>
             <div>
-            Passengers: {city.passengers}
+
             </div>
               
           </h3>
@@ -190,6 +192,7 @@ export default function Itinerary({match}) {
   ) : (
     <Container className={classes.mainContainer} maxWidth="md">
      <h1>{itinerary.name}</h1>
+     Passengers: {itinerary.passengers}
      {tripList}
     </Container>
   )
