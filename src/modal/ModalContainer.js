@@ -189,7 +189,7 @@ const reducer = function(state, action) {
     case SET_TRIP_NAME:
       return {...state, name: action.name}
     case CLEAR_URL:
-      return {...state, url: []}
+      return {...state, urls: []}
     default:
       return {...state};
   }
