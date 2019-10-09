@@ -177,7 +177,6 @@ const reducer = function(state, action) {
       let flightUrls = [...state.urls];
       flightUrls[action.index - 1] += `;fl=${action.selectedFlight.routing_idens[0]}`;
       updatedFlightPlans[action.cityCode] = action.selectedFlight
-      console.log("flightUrls" ,flightUrls);
       return {...state, selectedFlightPlans: updatedFlightPlans, urls: flightUrls}
     case SET_PASSENGER:
       let numberOfPassengers = action.adults + action.children + action.infants;
