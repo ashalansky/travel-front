@@ -21,7 +21,7 @@ export default function App() {
   })
 
   const login = ((email, password) => {
-     return axios.post("http://localhost:8080/users/login", {email, password})
+     return axios.post(process.env.REACT_APP_API_BASE_URL+"users/login", {email, password})
      .then((data)=>{
        console.log(data);
        let name = data.data.user[0].username
@@ -33,7 +33,7 @@ export default function App() {
   })
 
   const register = ((username, email, password, city) => {
-    let url = "http://localhost:8080/users/register";
+    let url = process.env.REACT_APP_API_BASE_URL+"users/register";
     let data = {
       username, 
       email,

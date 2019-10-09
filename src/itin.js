@@ -105,7 +105,8 @@ export default function Itinerary({match}) {
   useEffect(() => {
     const getItinerary = async () => {
       // Pass our param (:id) to the API call
-      const { data } = await axios(`http://localhost:8080/itineraries/${match.params.id}`)
+    
+      const { data } = await axios(process.env.REACT_APP_API_BASE_URL+"itineraries/"+match.params.id)
      console.log(match.params.id)
       // Update state
       setItinerary(data)
