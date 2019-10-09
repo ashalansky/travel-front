@@ -6,7 +6,7 @@ import ModalSecondPage from "./Calendar"
 import ModalLastPage from "./FlightComp"
 import ModalNav from "./Nav";
 import { Grid, Button, Typography } from "@material-ui/core";
-
+import { Redirect } from 'react-router';
 const axios = require("axios");
 
 const HANDLE_NEXT = "HANDLE_NEXT";
@@ -241,6 +241,7 @@ export default function(props) {
     dispatch({ type: FINISH_PLAN, userId: props.userId, passengers: state.numberOfPassengers })
     props.closeModal();
     dispatch({ type: HANDLE_RESET })
+    return <Redirect to={"/itineraries/1"} />
   }
 
   const setPassenger = function(adults, children, infants) {
