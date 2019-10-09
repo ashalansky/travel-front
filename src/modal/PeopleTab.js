@@ -281,9 +281,14 @@ export default function PeopleTab(props) {
                 <MenuItem value={5}>5</MenuItem>
               </Select>
           </FormControl>
-          <Button variant="outlined" className={classes.button} 
-              style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5} } 
-              onClick={() => getCityCodes()}>Generate Flights </Button>
+          <Button 
+            variant="outlined" className={classes.button} 
+            style={{ gridRow: 4, gridColumnStart: 1, gridColumnEnd: 3, width: '50%', padding: 5} } 
+            onClick={() => getCityCodes()}
+            disabled={!values.children && !values.adults}
+          >
+              Generate Flights
+          </Button>
         </Paper>
     )
 }
