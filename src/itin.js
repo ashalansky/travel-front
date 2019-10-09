@@ -141,6 +141,7 @@ export default function Itinerary({match}) {
             </Typography>
             <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
               ${city.flight.price}
+             
             </Typography>
           </Paper></p>
               </div>  
