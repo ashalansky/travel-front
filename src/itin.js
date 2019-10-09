@@ -141,7 +141,8 @@ export default function Itinerary({match}) {
               ${city.flight.price}
             
             </Typography>
-            <a href={"https://www." + city.flight.url}>Link</a>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}> <a href={"https://www." + city.flight.url}>Link</a></Typography>
+           
           </Paper></p>
               </div>  
           )
