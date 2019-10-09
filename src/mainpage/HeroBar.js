@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import AOS from 'aos'
+import './HeroBar.css';
 
 const useStyles = makeStyles(theme => ({
   container: {
@@ -55,9 +56,10 @@ const useStyles = makeStyles(theme => ({
   arrow: {
     gridColumn: 2,
     gridRow: 4,
-    color: '#9b8bf7',
-    fontSize: 80,
-    placeSelf: 'center'
+    color: '#c2c0bf',
+    fontSize: '70px',
+    placeSelf: 'center',
+    textAlign: 'center'
   }
 }))
 
@@ -86,12 +88,10 @@ export default function HeroBanner(props) {
           data-aos-delay='1000' 
           data-aos-easing='ease-in-out' 
           data-aos-duration='1000'>Create Trip</Button>
-          <KeyboardArrowDownIcon className={classes.arrow}
-          data-aos="zoom-in"
-          data-aos-delay='1200'
-          data-aos-easing='ease-in-out'
-          data-aos-duration='7000'
-          ></KeyboardArrowDownIcon>
+          <div class="animated infinite fadeOutDown delay-2s" style={{textAlign: 'center'}}>
+          <KeyboardArrowDownIcon className={classes.arrow}>
+          </KeyboardArrowDownIcon>
+          </div>
     </div>
     );
 };

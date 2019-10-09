@@ -25,6 +25,7 @@ const SET_PASSENGER = "SET_PASSENGER";
 const FINISH_PLAN = "FINISH_PLAN";
 const RESET_FLIGHT_PLANS = "RESET_FLIGHT_PLANS";
 const SET_TRIP_NAME = "SET_TRIP_NAME";
+const CLEAR_URL = "CLEAR_URL";
 
 const useStyles = makeStyles({
  modal: {
@@ -45,8 +46,12 @@ const useStyles = makeStyles({
   },
   instructions: {
     justifyContent: 'center',
-    fontFamily: 'Ubuntu'
+    fontFamily: 'Ubuntu',
+    fontSize: '1.2em'
   },
+  nav: {
+    fontSize: '1.2em'
+  }
 });
 
 const getSteps = function () {
@@ -166,13 +171,17 @@ const reducer = function(state, action) {
       }
       return {...state, routes: newCityCodeInformation}
     case UPDATE_FLIGHT_PLAN:
-      let generatedFlightPlans = [...state.flightPlans]
+      let generatedFlightPlans = [...state.flightPlans];
+      let newUrls = [...state.urls];
+      newUrls.push(action.url);
       generatedFlightPlans.push(action.flightPlans)
-      return {...state, flightPlans: generatedFlightPlans}
+      return {...state, flightPlans: generatedFlightPlans, urls: newUrls}
     case SELECT_FLIGHT_PLAN:
       let updatedFlightPlans = {...state.selectedFlightPlans};
+      let flightUrls = [...state.urls];
+      flightUrls[action.index - 1] += `;fl=${action.selectedFlight.routing_idens[0]}`;
       updatedFlightPlans[action.cityCode] = action.selectedFlight
-      return {...state, selectedFlightPlans: updatedFlightPlans}
+      return {...state, selectedFlightPlans: updatedFlightPlans, urls: flightUrls}
     case SET_PASSENGER:
       let numberOfPassengers = action.adults + action.children + action.infants;
       return {...state, numberOfPassengers}
@@ -181,13 +190,10 @@ const reducer = function(state, action) {
     case FINISH_PLAN:
       axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers})
       return {...state, finished: true} 
-      
-    
-     
-    
-
-      case SET_TRIP_NAME:
+    case SET_TRIP_NAME:
       return {...state, name: action.name}
+    case CLEAR_URL:
+      return {...state, urls: []}
     default:
       return {...state};
   }
@@ -205,7 +211,8 @@ export default function(props) {
     selectedFlightPlans: {},
     numberOfPassengers: 0,
     name:"",
-    finished: false
+    finished: false,
+    urls: []
   })
 
   if (state.finished) {
@@ -241,12 +248,12 @@ export default function(props) {
     dispatch({ type: UPDATE_CITY_CODE, cityName, cityCode});
   }
 
-  const updateFlightPlans = function (flightPlans) {
-    dispatch( {type: UPDATE_FLIGHT_PLAN, flightPlans})
+  const updateFlightPlans = function (flightPlans, url) {
+    dispatch( {type: UPDATE_FLIGHT_PLAN, flightPlans, url})
   }
 
-  const selectFlightPlan = function (selectedFlight, cityCode) {
-    dispatch( {type:SELECT_FLIGHT_PLAN, selectedFlight, cityCode})
+  const selectFlightPlan = function (selectedFlight, cityCode, index) {
+    dispatch( {type:SELECT_FLIGHT_PLAN, selectedFlight, cityCode, index})
   }
 
   const finishedPlan = function() {
@@ -267,6 +274,10 @@ export default function(props) {
     dispatch({ type:SET_TRIP_NAME, name})
   }
 
+  const clearUrls = function() {
+    dispatch({ type:CLEAR_URL})
+  }
+
   const steps = getSteps();
 
   const currentDisplay  = function(){
@@ -275,7 +286,7 @@ export default function(props) {
     } else if (state.step === 1) {
       return (<ModalSecondPage cities = {state.routes} city = {state.selectedCity} travelDates={state.travelDates} changeSelectedCity={changeSelectedCity} updateTravelDates={updateTravelDates} updateDepartureDate={updateDepartureDate}></ModalSecondPage>)
     } else if (state.step === 2) {
-      return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan} setPassenger={setPassenger} resetFlightPlans={flightReset}></ModalLastPage>)
+      return (<ModalLastPage cities = {state.routes} flightPlans={state.flightPlans} selectedFlightPlan={state.selectedFlightPlans} updateCityCode={updateCityCode} updateFlightPlans={updateFlightPlans} selectFlightPlan={selectFlightPlan} setPassenger={setPassenger} resetFlightPlans={flightReset} clearUrls={clearUrls}></ModalLastPage>)
     }
   }
 

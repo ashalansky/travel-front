@@ -1,0 +1,7 @@
+.animated {
+  animation-duration: 3s;
+  grid-column: 2;
+  grid-row: 4;
+  text-align: 'center';
+  align-items: 'center'
+}

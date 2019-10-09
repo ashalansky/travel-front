@@ -67,7 +67,7 @@ export default function App() {
     .then((data) => {
       if (data.data === "Email already exists") {
         resetErrors();
-        setError({...error, signUpEmail: true})
+        setError({...error, signUpEmail: true, loginEmail: false, loginPassword: false})
       } else {
         let name = data.data.user[0].username 
         let id = data.data.user[0].id

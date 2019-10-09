@@ -154,8 +154,10 @@ export default function VerticalTabs(props) {
   const selectFlight = function(flightPlan, cityCode) {
     let currentState = {...state};
     currentState[cityCode] = flightPlan.iden;
+    let keys = Object.keys(currentState);
+    let index = keys.length
     setState(currentState) ;
-    props.selectedFlight(flightPlan, cityCode);
+    props.selectedFlight(flightPlan, cityCode, index);
   }
 
   const tabsContent = function() {
