@@ -13,7 +13,7 @@ export default function(props) {
   const classes = useStyles();
   return (
   <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>
-    <SignUp register={props.register} close={props.closeModal}></SignUp>
+    <SignUp register={props.register} close={props.closeModal} emailError={props.emailError} errorReset={props.errorReset}></SignUp>
     </Modal>
   );
 }

@@ -44,6 +44,14 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
     }
+  },
+  errorMessage: {
+    margin: "auto",
+    textAlign: "left",
+    width: '70%',
+    fontFamily: 'Ubuntu',
+    fontSize: "10px",
+    color: "red",
   }
 }));
 
@@ -69,11 +77,64 @@ export default function Login(props) {
   const classes = useStyles();
 
   const login = (() => {
+    props.errorReset();
     props.login(state.email, state.password)
-    props.close()
   })
 
-  return (
+  if (props.emailError) {
+    return (
+      <Grid 
+        container 
+        spacing={0} 
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{minHeight: '100vh'}}
+        className={classes.grid} noValidate autoComplete="off">
+          <Paper className={classes.paper}>
+            <div>
+              <Typography variant="h6" className={classes.title}>
+              Login
+              </Typography>
+            </div>
+            <div>
+            <TextField
+              error
+              id="outlined-email-input"
+              label="Email"
+              className={classes.textField}
+              type="email"
+              autoComplete="current-email"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_EMAIL, email : e.target.value})}
+              value={state.email}
+            />
+            </div>
+            <div>
+              <p className={classes.errorMessage}> Email doesn't exist </p>
+            </div>
+            <div>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_PASSWORD, password : e.target.value})}
+              value={state.password}
+            />
+            </div>
+            <Button variant="contained" color="primary" className={classes.button} onClick={() => login()} >
+              Login
+            </Button>
+          </Paper>
+      </Grid>
+  )
+  } else if (props.passwordError) {
+    return (
       <Grid 
         container 
         spacing={0} 
@@ -103,6 +164,7 @@ export default function Login(props) {
             </div>
             <div>
             <TextField
+              error
               id="outlined-password-input"
               label="Password"
               className={classes.textField}
@@ -114,10 +176,62 @@ export default function Login(props) {
               value={state.password}
             />
             </div>
+            <div>
+              <p className={classes.errorMessage}> Incorrect password </p>
+            </div>
             <Button variant="contained" color="primary" className={classes.button} onClick={() => login()} >
               Login
             </Button>
           </Paper>
       </Grid>
   )
+  } else {
+    return (
+        <Grid 
+          container 
+          spacing={0} 
+          direction="column"
+          alignItems="center"
+          justify="center"
+          style={{minHeight: '100vh'}}
+          className={classes.grid} noValidate autoComplete="off">
+            <Paper className={classes.paper}>
+              <div>
+                <Typography variant="h6" className={classes.title}>
+                Login
+                </Typography>
+              </div>
+              <div>
+              <TextField
+                id="outlined-email-input"
+                label="Email"
+                className={classes.textField}
+                type="email"
+                autoComplete="current-email"
+                margin="normal"
+                variant="outlined"
+                onChange={(e) => dispatch({type: SET_EMAIL, email : e.target.value})}
+                value={state.email}
+              />
+              </div>
+              <div>
+              <TextField
+                id="outlined-password-input"
+                label="Password"
+                className={classes.textField}
+                type="password"
+                autoComplete="current-password"
+                margin="normal"
+                variant="outlined"
+                onChange={(e) => dispatch({type: SET_PASSWORD, password : e.target.value})}
+                value={state.password}
+              />
+              </div>
+              <Button variant="contained" color="primary" className={classes.button} onClick={() => login()} >
+                Login
+              </Button>
+            </Paper>
+        </Grid>
+    )
+  }
 }

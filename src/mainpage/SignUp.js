@@ -44,6 +44,14 @@ const useStyles = makeStyles(theme => ({
     '&:hover': {
       boxShadow: '0 2px 5px 2px rgba(255, 105, 135, .3)',
     }
+  },
+  errorMessage: {
+    margin: "auto",
+    textAlign: "left",
+    width: '70%',
+    fontFamily: 'Ubuntu',
+    fontSize: "10px",
+    color: "red",
   }
 }));
 
@@ -78,11 +86,92 @@ export default function SignUp(props) {
   const classes = useStyles();
   
   const save = (() => {
+    props.errorReset();
     props.register(state.username, state.email, state.password, state.city)
-    props.close()
   })
 
-  return (
+  if (props.emailError) {
+    return (
+      <Grid 
+        container 
+        spacing={0} 
+        direction="column"
+        alignItems="center"
+        justify="center"
+        style={{minHeight: '100vh'}}
+        className={classes.grid} noValidate autoComplete="off">
+          <Paper className={classes.paper}>
+            <div>
+              <Typography variant="h6" className={classes.title}>
+              Sign Up
+              </Typography>
+            </div>
+          <div>
+          <TextField
+              id="outlined-username-input"
+              name="username"
+              label="Username"
+              className={classes.textField}
+              type="username"
+              autoComplete="current-username"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_USERNAME, username : e.target.value})}
+              value={state.username}
+            />
+          </div>
+          <div>
+          <TextField
+              id="outlined-city-input"
+              name="city"
+              label="City"
+              className={classes.textField}
+              type="city"
+              autoComplete="current-city"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_CITY, city : e.target.value})}
+              value={state.city}
+            />
+          </div>
+          <div>
+          <TextField
+              error
+              id="outlined-email-input"
+              name="email"
+              label="Email"
+              className={classes.textField}
+              type="email"
+              autoComplete="current-email"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_EMAIL, email : e.target.value})}
+              value={state.email}
+            />
+          </div>
+          <p className={classes.errorMessage}> Email already in use! </p>
+          <div>
+          <TextField
+              id="outlined-password-input"
+              name="password"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+              onChange={(e) => dispatch({type: SET_PASSWORD, password : e.target.value})}
+              value={state.password}
+            />
+          </div>
+          <Button variant="contained" onClick={() => save()} color="primary" className={classes.button}>
+            Sign Up
+          </Button>
+          </Paper>
+      </Grid>
+  )
+  } else {
+    return (
       <Grid 
         container 
         spacing={0} 
@@ -159,4 +248,5 @@ export default function SignUp(props) {
           </Paper>
       </Grid>
   )
+  }
 }
