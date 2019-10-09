@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import NavBar from "./mainpage/NavBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
