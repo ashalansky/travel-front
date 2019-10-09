@@ -137,7 +137,9 @@ export default function PeopleTab(props) {
         url += `;infants_seat=${values.infants}`;
       }
       url += `;country=CA;is_search_for_business=true;group=1`;
-
+      
+      let firstParam = {...apiParams};
+      console.log("firstParams", firstParam);
       axios({
         "method":"GET",
         "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
@@ -146,9 +148,11 @@ export default function PeopleTab(props) {
         "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
         "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
         },
-        "params": apiParams
+        "params": firstParam
         })
         .then((response)=>{
+          let secondParams = {...firstParam};
+          console.log("secondParams", secondParams);
           if (response.data.done) {
             makePlans(response, url)
           } else {
@@ -160,9 +164,11 @@ export default function PeopleTab(props) {
               "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
               "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
               },
-              "params": apiParams
+              "params": secondParams
               })
               .then((response2) => {
+                let thirdParams = {...secondParams}
+                console.log("thirdParams", thirdParams);
                 if (response2.data.done) {
                   makePlans(response2, url)
                 } else {
@@ -174,7 +180,7 @@ export default function PeopleTab(props) {
                     "x-rapidapi-host": process.env.REACT_APP_HIPMUNK_HOST,
                     "x-rapidapi-key": process.env.REACT_APP_HIPMUNK_KEY
                     },
-                    "params": apiParams
+                    "params": thirdParams
                     })
                     .then((response3) => {
                       makePlans(response3, url);
