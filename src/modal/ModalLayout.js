@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Input from '@material-ui/core/Input'
 import Map from "./Map";
 import Search from "./Search";
 import { DragDropContext, Droppable} from "react-beautiful-dnd";
@@ -33,9 +33,10 @@ export default function ModalLayout(props) {
 
   return (
       <Grid container spacing={3}>
+       
         <Grid item xs={12} sm={5}>
           <Paper className={classes.paper}>
-           
+          Trip Name: <Input value={props.name} onChange={event => props.setTripName(event.target.value)}></Input>
             <Search addCity={props.addCity}></Search>
             <DragDropContext onDragEnd={props.onDragEnd}>
               <Droppable droppableId="list">
