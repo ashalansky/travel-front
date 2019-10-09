@@ -179,7 +179,6 @@ const reducer = function(state, action) {
     case RESET_FLIGHT_PLANS:
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
-      console.log("in Finished Plan in reducer");
       return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers});
     case SET_TRIP_NAME:
       return {...state, name: action.name}
@@ -253,7 +252,6 @@ export default function(props) {
   }
 
   const setTripName = function(name) {
-    console.log(name)
     dispatch({ type:SET_TRIP_NAME, name})
   }
 

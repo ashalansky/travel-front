@@ -32,16 +32,13 @@ export default function App() {
   }
 
   const login = ((email, password) => {
-    console.log(process.env.REACT_APP_API_BASE_URL)
      return axios.post(process.env.REACT_APP_API_BASE_URL+"users/login", {email, password})
      .then((data)=>{
-       console.log(data);
        if (data.data === "invalid email") {
         resetErrors();
         setError({...error, signUpEmail: false, loginEmail: true, loginPassword: false})
        } else if (data.data === "incorrect password") {
         resetErrors();
-        console.log(error);
         setError({...error, signUpEmail: false, loginEmail: false, loginPassword: true})
        } else {
          let name = data.data.user[0].username;
@@ -68,7 +65,6 @@ export default function App() {
       data
     )
     .then((data) => {
-      console.log(data);
       if (data.data === "Email already exists") {
         resetErrors();
         setError({...error, signUpEmail: true})

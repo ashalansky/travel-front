@@ -209,7 +209,6 @@ export default function VerticalTabs(props) {
 
   if(props.cities && props.cities.length) {
     if (props.cities[props.cities.length - 1].cityCode){
-      console.log("how many");
       return (
         <Paper className={classes.root}>
           <Tabs

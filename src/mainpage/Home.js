@@ -16,7 +16,6 @@ export default function Home(props){
   }
 
   const loggedIn = function() {
-    console.log(cookies.get("username"))
     if (cookies.get("username")) {
       return (
         <Fragment>
