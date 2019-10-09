@@ -106,7 +106,7 @@ export default function Itinerary({match}) {
     const getItinerary = async () => {
       // Pass our param (:id) to the API call
     
-      const { data } = await axios(process.env.REACT_APP_API_BASE_URL+match.params.id)
+      const { data } = await axios(process.env.REACT_APP_API_BASE_URL+"itineraries/"+match.params.id)
      console.log(match.params.id)
       // Update state
       setItinerary(data)
