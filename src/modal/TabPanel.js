@@ -163,7 +163,6 @@ export default function VerticalTabs(props) {
     for (let i = 0; i < props.flightPlans.length; i++) {
       let tabContent = []
       for (let j = 0; j < props.flightPlans[i].length; j++) {
-        // let selectedTab = (state[props.cities[i].cityCode] === props.flightPlans[i][j].iden) ? classes.selectedTab : classes.flight;
         let selectedButton = (state[props.cities[i].cityCode] === props.flightPlans[i][j].iden) ? classes.selectedButton : classes.button;
         tabContent.push(
           <Paper className={classes.flight}>
@@ -209,7 +208,6 @@ export default function VerticalTabs(props) {
 
   if(props.cities && props.cities.length) {
     if (props.cities[props.cities.length - 1].cityCode){
-      console.log("how many");
       return (
         <Paper className={classes.root}>
           <Tabs

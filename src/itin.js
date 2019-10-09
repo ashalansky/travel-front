@@ -171,7 +171,7 @@ export default function Itinerary({match}) {
           </h2>
           <h3 className={classes.title}>
             <div>
-            Passengers: {city.numOfTravelers}
+            Passengers: {city.passengers}
             </div>
               
           </h3>

@@ -6,7 +6,7 @@ import ModalSecondPage from "./Calendar"
 import ModalLastPage from "./FlightComp"
 import ModalNav from "./Nav";
 import { Grid, Button, Typography } from "@material-ui/core";
-
+import { Redirect } from 'react-router';
 const axios = require("axios");
 
 const HANDLE_NEXT = "HANDLE_NEXT";
@@ -179,7 +179,6 @@ const reducer = function(state, action) {
     case RESET_FLIGHT_PLANS:
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
-      console.log("in Finished Plan in reducer");
       return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers});
     case SET_TRIP_NAME:
       return {...state, name: action.name}
@@ -242,6 +241,7 @@ export default function(props) {
     dispatch({ type: FINISH_PLAN, userId: props.userId, passengers: state.numberOfPassengers })
     props.closeModal();
     dispatch({ type: HANDLE_RESET })
+    return <Redirect to={"/itineraries/1"} />
   }
 
   const setPassenger = function(adults, children, infants) {
@@ -253,7 +253,6 @@ export default function(props) {
   }
 
   const setTripName = function(name) {
-    console.log(name)
     dispatch({ type:SET_TRIP_NAME, name})
   }
 
