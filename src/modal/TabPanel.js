@@ -193,19 +193,22 @@ export default function VerticalTabs(props) {
   }
   const tabPanels = function () {
     let tabPanels = [];
-    for (let i = 0; i < props.flightPlans.length; i++) {
-      tabPanels.push(
-        <TabPanel value={value} index={i} 
-          className={classes.tabPanel}
-          orientation="vertical"
-          variant="scrollable"
-          aria-label="Vertical tabs example"
-        >
-          {tabsContent()[i]}
-        </TabPanel>
-        )
+    if (props.flightPlans && props.flightPlans.length) {
+      for (let i = 0; i < props.flightPlans.length; i++) {
+        tabPanels.push(
+          <TabPanel value={value} index={i} 
+            className={classes.tabPanel}
+            orientation="vertical"
+            variant="scrollable"
+            aria-label="Vertical tabs example"
+          >
+            {tabsContent()[i]}
+          </TabPanel>
+          )
+      }
+      return tabPanels;
     }
-    return tabPanels
+    return;
   }
 
   if(props.cities && props.cities.length) {
@@ -223,7 +226,7 @@ export default function VerticalTabs(props) {
             {createTabs()}
           </Tabs>
           {(!props.flightPlans || !props.flightPlans.length) && <Loader />}
-          {props.flightPlans && props.flightPlans.length && tabPanels()}
+          {tabPanels()}
         </Paper>
       );
     }

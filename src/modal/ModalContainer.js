@@ -188,7 +188,7 @@ const reducer = function(state, action) {
     case RESET_FLIGHT_PLANS:
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
-      axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers})
+      axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls})
       return {...state, finished: true} 
     case SET_TRIP_NAME:
       return {...state, name: action.name}
