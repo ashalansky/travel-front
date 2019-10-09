@@ -30,7 +30,7 @@ export default function MyTrips() {
   useEffect(() => {
     const getTrips = async () => {
       // Pass our param (:id) to the API call
-      const { data } = await axios(`http://localhost:8080/trips/${id}`)
+      const { data } = await axios(process.env.REACT_APP_API_BASE_URL+id)
 
      setTrips(data)
          

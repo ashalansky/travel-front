@@ -174,7 +174,7 @@ const reducer = function(state, action) {
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
       console.log("in Finished Plan in reducer");
-      return axios.post("http://localhost:8080/trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers});
+      return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers});
     case SET_TRIP_NAME:
       return {...state, name: action.name}
     default:
