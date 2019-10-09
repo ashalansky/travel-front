@@ -32,6 +32,7 @@ export default function App() {
   }
 
   const login = ((email, password) => {
+    console.log(process.env.REACT_APP_API_BASE_URL)
      return axios.post(process.env.REACT_APP_API_BASE_URL+"users/login", {email, password})
      .then((data)=>{
        console.log(data);
@@ -105,7 +106,7 @@ export default function App() {
 
       <Route 
         exact path="/" 
-        component={Home}
+        render={() => <Home login={login} setLoginModal={setLoginModal} open={LoginOn} closeModal={closeModal} emailError={error.loginEmail} passwordError={error.loginPassword} errorReset={resetErrors}></Home>}
       />
 
       <Route 
