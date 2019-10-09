@@ -296,6 +296,7 @@ export default function CalendarComponent(props) {
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
       } else if (props.cities[cityNumber - 1].departureDate && selectedCity && cityNumber === (props.cities.length - 1)){
+        console.log(props.cities);
         let selectedCity = props.cities[cityNumber].id;
         if (!(props.cities[props.cities.length - 1].id === props.city)) {
           let index = 0;
