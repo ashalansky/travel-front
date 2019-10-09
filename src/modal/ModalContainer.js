@@ -188,10 +188,8 @@ const reducer = function(state, action) {
     case RESET_FLIGHT_PLANS:
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
-      return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls})
-      .then((data) => {
-        console.log(data);
-      })
+      axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls})
+      return {...state, finished: true} 
     case SET_TRIP_NAME:
       return {...state, name: action.name}
     case CLEAR_URL:
@@ -213,8 +211,14 @@ export default function(props) {
     selectedFlightPlans: {},
     numberOfPassengers: 0,
     name:"",
+    finished: false,
     urls: []
   })
+
+  if (state.finished) {
+   
+    return <Redirect to="/mytrips"/>
+  }
 
   const addCity = function(city) {
     dispatch({ type: ADD_CITY, routes: state.routes, city})
@@ -253,10 +257,9 @@ export default function(props) {
   }
 
   const finishedPlan = function() {
+
     dispatch({ type: FINISH_PLAN, userId: props.userId, passengers: state.numberOfPassengers })
-    props.closeModal();
-    dispatch({ type: HANDLE_RESET })
-    return <Redirect to={"/itineraries/1"} />
+   
   }
 
   const setPassenger = function(adults, children, infants) {
