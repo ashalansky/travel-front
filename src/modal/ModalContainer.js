@@ -172,7 +172,7 @@ const reducer = function(state, action) {
       return {...state, routes: newCityCodeInformation}
     case UPDATE_FLIGHT_PLAN:
       let generatedFlightPlans = [...state.flightPlans];
-      let newUrls = [...state.url];
+      let newUrls = [...state.urls];
       newUrls.push(action.url);
       generatedFlightPlans.push(action.flightPlans)
       return {...state, flightPlans: generatedFlightPlans, urls: newUrls}
@@ -181,7 +181,6 @@ const reducer = function(state, action) {
       let flightUrls = [...state.urls];
       flightUrls[action.index - 1] += `;fl=${action.selectedFlight.routing_idens[0]}`;
       updatedFlightPlans[action.cityCode] = action.selectedFlight
-      console.log("flightUrls" ,flightUrls);
       return {...state, selectedFlightPlans: updatedFlightPlans, urls: flightUrls}
     case SET_PASSENGER:
       let numberOfPassengers = action.adults + action.children + action.infants;
@@ -189,7 +188,10 @@ const reducer = function(state, action) {
     case RESET_FLIGHT_PLANS:
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
-      return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls});
+      return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls})
+      .then((data) => {
+        console.log(data);
+      })
     case SET_TRIP_NAME:
       return {...state, name: action.name}
     case CLEAR_URL:
