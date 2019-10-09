@@ -13,7 +13,7 @@ export default function LoginModal(props) {
   const classes = useStyles();
   return (
   <Modal className={classes.modal} open={props.open} onClose={props.closeModal}>
-    <Login login={props.login} close={props.closeModal}></Login>
+    <Login login={props.login} close={props.closeModal} emailError={props.emailError} passwordError={props.passwordError} errorReset={props.errorReset}></Login>
   </Modal>
   );
 }
