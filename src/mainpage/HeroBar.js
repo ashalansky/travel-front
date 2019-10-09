@@ -3,13 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AirplanemodeActiveIcon from '@material-ui/icons/AirplanemodeActive';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import AOS from 'aos'
 
 const useStyles = makeStyles(theme => ({
   container: {
     marginTop: 70,
     display: 'grid',
-    gridTemplateRows: '35% 25% auto',
+    gridTemplateRows: '35% 25% 25% 15%',
     gridTemplateColumns: '90px auto 90px',
     width: '100%',
     background: 'linear-gradient(0deg, rgba(54,104,173,1) 0%, rgba(255,255,255,1) 0%, rgba(100,148,233,1) 100%)',
@@ -50,8 +51,14 @@ const useStyles = makeStyles(theme => ({
     color: 'white',
     fontSize: 150,
     transform: 'rotate(120deg) scale(1.1)'
-    
   },
+  arrow: {
+    gridColumn: 2,
+    gridRow: 4,
+    color: '#9b8bf7',
+    fontSize: 80,
+    placeSelf: 'center'
+  }
 }))
 
 export default function HeroBanner(props) {
@@ -79,6 +86,12 @@ export default function HeroBanner(props) {
           data-aos-delay='1000' 
           data-aos-easing='ease-in-out' 
           data-aos-duration='1000'>Create Trip</Button>
+          <KeyboardArrowDownIcon className={classes.arrow}
+          data-aos="zoom-in"
+          data-aos-delay='1200'
+          data-aos-easing='ease-in-out'
+          data-aos-duration='7000'
+          ></KeyboardArrowDownIcon>
     </div>
     );
 };
