@@ -63,6 +63,20 @@ export default function PeopleTab(props) {
   })
   const classes = useStyles();
 
+  const formatDate = function(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+  
   const handleChange = event => {
     setValues(oldValues => ({
       ...oldValues,
@@ -76,7 +90,7 @@ export default function PeopleTab(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
-  const makePlans = function(data) {
+  const makePlans = function(data, urlLink) {
     let cheapestFlights = [];
     let priceList = [];
     const itineraryList = data.data.itins
@@ -97,7 +111,7 @@ export default function PeopleTab(props) {
         }
       }
     }
-    props.updateFlightPlans(cheapestFlights);
+    props.updateFlightPlans(cheapestFlights, urlLink);
   }
 
   const callFlightsApi = (() => {
@@ -113,7 +127,17 @@ export default function PeopleTab(props) {
       apiParams["from0"] = props.cities[i].cityCode
       apiParams["to0"] = props.cities[i + 1].cityCode
       apiParams["date0"] = props.cities[i].departureDate
+      let formattedDate = formatDate(props.cities[i].departureDate);
       
+      let url = `hipmunk.com/flights#f=${props.cities[i].cityCode};t=${props.cities[i+1].cityCode};d=${formattedDate}`
+      if (values.chilren) {
+        url += `;children=${values.chilren}`;
+      }
+      if (values.infants) {
+        url += `;infants_seat=${values.infants}`;
+      }
+      url += `;country=CA;is_search_for_business=true;group=1`;
+
       axios({
         "method":"GET",
         "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
@@ -126,7 +150,7 @@ export default function PeopleTab(props) {
         })
         .then((response)=>{
           if (response.data.done) {
-            makePlans(response)
+            makePlans(response, url)
           } else {
             axios({
               "method":"GET",
@@ -140,7 +164,7 @@ export default function PeopleTab(props) {
               })
               .then((response2) => {
                 if (response2.data.done) {
-                  makePlans(response2)
+                  makePlans(response2, url)
                 } else {
                   axios({
                     "method":"GET",
@@ -153,7 +177,7 @@ export default function PeopleTab(props) {
                     "params": apiParams
                     })
                     .then((response3) => {
-                      makePlans(response3);
+                      makePlans(response3, url);
                     });
               }
             });
@@ -168,6 +192,7 @@ export default function PeopleTab(props) {
 
   const getCityCodes = (() => {
     props.flightReset();
+    props.clearUrls();
     props.setPassenger(values.adults, values.children, values.infants);
     
     for (let i = 0; i < props.cities.length; i++) {
