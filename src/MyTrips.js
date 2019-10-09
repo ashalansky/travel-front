@@ -5,11 +5,39 @@ import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import { Link, Redirect } from 'react-router-dom'
+import { Typography } from "@material-ui/core";
 const cookies = new Cookies();
 
 const useStyles = makeStyles({
   mainContainer: {
-    marginTop: "80px",
+    display: 'grid',
+    marginTop: "70px",
+    gridTemplateRows: '20% auto',
+    height: '100vh',
+    alignItems: 'center',
+    justifyContent: 'center',
+    background: 'linear-gradient(0deg, rgba(54,104,173,1) 0%, rgba(255,255,255,1) 0%, rgba(100,148,233,1) 100%)',
+  },
+  title: {
+    fontFamily: 'Ubuntu',
+    fontSize: '2rem',
+    color: 'white',
+    gridRow: 1,
+    alignItems: 'center',
+    textAlign: 'center',
+    borderBottom: '1px solid white'
+  },
+  link: {
+    textDecoration: 'none',
+    fontFamily: 'Ubuntu',
+    fontSize: '1.5rem',
+    color: 'white',
+    
+  },
+  button: {
+    textAlign: 'center',
+    background:'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    borderRadius: '10px'
   }
 });
 
@@ -47,10 +75,10 @@ export default function MyTrips() {
     tripList = trips.map(trip => {
       let linkUrl = `/itineraries/${trip.id}`; 
       return(
-         <div>
-         <Button>
+         <div className={classes.button}>
+         <Button >
            
-            <Link to={linkUrl}> {trip.name}    {trip.id} </Link>
+            <Link className={classes.link} to={linkUrl}> {trip.name}</Link>
             
           </Button>
           </div>
@@ -65,7 +93,7 @@ export default function MyTrips() {
     <div>Loading...</div>
   ) : (
     <Container className={classes.mainContainer} maxWidth="md">
-    <h1>My Trips</h1>
+    <Typography className={classes.title}>My Trips</Typography>
     {tripList}
     <h1></h1>
     </Container>
