@@ -185,9 +185,6 @@ const reducer = function(state, action) {
       return {...state, flightPlans: [], selectedFlightPlans: {}}
     case FINISH_PLAN:
       return axios.post(process.env.REACT_APP_API_BASE_URL+"trips/trip", {cityInformation: state.routes, name: state.name, flightInformation: state.selectedFlightPlans, userId: action.userId, passengers: action.passengers, url: state.urls})
-      .then((data) => {
-        console.log(data);
-      })
     case SET_TRIP_NAME:
       return {...state, name: action.name}
     case CLEAR_URL:
