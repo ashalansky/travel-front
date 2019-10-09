@@ -48,6 +48,7 @@ export default function ModalLayout(props) {
                 )}
               </Droppable>
             </DragDropContext>
+            
           </Paper>
         </Grid>
         <Grid item sm={7} xs={12}>
