@@ -55,7 +55,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     padding: 10,
     marginTop: 5,
-    marginRight: 10,
+    marginRight: 0,
     marginBottom: 5,
     height: 90,
     fontFamily: 'Ubuntu',
@@ -123,6 +123,10 @@ export default function Itinerary({match}) {
       if(city.flight){
         console.log(city.flight)
          flightComp = function(){
+  
+          let cityDate = new Date(city.departure_date)
+          let datestring = cityDate.getDate()  + "-" + (cityDate.getMonth()+1) + "-" + cityDate.getFullYear() 
+         
           return (
             <div>
             <p><Paper className={classes.flight}>
@@ -134,14 +138,17 @@ export default function Itinerary({match}) {
             <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
             {city.flight.arrival_location}
             </Typography>
-            <Typography style={{ fontSize: 16}}>
-              {city.departure_date}
+            <Typography style={{ gridColumn: 1 ,fontSize: 16}}>
+              {datestring}
             </Typography>
+
+
+
             <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
               ${city.flight.price}
             
             </Typography>
-            <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}> <a href={"https://www." + city.flight.url}>Link</a></Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 4, justifySelf: 'center'}}> <a href={"https://www." + city.flight.url}>Link</a></Typography>
            
           </Paper></p>
               </div>  
