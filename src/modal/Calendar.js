@@ -82,7 +82,7 @@ export default function CalendarComponent(props) {
         }
       }
       let selectedClass = classnames(classes.fab)
-
+      
       switch (index) {
         case 1:
           selectedClass = classnames(classes.fab, classes.reactCalendarTileSelectedPrevious1)
@@ -244,6 +244,7 @@ export default function CalendarComponent(props) {
     }
   }
 
+  // removes all the departure dates that are stored within state
   const reset = function() {
     for (let i = 0; i < props.cities.length; i++) {
       delete props.cities[i].departureDate;
@@ -252,8 +253,8 @@ export default function CalendarComponent(props) {
     setState({...state, numberOfCities: 0, lastDate: new Date()})
   }
 
+  // If a departure date is set for a city and the city is selected, the calendar focuses on the departure date
   const updateArrivingDate = function(city) {
-
     let index = 0
     for (let i = 0; i < props.cities.length; i++) {
       if (props.cities[i].id === city) {
@@ -265,15 +266,21 @@ export default function CalendarComponent(props) {
     }
   }
 
+  // This function runs every time a date is clicked on the calendar
   const onChange = (values) => {
     
+    // values is the date that is currently clicked
     const departingDate = values
+    // selectedCity is a number that represent a city that is being tracked in the current state
     let selectedCity = 0;
+    // cityNumber is used to determine if a particular city in the state has a departure date
     let cityNumber = state.numberOfCities;
     
+
     if (cityNumber < props.cities.length){
       selectedCity = props.cities[cityNumber].id
     }
+
     if (cityNumber === props.cities.length) {
       selectedCity = props.cities[cityNumber - 1].id;
     }
@@ -281,13 +288,14 @@ export default function CalendarComponent(props) {
     const newDate = setNewDate(departingDate);
 
     if (props.cities[cityNumber]){
-      if (cityNumber === 0 && cityNumber < (props.cities.length - 1)) {
-        props.updateDepartureDate(moment(values).format("ll"), selectedCity);
+      
+      if (cityNumber === 0 && cityNumber < (props.cities.length - 1)) { // for origin city
+        props.updateDepartureDate(moment(values).format("ll"), selectedCity); // updates departure date from origin city
         cityNumber++;
-        selectedCity = props.cities[cityNumber].id
-        props.changeSelectedCity(selectedCity);
+        selectedCity = props.cities[cityNumber].id 
+        props.changeSelectedCity(selectedCity); // automatically chooses next city
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-      } else if (!(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && cityNumber < (props.cities.length - 1)) {
+      } else if (!(moment(departingDate).add(1, 'days').isSameOrBefore(state.lastDate)) && cityNumber < (props.cities.length - 1)) { // for every city following the origin city excluding the last city prior to setting their departure dates
         props.updateDepartureDate(moment(values).format("ll"), selectedCity);
         if (cityNumber < props.cities.length - 1) {
           cityNumber++;
@@ -295,10 +303,9 @@ export default function CalendarComponent(props) {
         selectedCity = props.cities[cityNumber].id
         props.changeSelectedCity(selectedCity);
         setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-      } else if (props.cities[cityNumber - 1].departureDate && selectedCity && cityNumber === (props.cities.length - 1)){
-        console.log(props.cities);
+      } else if (props.cities[cityNumber - 1].departureDate && selectedCity && cityNumber === (props.cities.length - 1)){ //for every city after departure date is set
         let selectedCity = props.cities[cityNumber].id;
-        if (!(props.cities[props.cities.length - 1].id === props.city)) {
+        if (!(props.cities[props.cities.length - 1].id === props.city)) { // checks to see if the selected city is the last city
           let index = 0;
           for (let i = 0; i < props.cities.length - 1; i++) {
             if (props.cities[i].id === props.city) {
@@ -306,25 +313,25 @@ export default function CalendarComponent(props) {
             }
           }
           selectedCity = props.cities[index].id;
-          if (index === 0) {
+          if (index === 0) { // for origin city
             props.updateDepartureDate(moment(values).format("ll"), selectedCity);
             selectedCity = props.cities[index + 1].id;
             props.changeSelectedCity(selectedCity);
-            if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) {
+            if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) { // checks if departure date of origin city is later than departure date of next visited city
               for (let i = index + 1; i < props.cities.length; i++) {
                 delete props.cities[i].departureDate;
               }
               cityNumber = index + 1
             }
             setState({...state, numberOfCities: cityNumber, lastDate: newDate["_d"]})
-          } else if (index > 0 && moment(values).isAfter(moment(props.cities[index-1].departureDate)["_d"])) {
+          } else if (index > 0 && moment(values).isAfter(moment(props.cities[index-1].departureDate)["_d"])) { // for every city after origin city excluding last visited city  
             props.updateDepartureDate(moment(values).format("ll"), selectedCity);
-            if (props.cities[index + 1]){
+            if (props.cities[index + 1]){ //updates selected city
               selectedCity = props.cities[index + 1].id;
             }
             props.changeSelectedCity(selectedCity);
             if (props.cities[index + 1]){
-              if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) {
+              if (moment(props.cities[index].departureDate) > moment(props.cities[index+1].departureDate)) { // checks if departure date of current city is later than departure date of next visited city
                 for (let i = index + 1; i < props.cities.length; i++) {
                   delete props.cities[i].departureDate;
                 }
