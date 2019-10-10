@@ -1,7 +1,7 @@
 # Travel Bum
 A easy to use trip planner for short and long term trips. A trip planner that suggests possible cheap flights for your dream trip.
 
-# Contributors
+### Contributors
 [Amanda Shalansky](https://github.com/ashalansky), [Andrew Kim](https://github.com/Kimwj0318), [Scott Roberts](https://github.com/ScottRoberts0) 
 
 # Final Product
