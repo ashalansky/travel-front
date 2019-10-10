@@ -88,7 +88,7 @@ export default function HeroBanner(props) {
           data-aos-delay='1000' 
           data-aos-easing='ease-in-out' 
           data-aos-duration='1000'>Create Trip</Button>
-          <div class="animated infinite fadeOutDown delay-2s" style={{textAlign: 'center'}}>
+          <div className="animated infinite fadeOutDown delay-2s" style={{textAlign: 'center'}}>
           <KeyboardArrowDownIcon className={classes.arrow}>
           </KeyboardArrowDownIcon>
           </div>
