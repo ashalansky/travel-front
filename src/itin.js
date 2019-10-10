@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import NavBar from "./mainpage/NavBar";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Button from "@material-ui/core/Button";
-import SaveAltIcon from "@material-ui/icons/SaveAlt";
-import { Grid, Paper, Typography } from "@material-ui/core";
+import { Paper, Typography } from "@material-ui/core";
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 
@@ -58,7 +55,7 @@ const useStyles = makeStyles({
     alignItems: 'center',
     padding: 10,
     marginTop: 5,
-    marginRight: 10,
+    marginRight: 0,
     marginBottom: 5,
     height: 90,
     fontFamily: 'Ubuntu',
@@ -126,6 +123,10 @@ export default function Itinerary({match}) {
       if(city.flight){
         console.log(city.flight)
          flightComp = function(){
+  
+          let cityDate = new Date(city.departure_date)
+          let datestring = cityDate.getDate()  + "-" + (cityDate.getMonth()+1) + "-" + cityDate.getFullYear() 
+         
           return (
             <div>
             <p><Paper className={classes.flight}>
@@ -133,16 +134,22 @@ export default function Itinerary({match}) {
               {city.flight.departure_location}
             </Typography>
             <ArrowForwardIosIcon style={{ gridColumn: 2, justifySelf: 'center'}}></ArrowForwardIosIcon>
+           
             <Typography variant="body2" style={{ gridColumn: 3, fontSize: 20}}>
             {city.flight.arrival_location}
             </Typography>
-            <Typography style={{ fontSize: 16}}>
-              {city.departure_date}
+            <Typography style={{ gridColumn: 1 ,fontSize: 16}}>
+              {datestring}
             </Typography>
+
+
+
             <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 3}}>
               ${city.flight.price}
-             
+            
             </Typography>
+            <Typography style={{ fontSize: 18, color: '#9b8bf7', gridColumn: 4, justifySelf: 'center'}}> <a href={"https://www." + city.flight.url}>Link</a></Typography>
+           
           </Paper></p>
               </div>  
           )
@@ -172,7 +179,7 @@ export default function Itinerary({match}) {
           </h2>
           <h3 className={classes.title}>
             <div>
-            Passengers: {city.passengers}
+
             </div>
               
           </h3>
@@ -193,6 +200,7 @@ export default function Itinerary({match}) {
   ) : (
     <Container className={classes.mainContainer} maxWidth="md">
      <h1>{itinerary.name}</h1>
+     Passengers: {itinerary.passengers}
      {tripList}
     </Container>
   )

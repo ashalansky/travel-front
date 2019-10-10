@@ -4,7 +4,7 @@ import Cookies from 'universal-cookie';
 import Container from "@material-ui/core/Container";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import { Link, Redirect } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Typography } from "@material-ui/core";
 const cookies = new Cookies();
 
