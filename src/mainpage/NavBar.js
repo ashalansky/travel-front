@@ -39,17 +39,6 @@ const useStyles = makeStyles(theme => ({
 export default function(props) {
   const classes = useStyles();
 
-  let transferState = { 
-    user: props.user,
-    LoginOn: props.LoginOn,
-    SignUpOn: props.SignUpOn,
-    setLoginModal: props.setLoginModal,
-    setSignUpModal: props.setSignUpModal,
-    logout: props.logout
-  };
-
-
-
   if (props.user) {
     return(
       <div>

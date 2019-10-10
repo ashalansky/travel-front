@@ -140,6 +140,7 @@ export default function VerticalTabs(props) {
     setValue(newValue);
   };
 
+  // generates tabs dynamically depending on number of cities visited
   const createTabs = function () {
     let tabs = [];
     for (let i = 0; i < props.cities.length - 1; i++) {
@@ -151,6 +152,7 @@ export default function VerticalTabs(props) {
     return tabs;
   }
 
+  // Allows user to select a flight they wish to take
   const selectFlight = function(flightPlan, cityCode) {
     let currentState = {...state};
     currentState[cityCode] = flightPlan.iden;
@@ -191,6 +193,7 @@ export default function VerticalTabs(props) {
     }
     return totalTabContent;
   }
+  
   const tabPanels = function () {
     let tabPanels = [];
     if (props.flightPlans && props.flightPlans.length) {

@@ -90,9 +90,11 @@ export default function PeopleTab(props) {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
+  // generate a list of 5 cheapest flights that are available from the hipmunk api
   const makePlans = function(data, urlLink) {
     let cheapestFlights = [];
     let priceList = [];
+    // List of flights that are provided by hipmunk
     const itineraryList = data.data.itins
 
     for (let itinerary in itineraryList) {
@@ -101,9 +103,9 @@ export default function PeopleTab(props) {
       }
     }
 
+    // sort the unround_price of flights from smallest to largest
     priceList.sort((a,b) => a - b);
 
-    
     for (let price of priceList) {
       for (let itinerary in itineraryList) {
         if (itineraryList[itinerary].unrounded_price === price && cheapestFlights.length < 5){
@@ -111,9 +113,11 @@ export default function PeopleTab(props) {
         }
       }
     }
+    //Update the list of flights that are available for user to select
     props.updateFlightPlans(cheapestFlights, urlLink);
   }
 
+  //Searches for available flights given number of passengers, list of cities, the cities' airport codes, and the departure date
   const callFlightsApi = (() => {
     let apiParams = {
       "infants_lap":values.infants || 0,
@@ -127,6 +131,7 @@ export default function PeopleTab(props) {
       apiParams["from0"] = props.cities[i].cityCode
       apiParams["to0"] = props.cities[i + 1].cityCode
       apiParams["date0"] = props.cities[i].departureDate
+      // format the departure date to be used when creating a link to the flight details
       let formattedDate = formatDate(props.cities[i].departureDate);
       
       let url = `hipmunk.com/flights#f=${props.cities[i].cityCode};t=${props.cities[i+1].cityCode};d=${formattedDate}`
@@ -138,8 +143,8 @@ export default function PeopleTab(props) {
       }
       url += `;country=CA;is_search_for_business=true;group=1`;
       
+      // spread the params for the api call to prevent changing parameter values 
       let firstParam = {...apiParams};
-      console.log("firstParams", firstParam);
       axios({
         "method":"GET",
         "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/flights/create-session",
@@ -151,9 +156,12 @@ export default function PeopleTab(props) {
         "params": firstParam
         })
         .then((response)=>{
+          // repeat api calls because hipmunk may return with status 200 but their search query might not be finished
+          // they let developers know that their search is finished by providing a "done" key which is a boolean
           let secondParams = {...firstParam};
           console.log("secondParams", secondParams);
           if (response.data.done) {
+            // If response is finished, start generating list of flights
             makePlans(response, url)
           } else {
             axios({
@@ -167,6 +175,7 @@ export default function PeopleTab(props) {
               "params": secondParams
               })
               .then((response2) => {
+                // limit the number of times a certain city can call the api to three because hipmunk only allows 500 api calls per month for demo
                 let thirdParams = {...secondParams}
                 console.log("thirdParams", thirdParams);
                 if (response2.data.done) {
@@ -195,14 +204,17 @@ export default function PeopleTab(props) {
     }
   })
 
-
   const getCityCodes = (() => {
+    // empties the current list of flights that are stored in the state if there are any
     props.flightReset();
+    // empties the current list of url links to flights in the state if there are any
     props.clearUrls();
+    // counts the number of passengers that are boarding the plane
     props.setPassenger(values.adults, values.children, values.infants);
     
     for (let i = 0; i < props.cities.length; i++) {
 
+    // api call to hipmunk to get the airport codes from city names
     axios({
       "method":"GET",
       "url":"https://apidojo-hipmunk-v1.p.rapidapi.com/locations/search",
@@ -215,6 +227,7 @@ export default function PeopleTab(props) {
       }
       })
       .then((response)=>{
+        // adds the airport codes to the city information that is being tracked in the state
         props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
       })
       .catch((error)=>{
@@ -235,6 +248,7 @@ export default function PeopleTab(props) {
         })
         .then((response)=>{
           props.updateCityCode(response.data.normalized, response.data.endpoints.station[0].code)
+          // after the city codes are generated for every city, start searching for available flights
           setTimeout(() => {
             callFlightsApi();
           }, 2000)
