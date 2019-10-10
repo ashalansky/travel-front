@@ -54,3 +54,8 @@ A easy to use trip planner for short and long term trips. A trip planner that su
 # Description
 
 # Get Started
+1) Fork this reposity then clone your fork
+2) Install dependencies using npm install
+3) Create a .env file where you will store your hipmunk api
+4) Run npm start command. The default port that will be used is 3000.
+5) Go to http://localhost:3000/ 
