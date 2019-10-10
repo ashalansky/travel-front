@@ -22,9 +22,34 @@ A easy to use trip planner for short and long term trips. A trip planner that su
 - Flight Itinerary
 !["Flight-Itinerary"]()
 
+# Tech Stack
+- ReactJS
+- Node
+- Express
+- Material-ui
+- Postgres
+
+# Deployment
+- Heroku for database
+- Netlify for web app
+
 # Dependencies
+- axios
+- classnames
+- dotenv
+- google-map-react
+- moment
+- react-calendar
+- react-router
+- universal-cookie
 
 # Apis
+- Hipmunk 
+  - airport codes
+  - list of flights
+- Google
+  - maps
+  - places
 
 # Description
 
